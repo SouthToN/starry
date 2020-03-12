@@ -2,17 +2,17 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Day28：和为s的连续正数序列 &amp; 翻转单词顺序和左旋转字符串 | Starry</title>
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583998460248">
+<title>Day28：翻转单词顺序和左旋转字符串 &amp; 滑动窗口的最大值和队列的最大值  | Starry</title>
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1584005561973">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Day28：和为s的连续正数序列 &amp; 翻转单词顺序和左旋转字符串 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Day28：翻转单词顺序和左旋转字符串 &amp; 滑动窗口的最大值和队列的最大值  | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="一、和为s的连续正数序列
-" />
+    <meta name="description" content="一、翻转单词顺序
+输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。为简单起见，标点符号和普通字母一样处理。例如输入字符串&quot;I am a student. &quot;，则输出&quot;student. a am ..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -22,7 +22,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://southton.github.io/starry">
-  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1583998460248" alt="">
+  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1584005561973" alt="">
   </a>
   <h1 class="site-title">
     Starry
@@ -75,14 +75,14 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Day28：和为s的连续正数序列 &amp; 翻转单词顺序和左旋转字符串
+              Day28：翻转单词顺序和左旋转字符串 &amp; 滑动窗口的最大值和队列的最大值 
             </h2>
             <div class="post-info">
               <span>
                 2020-03-12
               </span>
               <span>
-                1 min read
+                6 min read
               </span>
               
             </div>
@@ -91,7 +91,182 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="一-和为s的连续正数序列">一、和为s的连续正数序列</h3>
+                <h3 id="一-翻转单词顺序">一、翻转单词顺序</h3>
+<p>输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。为简单起见，标点符号和普通字母一样处理。例如输入字符串&quot;I am a student. &quot;，则输出&quot;student. a am I&quot;。</p>
+<p>示例 1：<br>
+输入: &quot;the sky is blue&quot;<br>
+输出: &quot;blue is sky the&quot;</p>
+<p>示例 2：<br>
+输入: &quot;  hello world!  &quot;<br>
+输出: &quot;world! hello&quot;<br>
+解释: 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。</p>
+<p>示例 3：<br>
+输入: &quot;a good   example&quot;<br>
+输出: &quot;example good a&quot;<br>
+解释: 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。<br>
+说明：</p>
+<ul>
+<li>无空格字符构成一个单词。</li>
+<li>输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。</li>
+<li>如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof">力扣：翻转单词顺序</a></p>
+<p>思路：trim（） 去除字符串前缀和后缀空格<br>
+&quot;\s+&quot; 正则表达式(正则表达式中\s匹配任何空白字符，包括空格、制表符、换页符等等, 等价于[ \f\n\r\t\v]</p>
+<ul>
+<li>\f -&gt; 匹配一个换页</li>
+<li>\n -&gt; 匹配一个换行符</li>
+<li>\r -&gt; 匹配一个回车符</li>
+<li>\t -&gt; 匹配一个制表符</li>
+<li>\v -&gt; 匹配一个垂直制表符</li>
+</ul>
+<p>而“\s+”则表示匹配任意多个上面的字符。另因为&quot;&quot;在Java里是转义字符，所以在Java里用“\s+”.)<br>
+code:</p>
+<pre><code>class Solution {
+    public String reverseWords(String s) {
+        String[] str = s.trim().split(&quot;\\s+&quot;);
+        int start=0;        
+        int end = str.length - 1;
+        while (start &lt; end) {
+            String tmp = str[start];
+            str[start] = str[end];
+            str[end] = tmp;
+            start++;
+            end--;
+        }              
+        return String.join(&quot; &quot;, str);
+    }
+}
+</code></pre>
+<h3 id="二-左旋转字符串">二、左旋转字符串</h3>
+<p>字符串的左旋转操作是把字符串前面的若干个字符转移到字符串的尾部。请定义一个函数实现字符串左旋转操作的功能。比如，输入字符串&quot;abcdefg&quot;和数字2，该函数将返回左旋转两位得到的结果&quot;cdefgab&quot;。</p>
+<p>示例 1：<br>
+输入: s = &quot;abcdefg&quot;, k = 2<br>
+输出: &quot;cdefgab&quot;</p>
+<p>示例 2：<br>
+输入: s = &quot;lrloseumgh&quot;, k = 6<br>
+输出: &quot;umghlrlose&quot;</p>
+<p>限制：1 &lt;= k &lt; s.length &lt;= 10000</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof">力扣：左旋转字符串</a></p>
+<p>思路1：用两个String数组<br>
+code1：</p>
+<pre><code>class Solution {
+    public String reverseLeftWords(String s, int n) {
+        if(n&lt;=0) return s;
+        String [] str = s.split(&quot;&quot;); 
+        int start=0; 
+        String [] str2 = new String[str.length];              
+        for (int i = n; i &lt; str.length; i++) {
+            str2[start++]=str[i];
+        }
+        for (int i = 0; i &lt; n; i++) {
+            str2[start++]=str[i];
+        }  
+        return String.join(&quot;&quot;, str2);
+    }
+}
+</code></pre>
+<p>思路2：<br>
+code2：</p>
+<pre><code>class Solution {
+    public String reverseLeftWords(String s, int n) {
+        return s.substring(n) + s.substring(0, n);
+    }
+}
+</code></pre>
+<h3 id="三-滑动窗口的最大值">三、滑动窗口的最大值</h3>
+<p>给定一个数组 nums 和滑动窗口的大小 k，请找出所有滑动窗口里的最大值。</p>
+<p>示例:<br>
+输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3<br>
+输出: [3,3,5,5,6,7]<br>
+解释:</p>
+<pre><code>  滑动窗口的位置                最大值
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+</code></pre>
+<p>提示：你可以假设 k 总是有效的，在输入数组不为空的情况下，1 ≤ k ≤ 输入数组的大小。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof">力扣：滑动窗口的位置</a></p>
+<p>思路：外层for控制窗口的移动，内层for负责找出最大值<br>
+code：</p>
+<pre><code>class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (k &lt;= 0) return nums;
+        List result = new ArrayList&lt;Integer&gt;();
+        for (int i = 0; i &lt;= nums.length-k; i++) {
+            int max=nums[i];
+            for (int j = i; j &lt; k+i; j++) {
+                max=Math.max(max, nums[j]);
+            }
+            result.add(max);            
+        }
+        int[] results =new int[result.size()];
+        for (int j = 0; j &lt; results.length; j++) {
+            results[j]=(int)result.get(j);
+        }
+        return results;
+    }
+}
+</code></pre>
+<h3 id="四-队列的最大值">四、队列的最大值</h3>
+<p>请定义一个队列并实现函数 max_value 得到队列里的最大值，要求函数max_value、push_back 和 pop_front 的均摊时间复杂度都是O(1)。<br>
+若队列为空，pop_front 和 max_value 需要返回 -1</p>
+<p>示例 1：<br>
+输入:<br>
+[&quot;MaxQueue&quot;,&quot;push_back&quot;,&quot;push_back&quot;,&quot;max_value&quot;,&quot;pop_front&quot;,&quot;max_value&quot;]<br>
+[[],[1],[2],[],[],[]]<br>
+输出: [null,null,null,2,1,2]</p>
+<p>示例 2：<br>
+输入:<br>
+[&quot;MaxQueue&quot;,&quot;pop_front&quot;,&quot;max_value&quot;]<br>
+[[],[],[]]<br>
+输出: [null,-1,-1]</p>
+<p>限制：</p>
+<ul>
+<li>1 &lt;= push_back,pop_front,max_value的总操作数 &lt;= 10000</li>
+<li>1 &lt;= value &lt;= 10^5</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof">力扣：队列的最大值</a><br>
+思路：<br>
+code：</p>
+<pre><code>class MaxQueue {
+    private Deque&lt;Integer&gt; data = null;
+    private Deque&lt;Integer&gt; max = null;    
+    public MaxQueue() {
+        data = new ArrayDeque&lt;&gt;();
+        max = new ArrayDeque&lt;&gt;();
+    }
+    
+    public int max_value() {
+        if(max.isEmpty()) return -1;
+        return max.peekFirst();
+    }
+    
+    public void push_back(int value) {
+        while(!max.isEmpty() &amp;&amp; value &gt; max.peekLast()) max.pollLast();        
+        max.offerLast(value);
+        data.offerLast(value);
+    }
+    
+    public int pop_front() {
+        if(data.isEmpty()) return -1;int value = data.pollFirst();
+        if(max.peekFirst() == value) max.pollFirst();
+        return value;
+    }
+}
+
+/**
+ * Your MaxQueue object will be instantiated and called as such:
+ * MaxQueue obj = new MaxQueue();
+ * int param_1 = obj.max_value();
+ * obj.push_back(value);
+ * int param_3 = obj.pop_front();
+ */
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -100,7 +275,10 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B8%80-%E5%92%8C%E4%B8%BAs%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97">一、和为s的连续正数序列</a></li>
+<li><a href="#%E4%B8%80-%E7%BF%BB%E8%BD%AC%E5%8D%95%E8%AF%8D%E9%A1%BA%E5%BA%8F">一、翻转单词顺序</a></li>
+<li><a href="#%E4%BA%8C-%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2">二、左旋转字符串</a></li>
+<li><a href="#%E4%B8%89-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC">三、滑动窗口的最大值</a></li>
+<li><a href="#%E5%9B%9B-%E9%98%9F%E5%88%97%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC">四、队列的最大值</a></li>
 </ul>
 </li>
 </ul>
