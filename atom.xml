@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
-    <title>Gridea</title>
-    <updated>2020-03-12T06:56:41.087Z</updated>
+    <title>Starry</title>
+    <updated>2020-03-12T07:12:30.330Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
+    <subtitle>突破天际的脑洞、无穷无尽的乐观，温柔相待的善良</subtitle>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
-    <rights>All rights reserved 2020, Gridea</rights>
+    <rights>All rights reserved 2020, Starry</rights>
     <entry>
         <title type="html"><![CDATA[Day28：和为s的连续正数序列 & 翻转单词顺序和左旋转字符串]]></title>
         <id>https://southton.github.io/starry/post/day28/</id>
