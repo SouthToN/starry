@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day08： 打印从1到最大的n位数 &amp; 删除链表的节点 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、打印从1到最大的n位数
+输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
+示例 1:
+输入: n = 1
+输出: [1,2,3,4,5,6,7,8,9]
+来..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day08： 打印从1到最大的n位数 &amp; 删除链表的节点</h2>
+            <div class="post-date">2020-02-21</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day08.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-打印从1到最大的n位数">一、打印从1到最大的n位数</h3>
+<p>输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。</p>
+<p>示例 1:<br>
+输入: n = 1<br>
+输出: [1,2,3,4,5,6,7,8,9]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof">力扣：打印从1到最大的n位数</a></p>
+<p>思路：根据位数，确定最大值。<br>
+code1:</p>
+<pre><code>class Solution {
+    public int[] printNumbers(int n) {        
+		int [] nums;		
+		int max=1;	//最大数字
+		while (n!=0) {
+			max*=10;
+			n--;
+		}
+		nums=new int[max-1];		
+		for (int j = 1; j &lt; max; j++) {
+			nums[j-1]=j;
+		}
+		return nums;
+    }
+}
+</code></pre>
+<p>code2:</p>
+<pre><code>class Solution {
+	public int[] printNumbers(int n) {
+        int  sum = (int)Math.pow(10,n);
+        int[] num = new int[sum-1];
+        for(int i=1;i&lt;sum;i++){
+            num[i-1] = i;
+        }
+        return num;
+    }
+}
+</code></pre>
+<h3 id="二-删除链表的结点">二、删除链表的结点</h3>
+<p>给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。<br>
+返回删除后的链表的头节点。</p>
+<p>示例 1:<br>
+输入: head = [4,5,1,9], val = 5<br>
+输出: [4,1,9]<br>
+解释: 给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -&gt; 1 -&gt; 9.</p>
+<p>示例 2:<br>
+输入: head = [4,5,1,9], val = 1<br>
+输出: [4,5,9]<br>
+解释: 给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -&gt; 5 -&gt; 9.</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof">力扣：删除链表的节点</a></p>
+<p>code1:</p>
+<pre><code>/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteNode(ListNode head, int val) {
+        if (head.val == val) return head.next; // 删除头结点		
+		ListNode node = head;
+		while (node != null) {
+			if (node.next.val == val) {// 删除最后一个结点
+				if (node.next.next == null)
+					node.next = null;
+				else
+					node.next = node.next.next;
+				break;
+			} else {
+				node = node.next;
+			}
+		}
+		return head;
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day07/">
+                  <h3 class="post-title">
+                    Day07： 二进制中1的个数 &amp; 数值的整数次方
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

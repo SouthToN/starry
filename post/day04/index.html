@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day04：斐波那契数列 &amp; 青蛙跳台阶问题 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、菲波那切数列
+写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项。斐波那契数列的定义如下：
+F(0) = 0,   F(1) = 1
+F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1...." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day04：斐波那契数列 &amp; 青蛙跳台阶问题</h2>
+            <div class="post-date">2020-02-17</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day04.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-菲波那切数列">一、菲波那切数列</h3>
+<p>写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项。斐波那契数列的定义如下：<br>
+F(0) = 0,   F(1) = 1<br>
+F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.<br>
+斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。<br>
+答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。<br>
+1，1,2,3,5,8。。。</p>
+<p>示例 1：<br>
+输入：n = 2<br>
+输出：1</p>
+<p>示例 2：<br>
+输入：n = 5<br>
+输出：5</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof">力扣：斐波那契数列</a></p>
+<p>思路1：递归方法<br>
+时间复杂度 ：O(2^N)<br>
+空间复杂度 ：O(N)<br>
+对于递归问题求时间复杂度画递归树<br>
+递归问题存在大量重复计算，解决方法就是采用动态规划<br>
+code1：</p>
+<pre><code>class Solution {
+    public int fib(int n) {       
+        if (n &lt;= 1)  return n;	
+        return fib(n-1)+fib(n-1);
+    }
+}
+</code></pre>
+<p>思路2：非递归方法<br>
+时间复杂度 ：O(N)<br>
+空间复杂度 ：O(1)<br>
+code2：</p>
+<pre><code>class Solution {
+    public int fib(int n) {
+        int a=0,b=1;
+        if (n &lt;= 1)	return n;		
+        for (int i = 2; i &lt;= n; i++) {
+            int temp = a + b;
+            a = b;
+            b = temp%1000000007;
+        }
+        return b;
+    }
+}
+</code></pre>
+<h3 id="二-青蛙跳台阶问题">二、青蛙跳台阶问题</h3>
+<p>一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。<br>
+答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。</p>
+<p>示例 1：<br>
+输入：n = 2<br>
+输出：2</p>
+<p>示例 2：<br>
+输入：n = 7<br>
+输出：21</p>
+<p>此问题与斐波那契数列问题类似,一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶，即每一级的跳法与n-1级和n-2级有关。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/qing-wa-tiao-tai-jie-wen-ti-lcof">力扣：青蛙跳台阶问题</a></p>
+<p>code1:</p>
+<pre><code>class Solution {
+    public int numWays(int n) {        
+        if (n&lt;=2) return n;		
+        return numWays(n-1)+numWays(n-2);
+    }
+}
+</code></pre>
+<p>code2:</p>
+<pre><code>class Solution {
+    public int numWays(int n) {        
+        int a = 1, b = 1;
+        if (n == 0)
+            return 1;
+        if (n &gt; 0 &amp;&amp; n &lt;= 2)
+            return n;
+        for (int i = 2; i &lt;= n; i++) {
+            int temp = a + b;
+            a = b;
+            b = temp % 1000000007;
+		}
+        return b;
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day03/">
+                  <h3 class="post-title">
+                    Day03：重建二叉树 &amp; 用两个栈实现队列
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

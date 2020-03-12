@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day19：最小的k个数 &amp; 数据流中的中位数 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、最小的k个数
+输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
+示例 1：
+输入：arr = [3,2,1], k = 2
+输出：[1,2] 或者 ..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day19：最小的k个数 &amp; 数据流中的中位数</h2>
+            <div class="post-date">2020-03-03</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day19.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-最小的k个数">一、最小的k个数</h3>
+<p>输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。</p>
+<p>示例 1：<br>
+输入：arr = [3,2,1], k = 2<br>
+输出：[1,2] 或者 [2,1]</p>
+<p>示例 2：<br>
+输入：arr = [0,1,2,1], k = 1<br>
+输出：[0]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof">力扣：最小的k个数</a></p>
+<p>思路1：排序<br>
+code1：</p>
+<pre><code>// 冒泡排序，时间复杂度O(n^2)
+public int[] getLeastNumbers(int[] arr, int k) {
+    if (arr.length == 0) return new int[0];
+    if (k &gt; arr.length) k = arr.length;
+    for (int i = 0; i &lt; arr.length; i++) {
+        for (int j = 0; j &lt; arr.length; j++) {
+            if (arr[i] &lt; arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    int[] mins = new int[k];
+    for (int i = 0; i &lt; mins.length; i++) {
+        mins[i] = arr[i];
+        }
+    return mins;
+}
+</code></pre>
+<pre><code>// 插入排序，时间复杂度O(n^2)
+public int[] getLeastNumbers2(int[] arr, int k) {
+    if (arr.length == 0) return new int[0];
+    if (k &gt; arr.length) k = arr.length;
+    for (int i = 0; i &lt; arr.length; i++) {
+        int temp = arr[i];
+        int j = i - 1;
+        while (j &gt;= 0 &amp;&amp; arr[j] &gt; temp) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = temp;
+    }
+    int[] mins = new int[k];
+    for (int i = 0; i &lt; mins.length; i++) {
+        mins[i] = arr[i];
+    }
+    return mins;
+}
+</code></pre>
+<pre><code>//选择排序 时间复杂度O(n^2)
+public int[] getLeastNumbers3(int[] arr, int k) {
+    if (arr.length == 0) return new int[0];
+    if (k &gt; arr.length) k = arr.length;
+    for (int i = 0; i &lt; arr.length; i++) {
+        int minIndex = i;
+        for (int j = i; j &lt; arr.length; j++) {
+            if (arr[j] &lt; arr[minIndex]) minIndex = j;
+        }
+        int temp = arr[minIndex];
+        arr[minIndex] = arr[i];
+        arr[i] = temp;
+    }
+    int[] mins = new int[k];
+    for (int i = 0; i &lt; mins.length; i++) {
+        mins[i] = arr[i];
+    }
+    return mins;
+}
+</code></pre>
+<pre><code>class Solution {
+    public int[] getLeastNumbers(int[] arr, int k) {
+        if (arr.length == 0) return new int[0];
+        if (k &gt; arr.length) k = arr.length;
+        int start = 0, end = arr.length-1;
+        int[] arrs=quick_sort(arr, start, end);
+        int[] mins =new int[k];
+        for (int i = 0; i &lt; mins.length; i++) {
+            mins[i] =arrs[i];
+        }
+        return mins;
+    }
+</code></pre>
+<pre><code>	// 快速排序  时间复杂度O(nlogn)
+    int[] quick_sort(int arr[], int start, int end) {
+        if (start &lt; end) {
+            int i = start, j = end, x = arr[start];
+            while (i &lt; j) {
+                // 从后往前找第一个小于x的数
+                while (i &lt; j &amp;&amp; arr[j] &gt;= x) j--;
+                if (i &lt; j) arr[i++] = arr[j];
+                // 从前往后找第一个大于等于x的数
+                while (i &lt; j &amp;&amp; arr[i] &lt; x)  i++;
+                if (i &lt; j) arr[j--] = arr[i];
+            }
+            arr[i] = x;
+            quick_sort(arr, start, i - 1); // 递归
+            quick_sort(arr, i + 1, end);
+        }
+        return arr;
+    }
+}
+</code></pre>
+<h3 id="二-数据流中的中位数">二、数据流中的中位数</h3>
+<p>何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。<br>
+例如，<br>
+[2,3,4] 的中位数是 3<br>
+[2,3] 的中位数是 (2 + 3) / 2 = 2.5<br>
+设计一个支持以下两种操作的数据结构：<br>
+void addNum(int num) - 从数据流中添加一个整数到数据结构中。<br>
+double findMedian() - 返回目前所有元素的中位数。</p>
+<p>示例 1：<br>
+输入：[&quot;MedianFinder&quot;,&quot;addNum&quot;,&quot;addNum&quot;,&quot;findMedian&quot;,&quot;addNum&quot;,&quot;findMedian&quot;]<br>
+[[],[1],[2],[],[3],[]]<br>
+输出：[null,null,null,1.50000,null,2.00000]</p>
+<p>示例 2：<br>
+输入：[&quot;MedianFinder&quot;,&quot;addNum&quot;,&quot;findMedian&quot;,&quot;addNum&quot;,&quot;findMedian&quot;]<br>
+[[],[2],[],[3],[]]<br>
+输出：[null,null,2.00000,null,2.50000]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof">力扣：数据流中的中位数</a></p>
+<p>思路：大小顶堆，大顶堆的条件是每个孩子节点的值都小于父节点，小顶堆的条件是每个孩子节点的值都大于父节点<br>
+code：</p>
+<pre><code>class MedianFinder {
+    PriorityQueue&lt;Integer&gt; smallQueue; // 小顶堆
+    PriorityQueue&lt;Integer&gt; bigQueue; // 大顶堆
+    int count;   
+    public MedianFinder() {
+        smallQueue = new PriorityQueue&lt;&gt;();
+        bigQueue = new PriorityQueue&lt;&gt;(new Comparator&lt;Integer&gt;() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        count = 1;
+    }    
+    public void addNum(int num) {
+        if (count % 2 == 0) { // 当前数据流为偶数个时，往大顶堆加数据，然后将堆顶弹出进入到小顶堆
+            bigQueue.add(num);
+            smallQueue.add(bigQueue.poll());
+        } else { // 当前数据流为奇数个时，往小顶堆加数据，然后将堆顶弹出进入到大顶堆
+            smallQueue.add(num);
+            bigQueue.add((smallQueue.poll()));
+        }
+        count++;
+    }    
+    public double findMedian() {
+         // 当前数据流为偶数个，中位数为两个堆堆顶数字的均值
+        if (count % 2 == 0) {
+            return ((double)(bigQueue.peek() + smallQueue.peek())) / 2;
+        } else { //当前数据流为奇数个时，中位数为小顶堆堆顶
+            return (double)(smallQueue.peek());
+        }
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day18/">
+                  <h3 class="post-title">
+                    Day18: 字符串的排列 &amp; 数组中出现次数超过一半的数字
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

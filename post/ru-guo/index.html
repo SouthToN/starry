@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>如果 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="（英）拉迪亚德.吉卜林
+如果在众人六神无主时
+你镇定自若而不是人云亦云
+如果被众人猜忌怀疑时
+你能自信如常而不去妄加辩论
+如果你有梦想
+又能不迷失自我
+如果你有神思
+又不至于走火入魔
+如果在成功之中能不忘形于色
+而在灾难之后也能勇于咀嚼苦果..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">如果</h2>
+            <div class="post-date">2019-06-24</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/ru-guo.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>（英）拉迪亚德.吉卜林<br>
+如果在众人六神无主时<br>
+你镇定自若而不是人云亦云<br>
+如果被众人猜忌怀疑时<br>
+你能自信如常而不去妄加辩论<br>
+如果你有梦想<br>
+又能不迷失自我<br>
+如果你有神思<br>
+又不至于走火入魔<br>
+如果在成功之中能不忘形于色<br>
+而在灾难之后也能勇于咀嚼苦果<br>
+如果看到自己追求的美好破灭为一摊零碎的瓦砾<br>
+也不说放弃<br>
+如果你辛苦劳作<br>
+已是功成名就<br>
+为了新目标<br>
+你依旧冒险一搏<br>
+哪怕功名成乌有<br>
+如果你跟村夫交谈而不变谦恭之态<br>
+和王侯散步而不露谄媚之言<br>
+如果他人的爱情左右不了你<br>
+如果你与任何人为伍都能卓然独立<br>
+如果昏惑的骚扰动摇不了你的意志<br>
+你能等自己平心静气再作答时<br>
+那么你的修养就会如天地般博大</p>
+
+            </div>
+            
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

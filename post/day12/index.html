@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day12：树的子结构 &amp; 二叉树的镜像 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、树的子结构
+输入两棵二叉树A和B，判断B是不是A的子结构。(约定空树不是任意一个树的子结构)
+B是A的子结构， 即 A中有出现和B相同的结构和节点值。
+例如:
+给定的树 A:
+
+给定的树 B：
+
+返回 true，因为 B 与 A 的一个..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day12：树的子结构 &amp; 二叉树的镜像</h2>
+            <div class="post-date">2020-02-25</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day12.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-树的子结构">一、树的子结构</h3>
+<p>输入两棵二叉树A和B，判断B是不是A的子结构。(约定空树不是任意一个树的子结构)<br>
+B是A的子结构， 即 A中有出现和B相同的结构和节点值。</p>
+<p>例如:<br>
+给定的树 A:<br>
+<img src="https://southton.github.io/starry/post-images/1583985694718.PNG" alt="" loading="lazy"><br>
+给定的树 B：<br>
+<img src="https://southton.github.io/starry/post-images/1583985699382.PNG" alt="" loading="lazy"><br>
+返回 true，因为 B 与 A 的一个子树拥有相同的结构和节点值。</p>
+<p>示例 1：<br>
+输入：A = [1,2,3], B = [3,1]<br>
+输出：false</p>
+<p>示例 2：<br>
+输入：A = [3,4,5,1,2], B = [4,1]<br>
+输出：true</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/">力扣：树的子结构</a></p>
+<p>思路：见注释<br>
+code1:</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+   public boolean isSubStructure(TreeNode A, TreeNode B) {
+       boolean flag = false;
+       if(A != null &amp;&amp; B != null){
+           //调用helper()判断B是不是A的子结构
+           flag = helper(A,B); 
+           //根节点不相等，判断A的左孩子和B
+           if(!flag) flag = isSubStructure(A.left,B);
+           //判断A的右孩子和B
+           if(!flag) flag = isSubStructure(A.right, B);
+        }
+        return flag;    //遍历完A节点返回结果
+  }
+  public boolean helper(TreeNode A, TreeNode B) {
+      //B遍历完后全部节点和A对上，则B是A的的子结构，返回true
+      if(B == null) return true;
+      //B不为null而A为null，直接返回false
+      if(A == null) return false;
+      return A.val == B.val &amp;&amp; helper(A.left, B.left) &amp;&amp; helper(A.right, B.right);
+  }
+}
+</code></pre>
+<h3 id="二-二叉树的镜像">二、二叉树的镜像</h3>
+<p>请完成一个函数，输入一个二叉树，该函数输出它的镜像。<br>
+例如输入：<br>
+<img src="https://southton.github.io/starry/post-images/1583985775436.PNG" alt="" loading="lazy"><br>
+镜像输出：<br>
+<img src="https://southton.github.io/starry/post-images/1583985781844.PNG" alt="" loading="lazy"></p>
+<p>示例 1：<br>
+输入：root = [4,2,7,1,3,6,9]<br>
+输出：[4,7,2,9,6,3,1]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/">力扣：二叉树的镜像</a></p>
+<p>思路：递归<br>
+code1：</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode mirrorTree(TreeNode root) {
+        if (root==null) return root;
+        TreeNode temp=root.left; //临时节点
+        root.left=mirrorTree(root.right);
+        root.right=mirrorTree(temp);
+        return root;
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day11/">
+                  <h3 class="post-title">
+                    Day11：反转链表 &amp; 合并两个排序的链表
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

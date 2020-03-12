@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day17：二叉搜索树与双向链表 &amp; 序列化二叉树 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、二叉搜索树与双向链表
+输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
+为了让您更好地理解问题，以下面的二叉搜索树为例：
+
+我们希望将这个二叉搜索树转化为双向循环链表..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day17：二叉搜索树与双向链表 &amp; 序列化二叉树</h2>
+            <div class="post-date">2020-03-01</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day17.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-二叉搜索树与双向链表">一、二叉搜索树与双向链表</h3>
+<p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。<br>
+为了让您更好地理解问题，以下面的二叉搜索树为例：<br>
+<img src="https://southton.github.io/starry/post-images/1583993192568.png" alt="" loading="lazy"><br>
+我们希望将这个二叉搜索树转化为双向循环链表。链表中的每个节点都有一个前驱和后继指针。对于双向循环链表，第一个节点的前驱是最后一个节点，最后一个节点的后继是第一个节点。<br>
+下图展示了上面的二叉搜索树转化成的链表。“head” 表示指向链表中有最小元素的节点。<br>
+<img src="https://southton.github.io/starry/post-images/1583993200812.png" alt="" loading="lazy"><br>
+特别地，我们希望可以就地完成转换操作。当转化完成以后，树中节点的左指针需要指向前驱，树中节点的右指针需要指向后继。还需要返回链表中的第一个节点的指针。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/">力扣：二叉搜索树与双向链表</a></p>
+<p>思路：借助栈实现二叉搜索树的中序遍历，修改其节点指向实现双向链表🙃<br>
+code：</p>
+<pre><code>/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node() {}
+    public Node(int _val) {
+        val = _val;
+    }
+    public Node(int _val,Node _left,Node _right) {
+        val = _val;
+        left = _left;
+        right = _right;
+    }
+};
+*/
+class Solution {   
+    public Node treeToDoublyList(Node root) {
+        if(root == null)	return null;
+        Node list = null;
+		Stack&lt;Node&gt; stack = new Stack&lt;Node&gt;();
+		while(root != null || !stack.isEmpty()){
+			if(root!=null){
+				stack.push(root);
+				root = root.right;
+			}else{
+				root = stack.pop();
+				if(list == null){
+					list = root;
+				}else{
+					list.left = root;
+					root.right = list;
+					list = root;
+				}
+				root = root.left;
+			}
+		}
+		return list;
+    }
+}
+</code></pre>
+<h3 id="二-序列化二叉树">二、序列化二叉树</h3>
+<p>请实现两个函数，分别用来序列化和反序列化二叉树。</p>
+<p>示例:<br>
+你可以将以下二叉树：<br>
+<img src="https://southton.github.io/starry/post-images/1583993093327.png" alt="" loading="lazy"><br>
+序列化为 &quot;[1,2,3,null,null,4,5]&quot;<br>
+来源：<a href="https://leetcode-cn.com/problems/xu-lie-hua-er-cha-shu-lcof/">力扣：序列化二叉树</a></p>
+<p>思路：二叉树序列化为字符串，使用前序遍历，空节点用“#”表示，反过来字符串序列化为二叉树依旧使用前序遍历，遇见数字或“#”则建立一个新节点🙃<br>
+code：</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Codec {
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder stringBuilder = new StringBuilder();
+		if (root == null) {
+			stringBuilder.append(&quot;#,&quot;);
+		} else {
+			stringBuilder.append(root.val + &quot;,&quot;);
+			stringBuilder.append(serialize(root.left));
+			stringBuilder.append(serialize(root.right));
+		}
+		return stringBuilder.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    int index = 0;
+    public TreeNode deserialize(String data) {
+        TreeNode node = null;
+        if (data == null || data.length() == 0) return node;            
+        int start = index;
+        while (data.charAt(index) != ',')
+            index++;
+        if (!data.substring(start, index).equals(&quot;#&quot;)) {
+            node = new TreeNode(Integer.parseInt(data.substring(start, index)));
+            index++; 
+            node.left = deserialize(data);
+            node.right = deserialize(data);
+        } else {
+            index++;
+        }
+        return node;
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.deserialize(codec.serialize(root));
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day16/">
+                  <h3 class="post-title">
+                    Day16：二叉树中和为某一值的路径 &amp; 复杂链表的复制
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

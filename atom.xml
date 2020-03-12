@@ -1,0 +1,1064 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://southton.github.io/starry</id>
+    <title>Gridea</title>
+    <updated>2020-03-12T06:52:51.860Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://southton.github.io/starry"/>
+    <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://southton.github.io/starry/images/avatar.png</logo>
+    <icon>https://southton.github.io/starry/favicon.ico</icon>
+    <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[Day28：和为s的连续正数序列 & 翻转单词顺序和左旋转字符串]]></title>
+        <id>https://southton.github.io/starry/post/day28/</id>
+        <link href="https://southton.github.io/starry/post/day28/">
+        </link>
+        <updated>2020-03-12T02:01:28.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-和为s的连续正数序列">一、和为s的连续正数序列</h3>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Day27：数组中数字出现的次数 & 和为s的两个数字]]></title>
+        <id>https://southton.github.io/starry/post/day27/</id>
+        <link href="https://southton.github.io/starry/post/day27/">
+        </link>
+        <updated>2020-03-11T04:37:44.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-数组中数字出现的次数">一、数组中数字出现的次数</h3>
+<p>（1）数组中数字出现的次数 I<br>
+一个整型数组 nums 里除两个数字之外，其他数字都出现了两次。请写程序找出这两个只出现一次的数字。要求时间复杂度是O(n)，空间复杂度是O(1)。</p>
+<p>示例 1：<br>
+输入：nums = [4,1,4,6]<br>
+输出：[1,6] 或 [6,1]</p>
+<p>示例 2：<br>
+输入：nums = [1,2,10,4,1,4,3,3]<br>
+输出：[2,10] 或 [10,2]<br>
+限制：</p>
+<ul>
+<li>2 &lt;= nums &lt;= 10000</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof">力扣：数组中数字出现的次数 I</a></p>
+<p>思路：利用hashset<br>
+code：</p>
+<pre><code>class Solution {
+    public int[] singleNumbers(int[] nums) {
+       if (nums.length == 0) return new int[0];         
+        HashSet hashset=new HashSet();
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (hashset.contains(nums[i])) {
+                hashset.remove(nums[i]);
+            } else {
+                hashset.add(nums[i]);
+            }
+        }       
+        int [] result = new int[2];
+        for (int i = 0; i &lt; hashset.size(); i++) {
+            result[i]=Integer.parseInt(hashset.toArray()[i].toString());
+        }
+        return result;
+    }
+}
+</code></pre>
+<p>（2）数组中数字出现的次数 II<br>
+在一个数组 nums 中除一个数字只出现一次之外，其他数字都出现了三次。请找出那个只出现一次的数字。</p>
+<p>示例 1：<br>
+输入：nums = [3,4,3,3]<br>
+输出：4</p>
+<p>示例 2：<br>
+输入：nums = [9,1,7,9,7,9,7]<br>
+输出：1</p>
+<p>限制：</p>
+<ul>
+<li>1 &lt;= nums.length &lt;= 10000</li>
+<li>1 &lt;= nums[i] &lt; 2^31</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof">力扣：数组中数字出现的次数 II</a></p>
+<p>思路1：循环遍历统计每个数字出现的次数<br>
+code1：</p>
+<pre><code>class Solution {
+    public int singleNumber(int[] nums) {
+        if (nums.length == 0) return 0;
+        for (int i = 0; i &lt; nums.length; i++) {
+            int count = 0;
+            for (int j = 0; j &lt; nums.length; j++) {
+                if (nums[i] == nums[j]) count++;                
+            }
+            if (count == 1) return nums[i];
+        }
+        return 0;
+    }
+}
+</code></pre>
+<p>思路2：借助hashmap统计每个数字出现的次数<br>
+code2:</p>
+<pre><code>class Solution {
+    public int singleNumber(int[] nums) {
+        if (nums.length == 0) return 0;
+        Map&lt;Integer,Integer&gt; hm= new HashMap&lt;&gt;();
+        for (int num : nums) {
+            hm.put(num, hm.getOrDefault(num, 0)+1);
+        }
+        for (int num : nums) {
+            if(hm.get(num)==1) return num;
+        }
+        return 0;
+    }
+}
+</code></pre>
+<h3 id="二-和为s的两个数字">二、和为s的两个数字</h3>
+<p>输入一个递增排序的数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。如果有多对数字的和等于s，则输出任意一对即可。</p>
+<p>示例 1：<br>
+输入：nums = [2,7,11,15], target = 9<br>
+输出：[2,7] 或者 [7,2]</p>
+<p>示例 2：<br>
+输入：nums = [10,26,30,31,47,60], target = 40<br>
+输出：[10,30] 或者 [30,10]</p>
+<p>限制：</p>
+<ul>
+<li>1 &lt;= nums.length &lt;= 10^5</li>
+<li>1 &lt;= nums[i] &lt;= 10^6</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof">力扣：和为s的两个数字</a></p>
+<p>思路1：直接遍历，由于递增排序，可以先找大的，然后遍历找小的<br>
+code1：</p>
+<pre><code>class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        if (nums.length == 0) return new int[0];            
+        int[] result = new int[2];        
+        for (int i = nums.length - 1; i &gt; 0; i--) {
+            if (target - nums[i] &lt;= 0) continue; 
+            for (int j = 0; j &lt; i; j++) {
+                if (nums[j] == target-nums[i]) {
+                    result[0] = nums[j];
+                    result[1] = nums[i];                    
+                    return result;
+                }
+            }
+        }
+        return result;
+    }
+}
+</code></pre>
+<p>思路2：利用双指针，从两端往中间扫描<br>
+code2：</p>
+<pre><code>class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        if (nums.length == 0) return new int[0];            
+        int[] result = new int[2];  
+        int start=0,end=nums.length-1;
+        while(start&lt;end){
+            int sum=nums[start]+nums[end];
+            if (sum==target) {
+                result[0]=nums[start];
+                result[1]=nums[end];
+            }
+            if(sum&gt;target){
+                end--;
+            }else start++;
+        }       
+        return result;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Day26：二叉搜索树的第k大节点 & 二叉树的深度和平衡二叉树]]></title>
+        <id>https://southton.github.io/starry/post/day26/</id>
+        <link href="https://southton.github.io/starry/post/day26/">
+        </link>
+        <updated>2020-03-10T07:32:36.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-二叉搜索树的第k大节点">一、二叉搜索树的第k大节点</h3>
+<p>给定一棵二叉搜索树，请找出其中第k大的节点。</p>
+<p>示例 1:<br>
+输入: root = [3,1,4,null,2], k = 1<br>
+<img src="https://southton.github.io/starry/post-images/1583995037571.png" alt="" loading="lazy"><br>
+输出: 4</p>
+<p>示例 2:<br>
+输入: root = [5,3,6,2,4,null,null,1], k = 3<br>
+<img src="https://southton.github.io/starry/post-images/1583995053171.png" alt="" loading="lazy"><br>
+输出: 4<br>
+限制：1 ≤ k ≤ 二叉搜索树元素个数</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/">力扣：二叉搜索树的第k大节点</a></p>
+<p>思路1：直接遍历，按右根左的顺序中序遍历整棵树<br>
+code1:</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    List tree = new ArrayList&lt;Integer&gt;();
+    public int kthLargest(TreeNode root, int k) {
+        if (root == null) return 0;
+        rightFirst(root);
+        int val = -1;
+        for (int i = 0; i &lt; k; i++) {
+            val = (int) tree.get(i);
+        }
+        return val;
+    }
+    public void rightFirst(TreeNode node) {
+        if (node != null) {
+            rightFirst(node.right);
+            tree.add(node.val);
+            rightFirst(node.left);
+        }
+    }
+}
+</code></pre>
+<p>思路2：不需要遍历完，遍历到第k大即停止<br>
+code2：</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    int count=0,val=0;
+    public int kthLargest(TreeNode root, int k) {
+    if (root == null)
+        return 0;
+    rightFirst(root,k);    
+    return val;
+    }
+
+    public void rightFirst(TreeNode node,int k) {
+        if (node != null) {
+            rightFirst(node.right,k);
+            if(++count==k){
+                val=node.val;
+                return;
+            }
+            rightFirst(node.left,k);
+        }
+    }
+}
+</code></pre>
+<h3 id="二-二叉树的深度和平衡二叉树">二、二叉树的深度和平衡二叉树</h3>
+<p>（1）二叉树的深度<br>
+输入一棵二叉树的根节点，求该树的深度。从根节点到叶节点依次经过的节点（含根、叶节点）形成树的一条路径，最长路径的长度为树的深度。<br>
+例如：<br>
+给定二叉树 [3,9,20,null,null,15,7]，<br>
+<img src="https://southton.github.io/starry/post-images/1583994937310.png" alt="" loading="lazy"><br>
+返回它的最大深度 3 。<br>
+提示：节点总数 &lt;= 10000</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/er-cha-shu-de-shen-du-lcof">力扣：二叉树的深度</a></p>
+<p>思路1：从根节点分别递归遍历左右子树<br>
+code:</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null) return 0;
+        return Math.max(maxDepth(root.left), maxDepth(root.right))+1;
+    }
+}
+</code></pre>
+<p>思路2：层序遍历<br>
+code2：</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null) return 0;
+        LinkedList&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();        
+        queue.add(root);
+        TreeNode last=root;
+        TreeNode cur;
+        int count =0;
+        while (!queue.isEmpty()) {
+            cur = queue.poll();
+            //System.out.print(root.val + &quot; &quot;);
+            if (cur.left != null) queue.add(cur.left);
+            if (cur.right != null) queue.add(cur.right);
+            if(cur==last){
+                last=queue.peekLast();
+                ++count;
+            }           
+        }
+        return count;
+    }
+}
+</code></pre>
+<p>（2）平衡二叉树<br>
+输入一棵二叉树的根节点，判断该树是不是平衡二叉树。如果某二叉树中任意节点的左右子树的深度相差不超过1，那么它就是一棵平衡二叉树。</p>
+<p>示例 1:<br>
+给定二叉树 [3,9,20,null,null,15,7]<br>
+<img src="https://southton.github.io/starry/post-images/1583994870436.png" alt="" loading="lazy"><br>
+返回 true 。<br>
+示例 2:<br>
+给定二叉树 [1,2,2,3,3,null,null,4,4]<br>
+<img src="https://southton.github.io/starry/post-images/1583994882199.png" alt="" loading="lazy"><br>
+返回 false 。<br>
+限制：1 &lt;= 树的结点个数 &lt;= 10000</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/ping-heng-er-cha-shu-lcof">力扣：平衡二叉树</a></p>
+<p>思路：递归计算每个节点的深度<br>
+code:</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(root==null) return true;
+        if(Math.abs(maxDepth(root.left)-maxDepth(root.right))&lt;=1) return isBalanced(root.left)&amp;&amp;isBalanced(root.right);
+        return false;
+    }
+
+    public int maxDepth(TreeNode root) {
+        if(root==null) return 0;
+        return Math.max(maxDepth(root.left), maxDepth(root.right))+1;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Day25：两个链表的第一个公共节点 & 0～n-1中缺失的数字]]></title>
+        <id>https://southton.github.io/starry/post/day25/</id>
+        <link href="https://southton.github.io/starry/post/day25/">
+        </link>
+        <updated>2020-03-09T05:27:58.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-两个链表的第一个公共节点">一、两个链表的第一个公共节点</h3>
+<p>输入两个链表，找出它们的第一个公共节点。<br>
+如下面的两个链表：<br>
+<img src="https://southton.github.io/starry/post-images/1583994703207.png" alt="" loading="lazy"><br>
+在节点 c1 开始相交。</p>
+<p>示例 1：<br>
+<img src="https://southton.github.io/starry/post-images/1583994712889.png" alt="" loading="lazy"><br>
+输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, skipB = 3<br>
+输出：Reference of the node with value = 8<br>
+输入解释：相交节点的值为 8 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，链表 A 为 [4,1,8,4,5]，链表 B 为 [5,0,1,8,4,5]。在 A 中，相交节点前有 2 个节点；在 B 中，相交节点前有 3 个节点。</p>
+<p>示例 2：<br>
+<img src="https://southton.github.io/starry/post-images/1583994723541.png" alt="" loading="lazy"><br>
+输入：intersectVal = 2, listA = [0,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1<br>
+输出：Reference of the node with value = 2<br>
+输入解释：相交节点的值为 2 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，链表 A 为 [0,9,1,2,4]，链表 B 为 [3,2,4]。在 A 中，相交节点前有 3 个节点；在 B 中，相交节点前有 1 个节点。</p>
+<p>示例 3：<br>
+<img src="https://southton.github.io/starry/post-images/1583994735923.png" alt="" loading="lazy"><br>
+输入：intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2<br>
+输出：null<br>
+输入解释：从各自的表头开始算起，链表 A 为 [2,6,4]，链表 B 为 [1,5]。由于这两个链表不相交，所以 intersectVal 必须为 0，而 skipA 和 skipB 可以是任意值。<br>
+解释：这两个链表不相交，因此返回 null。</p>
+<p><code>注意：</code></p>
+<ul>
+<li>如果两个链表没有交点，返回 null.</li>
+<li>在返回结果后，两个链表仍须保持原有的结构。</li>
+<li>可假定整个链表结构中没有循环。</li>
+<li>程序尽量满足 O(n) 时间复杂度，且仅用 O(1) 内存。</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">力扣：两个链表的第一个公共节点</a></p>
+<p>思路1：计算两个链表的长度差,从长度相等的地方开始找<br>
+code1：</p>
+<pre><code>/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) return null;
+        ListNode lnA = headA;
+        ListNode lnB = headB;
+        int la = 0, lb = 0;
+        while (lnA.next != null) {// 统计A的长度
+            la++;
+            lnA = lnA.next;
+        }
+        while (lnB.next != null) {// 统计B的长度
+            lb++;
+            lnB = lnB.next;
+        }
+        if (lnA != lnB) return null;// 如果最后一个节点不相等则无公共节点
+        lnA = headA; //计算长度时修改过，此时重新赋值
+        lnB = headB;
+        int n = 0;
+        if (la &gt; lb) { //移动到长度相等处
+            n = la - lb;
+            while (n-- &gt; 0) {
+                lnA = lnA.next;
+            }
+        } else {
+            n = lb - la;
+            while (n-- &gt; 0) {
+                lnB = lnB.next;
+            }
+        }
+        while (lnA != lnB) {//从相等长度处开始找
+            lnA = lnA == null ? null : lnA.next;
+            lnB = lnB == null ? null : lnB.next;
+        }
+        return lnA;
+    }
+}
+</code></pre>
+<p>思路二：双指针，headA无重复部分长度+公共长度+headB无重复部分长度=headB无重复部分长度+公共长度+headA无重复部分长度<br>
+code2：</p>
+<pre><code>/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+       if (headA == null || headB == null) return null;            
+        ListNode ln1 = headA;
+        ListNode ln2 = headB;
+        while (ln1 != ln2) {
+            ln1 = ln1 == null ? headB : ln1.next;
+            ln2 = ln2 == null ? headA : ln2.next;
+        }
+        return ln1; 
+    }
+}
+</code></pre>
+<h3 id="二-0~n-1中缺失的数字">二、0～n-1中缺失的数字</h3>
+<p>（1）在排序数组中查找数字 I<br>
+统计一个数字在排序数组中出现的次数。</p>
+<p>示例 1:<br>
+输入: nums = [5,7,7,8,8,10], target = 8<br>
+输出: 2</p>
+<p>示例 2:<br>
+输入: nums = [5,7,7,8,8,10], target = 6<br>
+输出: 0</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof">力扣：在排序数组中查找数字 I</a><br>
+思路：<br>
+code：</p>
+<pre><code>class Solution {
+    public int search(int[] nums, int target) {
+        if (nums.length == 0) return 0;
+        int count = 0;
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (nums[i] == target) count++;
+        }
+        return count;
+    }
+}
+</code></pre>
+<p>（2）0～n-1中缺失的数字<br>
+一个长度为n-1的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围0～n-1之内。在范围0～n-1内的n个数字中有且只有一个数字不在该数组中，请找出这个数字。</p>
+<p>示例 1:<br>
+输入: [0,1,3]<br>
+输出: 2</p>
+<p>示例 2:<br>
+输入: [0,1,2,3,4,5,6,7,9]<br>
+输出: 8</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof">力扣：0～n-1中缺失的数字</a></p>
+<p>思路：<br>
+code：</p>
+<pre><code>class Solution {
+    public int missingNumber(int[] nums) {
+        for(int i=0;i&lt;nums.length;i++){
+            if(nums[i]!=i) return i;
+        }
+        return nums.length;
+    }
+}
+</code></pre>
+<p>os: 0～n-1中缺失的数字应该得用上排序这个规律</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Day24：第一个只出现一次的字符 & 数组中的逆序对]]></title>
+        <id>https://southton.github.io/starry/post/day24/</id>
+        <link href="https://southton.github.io/starry/post/day24/">
+        </link>
+        <updated>2020-03-08T03:25:42.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-第一个只出现一次的字符">一、第一个只出现一次的字符</h3>
+<p>在字符串 s 中找出第一个只出现一次的字符。如果没有，返回一个单空格。</p>
+<p>示例:<br>
+s = &quot;abaccdeff&quot;<br>
+返回 &quot;b&quot;<br>
+s = &quot;&quot;<br>
+返回 &quot; &quot;</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof">力扣：第一个只出现一次的字符</a></p>
+<p>思路1：直接遍历，时间复杂度O(n)，空间复杂度O(1)<br>
+code1：</p>
+<pre><code>class Solution {
+    public char firstUniqChar(String s) {
+        if (s.length() == 0) return ' ';
+        int[] dict = new int[26];
+        for (int i = 0; i &lt; s.length(); i++) {//统计每个字符出现的次数
+            dict[s.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i &lt; s.length(); i++) {
+            if (dict[s.charAt(i) - 'a'] == 1) {//找出第一个只出现一次的字符
+                return s.charAt(i);
+            }
+        }
+        return ' ';
+    }
+}
+</code></pre>
+<h3 id="二-数组中的逆序对">二、数组中的逆序对</h3>
+<p>在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。</p>
+<p>示例 1:<br>
+输入: [7,5,6,4]<br>
+输出: 5</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof">力扣：数组中的逆序对</a></p>
+<p>思路：利用归并排序的排序过程进行统计逆序对的个数<br>
+code：</p>
+<pre><code>class Solution {
+    private long sum; // 统计逆序对的个数
+    public int reversePairs(int[] nums) {
+        if(nums.length==0) return 0;
+        sum = 0;
+        int l = 0;
+        int r = nums.length - 1;
+        divide(l, r, nums);
+        return (int)sum;
+    }    
+    public void divide(int l, int r, int[] nums) {
+        if (l != r) {
+            int mid = (l + r) &gt;&gt; 1;
+            divide(l, mid, nums);
+            divide(mid + 1, r, nums);
+            merge(l, r, mid, nums);
+        }
+    }
+    public void merge(int l, int r, int mid, int[] nums) {
+        int i = l; // 左区间的起点
+        int j = mid + 1; // 右区间的起点
+        int[] temp = new int[r - l + 1];
+        int index = 0;
+        while (i &lt;= mid &amp;&amp; j &lt;= r) {
+            if (nums[i] &gt; nums[j]) {
+                temp[index++] = nums[j++];
+                sum += mid - i + 1; // 统计逆序对个数
+            } else {
+                temp[index++] = nums[i++];
+            }
+        }
+        while (i &lt;= mid) temp[index++] = nums[i++];
+        while (j &lt;= r) temp[index++] = nums[j++];
+        index = 0;
+        for (int k = l; k &lt;= r; k++) {
+            nums[k] = temp[index++];
+        }
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Day23：最长不含重复字符的子字符串 & 丑数]]></title>
+        <id>https://southton.github.io/starry/post/day23/</id>
+        <link href="https://southton.github.io/starry/post/day23/">
+        </link>
+        <updated>2020-03-07T06:23:00.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-最长不含重复字符的子字符串">一、最长不含重复字符的子字符串</h3>
+<p>请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。</p>
+<p>示例 1:<br>
+输入: &quot;abcabcbb&quot;<br>
+输出: 3<br>
+解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</p>
+<p>示例 2:<br>
+输入: &quot;bbbbb&quot;<br>
+输出: 1<br>
+解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。</p>
+<p>示例 3:<br>
+输入: &quot;pwwkew&quot;<br>
+输出: 3<br>
+解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。<br>
+请注意，你的答案必须是 子串 的长度，&quot;pwke&quot; 是一个子序列，不是子串。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof">力扣：最长不含重复字符的子字符串</a></p>
+<p>思路：动态规划，使用maxlist记录无重复字符的最长子串<br>
+code：</p>
+<pre><code>class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s.length()==0) return 0;
+        int maxLength=1;
+		List&lt;Character&gt; maxlist = new ArrayList&lt;Character&gt;();
+		maxlist.add(s.charAt(0));
+		for(int i=1;i&lt;s.length();i++) {
+			if(maxlist.contains(s.charAt(i))) {				
+				int index = maxlist.indexOf(s.charAt(i)); 
+				maxlist = maxlist.subList(index+1, maxlist.size());
+				maxlist.add(s.charAt(i));
+				maxLength = Math.max(maxLength, maxlist.size());
+			}else {
+				maxlist.add(s.charAt(i));
+				maxLength = Math.max(maxLength, maxlist.size());
+			}
+		}
+		return maxLength;
+    }
+}
+</code></pre>
+<h3 id="二-丑数">二、丑数</h3>
+<p>我们把只包含因子 2、3 和 5 的数称作丑数（Ugly Number）。求按从小到大的顺序的第 n 个丑数。</p>
+<p>示例:<br>
+输入: n = 10<br>
+输出: 12<br>
+解释: 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 是前 10 个丑数。<br>
+说明:</p>
+<ul>
+<li>1 是丑数。</li>
+<li>n 不超过1690。</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/chou-shu-lcof">力扣：丑数</a></p>
+<p>思路1：穷举<br>
+code1：</p>
+<pre><code>class Solution {
+    public int nthUglyNumber(int n){
+		if(n &lt;= 0) return 0;
+		int number = 0;
+		int uglyFound = 0;
+		while(uglyFound &lt; n){
+			number++;
+			if(isUgly(number)) ++uglyFound;
+		}
+		return number;
+	}
+
+    public boolean isUgly(int number){
+		while(number % 2 == 0) number/=2;			
+		while(number % 3 == 0) number /=3;			
+		while(number % 5 == 0) number /=5;			
+		return number==1;
+	}
+}
+</code></pre>
+<p>思路2：找规律，一个丑数的下一个丑数总是等于它之前的 某个丑数乘2/某个丑数乘3/某个丑数乘5 中的最小值。<br>
+code2：</p>
+<pre><code>class Solution {
+    public int nthUglyNumber(int n){
+        if (n == 0) return 0;
+        int p1 = 0, p2 = 0, p3 = 0;
+        int[] ugly = new int[n];
+        ugly[0] = 1;
+        for (int i = 1; i &lt; n; i++) {
+            ugly[i] = Math.min(ugly[p1] * 2, Math.min(ugly[p2] * 3, ugly[p3] * 5));
+            if (ugly[i] == ugly[p1] * 2) p1++;                
+            if (ugly[i] == ugly[p2] * 3) p2++;                
+            if (ugly[i] == ugly[p3] * 5) p3++;                
+        }
+        return ugly[n - 1];
+	}    
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Day22：把数字翻译成字符串 & 礼物的最大价值]]></title>
+        <id>https://southton.github.io/starry/post/day22/</id>
+        <link href="https://southton.github.io/starry/post/day22/">
+        </link>
+        <updated>2020-03-06T05:19:52.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-把数字翻译成字符串">一、把数字翻译成字符串</h3>
+<p>给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。</p>
+<p>示例 1:<br>
+输入: 12258<br>
+输出: 5<br>
+解释: 12258有5种不同的翻译，分别是&quot;bccfi&quot;, &quot;bwfi&quot;, &quot;bczi&quot;, &quot;mcfi&quot;和&quot;mzi&quot;</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof">力扣：把数字翻译成字符串</a></p>
+<p>思路：动态规划<br>
+code：</p>
+<pre><code>class Solution {
+    public int translateNum(int num) {
+        if (num&lt;0) return 0;
+        char [] nums=String.valueOf(num).toCharArray();
+        int len = nums.length;
+        int[] dp =new int[len];
+        int count = 0;
+        for (int i = len-1; i &gt;=0 ; --i) {
+            if(i&lt;len-1){
+                count=dp[i+1];
+            }else{
+                count=1;
+            }
+            if(i&lt;len-1){
+                int d1=nums[i]-'0';
+                int d2 = nums[i+1]-'0';
+                if (d1*10+d2&gt;=10 &amp;&amp; d1*10+d2&lt;=25) {
+                    if (i&lt;len-2) {
+                        count+=dp[i+2];
+                    }else{
+                        count+=1;
+                    }
+                }
+            }
+            dp[i]=count;
+        }
+        return dp[0];
+    }
+}
+</code></pre>
+<h3 id="二-礼物的最大价值">二、礼物的最大价值</h3>
+<p>在一个 m*n 的棋盘的每一格都放有一个礼物，每个礼物都有一定的价值（价值大于 0）。你可以从棋盘的左上角开始拿格子里的礼物，并每次向右或者向下移动一格、直到到达棋盘的右下角。给定一个棋盘及其上面的礼物的价值，请计算你最多能拿到多少价值的礼物？</p>
+<p>示例 1:<br>
+输入:<br>
+[<br>
+  [1,3,1],<br>
+  [1,5,1],<br>
+  [4,2,1]<br>
+]<br>
+输出: 12<br>
+解释:<code>路径 1→3→5→2→1 可以拿到最多价值的礼物</code></p>
+<p>来源：<a href="https://leetcode-cn.com/problems/li-wu-de-zui-da-jie-zhi-lcof/">力扣：礼物的最大价值</a></p>
+<p>思路：动态规划问题，维护一个和棋盘同样大小的二位数组，数组中保存的每个元素[i][j]为从[0][0]按照规则走到[i][j]的礼物价值和。<br>
+code：</p>
+<pre><code>class Solution {
+    public int maxValue(int[][] grid) {
+        int m=grid.length, n=grid[0].length;
+        if(m==0&amp;&amp;n==0) return -1;
+        int [][] max=new int[m+1][n+1];        
+        for (int i = 1; i &lt;= m; i++) {
+            for (int j = 1; j &lt;= n; j++) {
+                max[i][j]= Math.max(max[i-1][j], max[i][j-1])+grid[i-1][j-1];
+            }
+        }
+        return max[m][n];
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Day21：数字序列中某一位的数字 & 把数组排成最小的数]]></title>
+        <id>https://southton.github.io/starry/post/day21/</id>
+        <link href="https://southton.github.io/starry/post/day21/">
+        </link>
+        <updated>2020-03-05T06:16:45.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-数字序列中某一位的数字">一、数字序列中某一位的数字</h3>
+<p>数字以0123456789101112131415…的格式序列化到一个字符序列中。在这个序列中，第5位（从下标0开始计数）是5，第13位是1，第19位是4，等等。<br>
+请写一个函数，求任意第n位对应的数字。</p>
+<p>示例 1：<br>
+输入：n = 3<br>
+输出：3</p>
+<p>示例 2：<br>
+输入：n = 11<br>
+输出：0<br>
+限制：</p>
+<ul>
+<li>0 &lt;= n &lt; 2^31</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-zi-xu-lie-zhong-mou-yi-wei-de-shu-zi-lcof">力扣：数字序列中某一位的数字</a></p>
+<p>思路：找规律，首先根据n先找到数字序列中对应的数字，其次判断是真实数字的哪一位数。n &lt; 2^31可以列出区间范围。</p>
+<pre><code>数字序列                            总位数
+1 --- 9                              9
+10 --- 99                           90*2
+100 --- 999                         900*3
+    .                                 .                         
+    .                                 .
+</code></pre>
+<p>code:</p>
+<pre><code>class Solution {
+    public int findNthDigit(int n) {
+        int[] index = { 0, 10, 190, 2890, 38890, 488890, 5888890, 68888890, 788888890 };
+        int[] values = { 0, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000 };
+        int idx = 8;
+        while (idx &gt;= 0 &amp;&amp; index[idx] &gt; n) {
+            idx--;
+        }
+        int numLength = idx + 1;
+        int number = (n - index[idx]) / numLength + values[idx];//数字序列中的数
+        int pos = (n - index[idx]) % numLength;
+        return Integer.toString(number).charAt(pos) - '0';
+    }
+}
+</code></pre>
+<h3 id="二-把数组排成最小的数">二、把数组排成最小的数</h3>
+<p>输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。</p>
+<p>示例 1:<br>
+输入: [10,2]<br>
+输出: &quot;102&quot;</p>
+<p>示例 2:<br>
+输入: [3,30,34,5,9]<br>
+输出: &quot;3033459&quot;</p>
+<p>提示:<code>0 &lt; nums.length &lt;= 100</code><br>
+说明:</p>
+<ul>
+<li>输出结果可能非常大，所以你需要返回一个字符串而不是整数</li>
+<li>拼接起来的数字可能会有前导 0，最后结果不需要去掉前导 0</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof">力扣：把数组排成最小的数</a></p>
+<p>思路：排序<br>
+code：</p>
+<pre><code>class Solution {
+    public String minNumber(int[] nums) {
+        int len = nums.length;
+        if(len == 0) return &quot;&quot;;
+        String [] str = new String [len];
+        for(int i = 0; i &lt; len; i++) str[i] = String.valueOf(nums[i]);
+        Arrays.sort(str, new Comparator&lt;String&gt;(){
+            public int compare(String s1, String s2){
+                return (s1 + s2).compareTo(s2 + s1);
+            }
+        });
+        StringBuffer stringBuffer = new StringBuffer();
+        for(String s: str) stringBuffer.append(s);
+        return stringBuffer.toString();
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Day20：连续子数组的最大和 & 1～n整数中1出现的次数]]></title>
+        <id>https://southton.github.io/starry/post/day20/</id>
+        <link href="https://southton.github.io/starry/post/day20/">
+        </link>
+        <updated>2020-03-04T07:14:22.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-连续子数组的最大和">一、连续子数组的最大和</h3>
+<p>输入一个整型数组，数组里有正数也有负数。数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。<br>
+要求时间复杂度为O(n)。</p>
+<p>示例1:<br>
+输入: nums = [-2,1,-3,4,-1,2,1,-5,4]<br>
+输出: 6<br>
+解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof">力扣：连续子数组的最大和</a></p>
+<p>思路：直接在原数组上修改元素值，nums[i]表示从nums[0]到nums[i]连续子序列的最大和，使用变量max记录最大值。<br>
+code：</p>
+<pre><code>class Solution {
+    public int maxSubArray(int[] nums) {
+        int max = nums[0];
+        for (int i = 1; i &lt; nums.length; i++) {
+			if (nums[i - 1] &gt; 0) nums[i] += nums[i - 1];
+            max = Math.max(max, nums[i]);
+        }
+        return max;
+    }
+}
+</code></pre>
+<h3 id="二-1~n整数中1出现的次数">二、1～n整数中1出现的次数</h3>
+<p>输入一个整数 n ，求1～n这n个整数的十进制表示中1出现的次数。<br>
+例如，输入12，1～12这些整数中包含1 的数字有1、10、11和12，1一共出现了5次。</p>
+<p>示例 1：<br>
+输入：n = 12<br>
+输出：5</p>
+<p>示例 2：<br>
+输入：n = 13<br>
+输出：6</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/1nzheng-shu-zhong-1chu-xian-de-ci-shu-lcof">力扣：1～n整数中1出现的次数</a></p>
+<p>思路：单独考虑每一个十进制位上的数，1出现的次数<br>
+code：</p>
+<pre><code>class Solution {    
+    public int countDigitOne(int n) {
+    if(n&lt;1)  return 0;
+    int count = 0;
+    int base = 1;
+    int round = n;
+    while(round&gt;0){
+        int weight = round%10;
+        round/=10;
+        count += round*base;
+        if(weight==1)
+            count+=(n%base)+1;
+        else if(weight&gt;1)
+            count+=base;
+        base*=10;
+    }
+    return count;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Day19：最小的k个数 & 数据流中的中位数]]></title>
+        <id>https://southton.github.io/starry/post/day19/</id>
+        <link href="https://southton.github.io/starry/post/day19/">
+        </link>
+        <updated>2020-03-03T07:10:53.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-最小的k个数">一、最小的k个数</h3>
+<p>输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。</p>
+<p>示例 1：<br>
+输入：arr = [3,2,1], k = 2<br>
+输出：[1,2] 或者 [2,1]</p>
+<p>示例 2：<br>
+输入：arr = [0,1,2,1], k = 1<br>
+输出：[0]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof">力扣：最小的k个数</a></p>
+<p>思路1：排序<br>
+code1：</p>
+<pre><code>// 冒泡排序，时间复杂度O(n^2)
+public int[] getLeastNumbers(int[] arr, int k) {
+    if (arr.length == 0) return new int[0];
+    if (k &gt; arr.length) k = arr.length;
+    for (int i = 0; i &lt; arr.length; i++) {
+        for (int j = 0; j &lt; arr.length; j++) {
+            if (arr[i] &lt; arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    int[] mins = new int[k];
+    for (int i = 0; i &lt; mins.length; i++) {
+        mins[i] = arr[i];
+        }
+    return mins;
+}
+</code></pre>
+<pre><code>// 插入排序，时间复杂度O(n^2)
+public int[] getLeastNumbers2(int[] arr, int k) {
+    if (arr.length == 0) return new int[0];
+    if (k &gt; arr.length) k = arr.length;
+    for (int i = 0; i &lt; arr.length; i++) {
+        int temp = arr[i];
+        int j = i - 1;
+        while (j &gt;= 0 &amp;&amp; arr[j] &gt; temp) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = temp;
+    }
+    int[] mins = new int[k];
+    for (int i = 0; i &lt; mins.length; i++) {
+        mins[i] = arr[i];
+    }
+    return mins;
+}
+</code></pre>
+<pre><code>//选择排序 时间复杂度O(n^2)
+public int[] getLeastNumbers3(int[] arr, int k) {
+    if (arr.length == 0) return new int[0];
+    if (k &gt; arr.length) k = arr.length;
+    for (int i = 0; i &lt; arr.length; i++) {
+        int minIndex = i;
+        for (int j = i; j &lt; arr.length; j++) {
+            if (arr[j] &lt; arr[minIndex]) minIndex = j;
+        }
+        int temp = arr[minIndex];
+        arr[minIndex] = arr[i];
+        arr[i] = temp;
+    }
+    int[] mins = new int[k];
+    for (int i = 0; i &lt; mins.length; i++) {
+        mins[i] = arr[i];
+    }
+    return mins;
+}
+</code></pre>
+<pre><code>class Solution {
+    public int[] getLeastNumbers(int[] arr, int k) {
+        if (arr.length == 0) return new int[0];
+        if (k &gt; arr.length) k = arr.length;
+        int start = 0, end = arr.length-1;
+        int[] arrs=quick_sort(arr, start, end);
+        int[] mins =new int[k];
+        for (int i = 0; i &lt; mins.length; i++) {
+            mins[i] =arrs[i];
+        }
+        return mins;
+    }
+</code></pre>
+<pre><code>	// 快速排序  时间复杂度O(nlogn)
+    int[] quick_sort(int arr[], int start, int end) {
+        if (start &lt; end) {
+            int i = start, j = end, x = arr[start];
+            while (i &lt; j) {
+                // 从后往前找第一个小于x的数
+                while (i &lt; j &amp;&amp; arr[j] &gt;= x) j--;
+                if (i &lt; j) arr[i++] = arr[j];
+                // 从前往后找第一个大于等于x的数
+                while (i &lt; j &amp;&amp; arr[i] &lt; x)  i++;
+                if (i &lt; j) arr[j--] = arr[i];
+            }
+            arr[i] = x;
+            quick_sort(arr, start, i - 1); // 递归
+            quick_sort(arr, i + 1, end);
+        }
+        return arr;
+    }
+}
+</code></pre>
+<h3 id="二-数据流中的中位数">二、数据流中的中位数</h3>
+<p>何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。<br>
+例如，<br>
+[2,3,4] 的中位数是 3<br>
+[2,3] 的中位数是 (2 + 3) / 2 = 2.5<br>
+设计一个支持以下两种操作的数据结构：<br>
+void addNum(int num) - 从数据流中添加一个整数到数据结构中。<br>
+double findMedian() - 返回目前所有元素的中位数。</p>
+<p>示例 1：<br>
+输入：[&quot;MedianFinder&quot;,&quot;addNum&quot;,&quot;addNum&quot;,&quot;findMedian&quot;,&quot;addNum&quot;,&quot;findMedian&quot;]<br>
+[[],[1],[2],[],[3],[]]<br>
+输出：[null,null,null,1.50000,null,2.00000]</p>
+<p>示例 2：<br>
+输入：[&quot;MedianFinder&quot;,&quot;addNum&quot;,&quot;findMedian&quot;,&quot;addNum&quot;,&quot;findMedian&quot;]<br>
+[[],[2],[],[3],[]]<br>
+输出：[null,null,2.00000,null,2.50000]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof">力扣：数据流中的中位数</a></p>
+<p>思路：大小顶堆，大顶堆的条件是每个孩子节点的值都小于父节点，小顶堆的条件是每个孩子节点的值都大于父节点<br>
+code：</p>
+<pre><code>class MedianFinder {
+    PriorityQueue&lt;Integer&gt; smallQueue; // 小顶堆
+    PriorityQueue&lt;Integer&gt; bigQueue; // 大顶堆
+    int count;   
+    public MedianFinder() {
+        smallQueue = new PriorityQueue&lt;&gt;();
+        bigQueue = new PriorityQueue&lt;&gt;(new Comparator&lt;Integer&gt;() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        count = 1;
+    }    
+    public void addNum(int num) {
+        if (count % 2 == 0) { // 当前数据流为偶数个时，往大顶堆加数据，然后将堆顶弹出进入到小顶堆
+            bigQueue.add(num);
+            smallQueue.add(bigQueue.poll());
+        } else { // 当前数据流为奇数个时，往小顶堆加数据，然后将堆顶弹出进入到大顶堆
+            smallQueue.add(num);
+            bigQueue.add((smallQueue.poll()));
+        }
+        count++;
+    }    
+    public double findMedian() {
+         // 当前数据流为偶数个，中位数为两个堆堆顶数字的均值
+        if (count % 2 == 0) {
+            return ((double)(bigQueue.peek() + smallQueue.peek())) / 2;
+        } else { //当前数据流为奇数个时，中位数为小顶堆堆顶
+            return (double)(smallQueue.peek());
+        }
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+</feed>

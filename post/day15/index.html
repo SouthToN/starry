@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day15：打印二叉树 &amp; 二叉搜索树的后序遍历序列 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、打印二叉树
+1、从上到下打印二叉树 I
+从上到下打印出二叉树的每个节点，同一层的节点按照从左到右的顺序打印。
+例如:
+给定二叉树: [3,9,20,null,null,15,7],
+
+返回：[3,9,20,15,7]
+来源：力扣：从上到..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day15：打印二叉树 &amp; 二叉搜索树的后序遍历序列</h2>
+            <div class="post-date">2020-02-28</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day15.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-打印二叉树">一、打印二叉树</h3>
+<p>1、从上到下打印二叉树 I<br>
+从上到下打印出二叉树的每个节点，同一层的节点按照从左到右的顺序打印。</p>
+<p>例如:<br>
+给定二叉树: [3,9,20,null,null,15,7],<br>
+<img src="https://southton.github.io/starry/post-images/1583986383337.PNG" alt="" loading="lazy"><br>
+返回：[3,9,20,15,7]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof">力扣：从上到下打印二叉树 I</a></p>
+<p>思路：二叉树的层序遍历，借助一个队列，首先根节点入队列，之后每个节点出队列时，判断其左右孩子是否为空，若不为空则入队列。<br>
+code：</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int[] levelOrder(TreeNode root) {
+        if(root == null) return new int[]{};
+        List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            list.add(cur.val);
+            if(cur.left != null) queue.offer(cur.left);
+            if(cur.right != null) queue.offer(cur.right);
+        }
+        int[] num = new int[list.size()];
+        for(int i=0; i&lt;num.length; i++) {
+        	num[i] = list.get(i);
+        }
+        return num;
+
+    }
+}
+</code></pre>
+<p>2、从上到下打印二叉树 II<br>
+从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。<br>
+例如:<br>
+给定二叉树: [3,9,20,null,null,15,7],<br>
+<img src="https://southton.github.io/starry/post-images/1583986578674.PNG" alt="" loading="lazy"><br>
+返回其层次遍历结果：<br>
+[<br>
+[3],<br>
+[9,20],<br>
+[15,7]<br>
+]<br>
+来源：<a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof">力扣：从上到下打印二叉树 II</a></p>
+<p>思路：层次遍历的基础上判断每一个节点个数<br>
+code：</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root){
+        if (root == null) return new ArrayList&lt;&gt;();
+        List&lt;List&lt;Integer&gt;&gt; num = new ArrayList&lt;&gt;();
+        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            ArrayList&lt;Integer&gt; list= new ArrayList&lt;&gt;();
+            while(size--&gt;0) {
+                TreeNode cur = queue.poll();
+                list.add(cur.val);
+                if (cur.left != null) queue.offer(cur.left);
+                if (cur.right != null) queue.offer(cur.right);
+            }
+            num.add(new ArrayList&lt;Integer&gt;(list));
+        }
+        return num;
+    }    
+}
+</code></pre>
+<p>3、从上到下打印二叉树 III<br>
+请实现一个函数按照之字形顺序打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右到左的顺序打印，第三行再按照从左到右的顺序打印，其他行以此类推。<br>
+例如:<br>
+给定二叉树: [3,9,20,null,null,15,7],<br>
+<img src="https://southton.github.io/starry/post-images/1583986600454.PNG" alt="" loading="lazy"><br>
+返回其层次遍历结果：<br>
+[<br>
+[3],<br>
+[20,9],<br>
+[15,7]<br>
+]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof">力扣：从上到下打印二叉树 III</a></p>
+<p>思路：<br>
+code：</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+        if (root == null) return new ArrayList&lt;&gt;();	
+        List&lt;List&lt;Integer&gt;&gt; num = new ArrayList&lt;&gt;();
+        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+        boolean dri=true; //控制方向
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            ArrayList&lt;Integer&gt; list= new ArrayList&lt;&gt;();
+            while(size-- &gt; 0) {
+                TreeNode cur = queue.poll();
+                list.add(cur.val);
+                if (cur.left != null) queue.offer(cur.left);
+                if (cur.right != null) queue.offer(cur.right);
+            }
+            dri=!dri;
+            if (dri)  Collections.reverse(list);
+            num.add(new ArrayList&lt;Integer&gt;(list));
+        }
+        return num;
+    }
+}
+</code></pre>
+<h3 id="二-二叉搜索树的后序遍历序列">二、 二叉搜索树的后序遍历序列</h3>
+<p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。<br>
+参考以下这颗二叉搜索树：<br>
+<img src="https://southton.github.io/starry/post-images/1583986622548.PNG" alt="" loading="lazy"><br>
+示例 1：<br>
+输入: [1,6,3,2,5]<br>
+输出: false</p>
+<p>示例 2：<br>
+输入: [1,3,2,6,5]<br>
+输出: true</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof">力扣：二叉搜索树的后序遍历序列</a></p>
+<p>思路：二叉搜索树：根节点的所有左子树元素都小于根节点，所有右子树节点都大于跟节点，抓住这个特点，首先找到数组中的分界点，然后继续判断右子树是否符合条件，递归遍历全部节点。<br>
+code：</p>
+<pre><code>class Solution {
+    public boolean verifyPostorder(int[] postorder) {
+        if (postorder == null) return true;
+        return helper(postorder, 0, postorder.length - 1);
+    }
+    private boolean helper(int[] postorder, int start, int end) {
+        if (start &gt; end) return true;
+        int rootVal = postorder[end];//数组的最后一个元素即根节点
+        int cut = start;
+        while (cut &lt; end &amp;&amp; postorder[cut] &lt;= rootVal) cut++;//找分界点，即右子树的第一个节点
+        for (int i = cut; i &lt; end; i++) {
+            if (postorder[i] &lt; rootVal) return false;
+        }
+        return helper(postorder, start, cut - 1) &amp;&amp; helper(postorder, cut, end - 1);
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day14/">
+                  <h3 class="post-title">
+                    Day14： 包含min函数的栈 &amp; 栈的压入、弹出序列
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

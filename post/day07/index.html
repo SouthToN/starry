@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day07： 二进制中1的个数 &amp; 数值的整数次方 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、二进制中1的个数
+请实现一个函数，输入一个整数，输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。因此，如果输入 9，则该函数输出 2。
+示例 1：
+输入：0000000000000000000..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day07： 二进制中1的个数 &amp; 数值的整数次方</h2>
+            <div class="post-date">2020-02-20</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day07.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-二进制中1的个数">一、二进制中1的个数</h3>
+<p>请实现一个函数，输入一个整数，输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。因此，如果输入 9，则该函数输出 2。</p>
+<p>示例 1：<br>
+输入：00000000000000000000000000001011<br>
+输出：3<br>
+解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 '1'。</p>
+<p>示例 2：<br>
+输入：00000000000000000000000010000000<br>
+输出：1<br>
+解释：输入的二进制串 00000000000000000000000010000000 中，共有一位为 '1'。</p>
+<p>示例 3：<br>
+输入：11111111111111111111111111111101<br>
+输出：31<br>
+解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 '1'。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof">力扣：二进制中1的个数</a></p>
+<p>思路1：直接统计手动十进制转二进制过程中1的个数（but: LeetCode提交未通过🙃）<br>
+code1:</p>
+<pre><code>public class Solution {
+    public int hammingWeight(int n) {
+        int count=0;
+        while(n!=0){
+            if(n % 2 == 1){
+                count++;
+                n /= 2;
+            }
+        }
+        return count;
+        
+    }
+}
+</code></pre>
+<p>思路二：位运算<br>
+code2：</p>
+<pre><code>public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        if(n==0) return 0;
+        return hammingWeight(n&amp;(n-1))+1; 
+    }
+}
+</code></pre>
+<h3 id="二-数值的整数次方">二、数值的整数次方</h3>
+<p>实现函数double Power(double base, int exponent)，求base的exponent次方。不得使用库函数，同时不需要考虑大数问题。</p>
+<p>示例 1:<br>
+输入: 2.00000, 10<br>
+输出: 1024.00000</p>
+<p>示例 2:<br>
+输入: 2.10000, 3<br>
+输出: 9.26100</p>
+<p>示例 3:<br>
+输入: 2.00000, -2<br>
+输出: 0.25000<br>
+解释: 2-2 = 1/22 = 1/4 = 0.25</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof">力扣：数值的整数次方</a></p>
+<p>思路1：直接循环（but: x=0.00001 n=2147483647过不了🙃）<br>
+code1:</p>
+<pre><code>class Solution {
+    public double myPow(double x, int n) {
+        if(n==-1) return 1/x;
+        if(n==0) return 1;
+        double result=1;
+        if(n&lt;0){
+            for(int i=1;i&lt;=-n;i++){
+                result*=x;
+            }
+            return 1/result;
+        }else{
+            for(int i=1;i&lt;=n;i++){
+                result*=x;
+            }
+            return result;
+        }
+    }
+}
+</code></pre>
+<p>code2：</p>
+<pre><code>class Solution {
+    public double myPow(double x, int n) {
+        if(n==-1) return 1/x;
+        if(n==0||x==1) return 1;
+        double num=1;
+        long N=n;
+        if(N&lt;0){
+            N=-N;
+            x=1/x;
+        }
+        while(N&gt;0){
+            if(N%2==1) num=num*x;
+            N=N&gt;&gt;1;
+            x=x*x;
+        }
+        return num;
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day06/">
+                  <h3 class="post-title">
+                    Day06：机器人的运动范围 &amp; 剪绳子 |
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

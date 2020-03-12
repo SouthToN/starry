@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day13：对称的二叉树 &amp; 顺时针打印矩阵 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、对称的二叉树
+请实现一个函数，用来判断一棵二叉树是不是对称的。如果一棵二叉树和它的镜像一样，那么它是对称的。
+例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+
+但是下面这个 [1,2,2,null,3,null,3] 则不是镜..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day13：对称的二叉树 &amp; 顺时针打印矩阵</h2>
+            <div class="post-date">2020-02-26</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day13.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-对称的二叉树">一、对称的二叉树</h3>
+<p>请实现一个函数，用来判断一棵二叉树是不是对称的。如果一棵二叉树和它的镜像一样，那么它是对称的。</p>
+<p>例如，二叉树 [1,2,2,3,4,4,3] 是对称的。<br>
+<img src="https://southton.github.io/starry/post-images/1583985973563.PNG" alt="" loading="lazy"><br>
+但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:<br>
+<img src="https://southton.github.io/starry/post-images/1583985979879.PNG" alt="" loading="lazy"><br>
+示例 1：<br>
+输入：root = [1,2,2,3,4,4,3]<br>
+输出：true</p>
+<p>示例 2：<br>
+输入：root = [1,2,2,null,3,null,3]<br>
+输出：false</p>
+<p>来源：<a href="">力扣：对称的二叉树</a></p>
+<p>思路：递归<br>
+code1:</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root==null) return true;
+        return helper(root.left, root.right); 
+    }
+    public boolean helper(TreeNode A,TreeNode B) {
+        f(A==null&amp;&amp;B==null) return true;
+        if(A==null||B==null) return false;
+        if (A.val==B.val) {
+            return helper(A.left,B.right) &amp;&amp; helper(A.right,B.left);
+        }else return false;
+    }
+}
+</code></pre>
+<h3 id="二-顺时针打印矩阵">二、顺时针打印矩阵</h3>
+<p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。</p>
+<p>示例 1：<br>
+输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]<br>
+输出：[1,2,3,6,9,8,7,4,5]</p>
+<p>示例 2：<br>
+输入：matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]<br>
+输出：[1,2,3,4,8,12,11,10,9,5,6,7]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof">力扣：顺时针打印矩阵</a></p>
+<p>思路：从外圈到内圈依次遍历，注意循环条件<br>
+code：</p>
+<pre><code>public int[] spiralOrder(int[][] matrix) {
+		if (matrix.length == 0 || matrix == null) return new int[0];			
+		int[] nums = new int[matrix.length * matrix[0].length];
+		int row = 0, col = 0, index = 0, times = 0;
+		while (index &lt; nums.length) {
+			for (int i = 0 + times; i &lt; matrix[0].length - times; i++) {// 从左到右
+				if (index &lt; nums.length) {
+					nums[index++] = matrix[row][i];
+					col = i;
+				} else {
+					return nums;
+				}
+
+			}
+			for (int i = 1 + times; i &lt; matrix.length - times; i++) {// 从上到下
+				if (index &lt; nums.length) {
+					nums[index++] = matrix[i][col];
+					row = i;
+				} else {
+					return nums;
+				}
+
+			}
+			for (int i = col - 1; i &gt;= times; i--) { // 从右到左
+				if (index &lt; nums.length) {
+					nums[index++] = matrix[row][i];
+					col = i;
+				} else {
+					return nums;
+				}
+
+			}
+			for (int i = row - 1; i &gt; times; i--) {// 从下到上
+				if (index &lt; nums.length) {
+					nums[index++] = matrix[i][col];
+					row = i;
+				} else {
+					return nums;
+				}
+			}
+			times++;
+		}
+		return nums;
+	}
+    ```</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day12/">
+                  <h3 class="post-title">
+                    Day12：树的子结构 &amp; 二叉树的镜像
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

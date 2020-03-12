@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day05：旋转数组的最小数字 &amp; 矩阵中的路径 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、旋转数组的最小数字
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。例如，数组 [3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day05：旋转数组的最小数字 &amp; 矩阵中的路径</h2>
+            <div class="post-date">2020-02-18</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day05.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-旋转数组的最小数字">一、旋转数组的最小数字</h3>
+<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。例如，数组 [3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为1。</p>
+<p>示例 1：<br>
+输入：[3,4,5,1,2]<br>
+输出：1</p>
+<p>示例 2：<br>
+输入：[2,2,2,0,1]<br>
+输出：0</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof">力扣：旋转数组中的最小数字</a></p>
+<p>思路：递增排序的数组，开始元素最小，末尾元素最大，旋转后最小元素则被搬到了最大元素之后,这是最直接的特点，由此入手。<br>
+code1：</p>
+<pre><code>class Solution {
+    public int minArray(int[] numbers) {
+        for(int i=0;i&lt;numbers.length-1;i++)
+        {
+            if(numbers[i]&gt;numbers[i+1])
+                return numbers[i+1];
+        }
+        return numbers[0];
+    }
+}
+</code></pre>
+<h3 id="二-矩阵中的路径">二、矩阵中的路径😐</h3>
+<p>请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一格开始，每一步可以在矩阵中向左、右、上、下移动一格。如果一条路径经过了矩阵的某一格，那么该路径不能再次进入该格子。例如，在下面的3×4的矩阵中包含一条字符串“bfce”的路径（路径中的字母用加粗标出）。<br>
+[[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;e&quot;],<br>
+[&quot;s&quot;,&quot;f&quot;,&quot;c&quot;,&quot;s&quot;],<br>
+[&quot;a&quot;,&quot;d&quot;,&quot;e&quot;,&quot;e&quot;]]<br>
+但矩阵中不包含字符串“abfb”的路径，因为字符串的第一个字符b占据了矩阵中的第一行第二个格子之后，路径不能再次进入这个格子。</p>
+<p>示例 1：<br>
+输入：board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;ABCCED&quot;<br>
+输出：true</p>
+<p>示例 2：<br>
+输入：board = [[&quot;a&quot;,&quot;b&quot;],[&quot;c&quot;,&quot;d&quot;]], word = &quot;abcd&quot;<br>
+输出：false</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/ju-zhen-zhong-de-lu-jing-lcof">力扣：矩阵中的路径</a></p>
+<p>code1：</p>
+<pre><code>class Solution {
+    boolean[][] visit;
+    private int[][] dir= {{-1,0},{0,-1},{0,1},{1,0}};
+    public boolean exist(char[][] board, String word) {
+        int rows = board.length;
+        int cols = board[0].length;
+        visit = new boolean[rows][cols];
+        for (int i = 0; i &lt; rows; i++) {
+        for (int j = 0; j &lt; cols; j++) {
+                if (word.charAt(0) == board[i][j] &amp;&amp; dfs(board, word, i, j, 0)) {
+					return true;
+				}
+			}
+		}
+		return false;
+    }
+    private boolean dfs(char[][] board, String word, int i, int j, int index) {
+		if (index == word.length()) {
+			return true;
+		}
+		if (i &gt;= board.length || i &lt; 0 || j &gt;= board[0].length || j &lt; 0 || visit[i][j] || word.charAt(index) != board[i][j]) return false;
+		visit[i][j] = true;
+		for (int[] d : dir) {
+			if (dfs(board, word, i + d[0], j + d[1], index + 1))  return true;
+		}
+		visit[i][j] = false;
+		return false;
+	}
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day04/">
+                  <h3 class="post-title">
+                    Day04：斐波那契数列 &amp; 青蛙跳台阶问题
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

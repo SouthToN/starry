@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day18: 字符串的排列 &amp; 数组中出现次数超过一半的数字 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、字符串的排列
+输入一个字符串，打印出该字符串中字符的所有排列。
+你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
+示例:
+输入：s = &quot;abc&quot;
+输出：[&quot;abc&quot;,&quot;acb..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day18: 字符串的排列 &amp; 数组中出现次数超过一半的数字</h2>
+            <div class="post-date">2020-03-02</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day18.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-字符串的排列">一、字符串的排列</h3>
+<p>输入一个字符串，打印出该字符串中字符的所有排列。<br>
+你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。</p>
+<p>示例:<br>
+输入：s = &quot;abc&quot;<br>
+输出：[&quot;abc&quot;,&quot;acb&quot;,&quot;bac&quot;,&quot;bca&quot;,&quot;cab&quot;,&quot;cba&quot;]<br>
+限制：1 &lt;= 字符串的长度 &lt;= 8</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof">力扣：字符串的排列</a></p>
+<p>思路：将字符串转换为字符数组进行全排列<br>
+code：</p>
+<pre><code>class Solution { 
+	// 给输入的str字符串中的字符进行全排列
+		public String [] permutation(String s) {
+            if (s == null) return new String[0];
+            List&lt;String&gt; strall = new ArrayList&lt;&gt;();
+            String [] strings=permutation(s.toCharArray(), 0);
+            for(String str:strings){//去重
+				if(!strall.contains(str))	
+					strall.add(str);
+			}
+			return strall.toArray(new String[strall.size()]);            
+        }
+        List&lt;String&gt; strList = new ArrayList&lt;&gt;();
+		private String [] permutation(char[] chars, int pos) {
+			if (pos == chars.length - 1) strList.add(new String(chars));
+			for (int i = pos; i &lt; chars.length; i++) {				
+				char temp = chars[i];
+				chars[i] = chars[pos];
+				chars[pos] = temp;
+				// 递归求后面的字符的排列
+				permutation(chars, pos + 1);
+				// 还原字符位置
+				temp = chars[i];
+				chars[i] = chars[pos];
+				chars[pos] = temp;
+			}
+			return strList.toArray(new String[strList.size()]);
+		}
+}
+</code></pre>
+<h3 id="二-数组中出现次数超过一半的数字">二、数组中出现次数超过一半的数字</h3>
+<p>数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。<br>
+你可以假设数组是非空的，并且给定的数组总是存在多数元素。<br>
+示例:<br>
+输入: [1, 2, 3, 2, 2, 2, 5, 4, 2]<br>
+输出: 2<br>
+限制：1 &lt;= 数组长度 &lt;= 50000</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof">力扣：数组中出现次数超过一半的数字</a></p>
+<p>思路1：直接遍历，时间复杂度O(n^2)较高。<br>
+code1：</p>
+<pre><code>class Solution {
+    public int majorityElement(int[] nums) {
+        int num=0;
+        if (nums.length == 0)  return num;
+        for (int i = 0; i &lt; nums.length; i++) {
+            int count = 1;
+            for (int j = i+1; j &lt; nums.length; j++) {
+                if (nums[i] == nums[j]) count++;
+            }
+            if (count&gt;nums.length/2) num=nums[i];
+        }
+        return num;
+    }
+}
+</code></pre>
+<p>思路2：摩尔投票法，时间复杂度O(N),空间复杂度O(1)<br>
+count作为计数器，如果count为0则num重新赋值，重新计算count,如果有数字出现次数超过数组长度一半，那么count便不会减到0。<br>
+code2：</p>
+<pre><code>class Solution {
+    public int majorityElement(int[] nums) {
+        int count =0;
+        int num=0;
+        for (int item : nums) {
+            if (count==0) {
+                num=item;
+            }
+            if (num==item) {
+                count+=1;
+            } else {
+                count+=-1;
+            }
+        }
+        return num;
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day17/">
+                  <h3 class="post-title">
+                    Day17：二叉搜索树与双向链表 &amp; 序列化二叉树
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

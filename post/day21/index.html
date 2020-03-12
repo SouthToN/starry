@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day21：数字序列中某一位的数字 &amp; 把数组排成最小的数 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、数字序列中某一位的数字
+数字以0123456789101112131415…的格式序列化到一个字符序列中。在这个序列中，第5位（从下标0开始计数）是5，第13位是1，第19位是4，等等。
+请写一个函数，求任意第n位对应的数字。
+示例 1..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day21：数字序列中某一位的数字 &amp; 把数组排成最小的数</h2>
+            <div class="post-date">2020-03-05</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day21.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-数字序列中某一位的数字">一、数字序列中某一位的数字</h3>
+<p>数字以0123456789101112131415…的格式序列化到一个字符序列中。在这个序列中，第5位（从下标0开始计数）是5，第13位是1，第19位是4，等等。<br>
+请写一个函数，求任意第n位对应的数字。</p>
+<p>示例 1：<br>
+输入：n = 3<br>
+输出：3</p>
+<p>示例 2：<br>
+输入：n = 11<br>
+输出：0<br>
+限制：</p>
+<ul>
+<li>0 &lt;= n &lt; 2^31</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/shu-zi-xu-lie-zhong-mou-yi-wei-de-shu-zi-lcof">力扣：数字序列中某一位的数字</a></p>
+<p>思路：找规律，首先根据n先找到数字序列中对应的数字，其次判断是真实数字的哪一位数。n &lt; 2^31可以列出区间范围。</p>
+<pre><code>数字序列                            总位数
+1 --- 9                              9
+10 --- 99                           90*2
+100 --- 999                         900*3
+    .                                 .                         
+    .                                 .
+</code></pre>
+<p>code:</p>
+<pre><code>class Solution {
+    public int findNthDigit(int n) {
+        int[] index = { 0, 10, 190, 2890, 38890, 488890, 5888890, 68888890, 788888890 };
+        int[] values = { 0, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000 };
+        int idx = 8;
+        while (idx &gt;= 0 &amp;&amp; index[idx] &gt; n) {
+            idx--;
+        }
+        int numLength = idx + 1;
+        int number = (n - index[idx]) / numLength + values[idx];//数字序列中的数
+        int pos = (n - index[idx]) % numLength;
+        return Integer.toString(number).charAt(pos) - '0';
+    }
+}
+</code></pre>
+<h3 id="二-把数组排成最小的数">二、把数组排成最小的数</h3>
+<p>输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。</p>
+<p>示例 1:<br>
+输入: [10,2]<br>
+输出: &quot;102&quot;</p>
+<p>示例 2:<br>
+输入: [3,30,34,5,9]<br>
+输出: &quot;3033459&quot;</p>
+<p>提示:<code>0 &lt; nums.length &lt;= 100</code><br>
+说明:</p>
+<ul>
+<li>输出结果可能非常大，所以你需要返回一个字符串而不是整数</li>
+<li>拼接起来的数字可能会有前导 0，最后结果不需要去掉前导 0</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof">力扣：把数组排成最小的数</a></p>
+<p>思路：排序<br>
+code：</p>
+<pre><code>class Solution {
+    public String minNumber(int[] nums) {
+        int len = nums.length;
+        if(len == 0) return &quot;&quot;;
+        String [] str = new String [len];
+        for(int i = 0; i &lt; len; i++) str[i] = String.valueOf(nums[i]);
+        Arrays.sort(str, new Comparator&lt;String&gt;(){
+            public int compare(String s1, String s2){
+                return (s1 + s2).compareTo(s2 + s1);
+            }
+        });
+        StringBuffer stringBuffer = new StringBuffer();
+        for(String s: str) stringBuffer.append(s);
+        return stringBuffer.toString();
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day20/">
+                  <h3 class="post-title">
+                    Day20：连续子数组的最大和 &amp; 1～n整数中1出现的次数
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

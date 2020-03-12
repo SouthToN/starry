@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Day14： 包含min函数的栈 &amp; 栈的压入、弹出序列 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583995869026">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、包含min函数的栈
+定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，调用 min、push 及 pop 的时间复杂度都是 O(1)。
+示例:
+MinStack minStack = new MinSt..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583995869026" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day14： 包含min函数的栈 &amp; 栈的压入、弹出序列</h2>
+            <div class="post-date">2020-02-27</div>
+            
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day14.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-包含min函数的栈">一、包含min函数的栈</h3>
+<p>定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，调用 min、push 及 pop 的时间复杂度都是 O(1)。</p>
+<p>示例:<br>
+MinStack minStack = new MinStack();<br>
+minStack.push(-2);<br>
+minStack.push(0);<br>
+minStack.push(-3);<br>
+minStack.min(); --&gt; 返回 -3.<br>
+minStack.pop();<br>
+minStack.top(); --&gt; 返回 0.<br>
+minStack.min(); --&gt; 返回 -2.</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof">力扣：包含min函数的栈</a></p>
+<p>思路：维护一个辅助栈<br>
+code1：</p>
+<pre><code>public class MinStack {
+	private Stack&lt;Integer&gt; stack = null; // MinStack栈
+	private Stack&lt;Integer&gt; min = null; // 辅助栈
+	public MinStack() {
+        stack=new Stack&lt;&gt;();
+		min=new Stack&lt;&gt;();
+    }
+	// 压栈
+	public void push(int x) {
+		stack.push(x);
+		if (min.isEmpty()) {
+			min.push(x);
+		} else {
+			int temp = min.peek();
+			// 如果x是最小值，则将x放在栈顶
+			if (x &lt;= temp) temp = x;
+			min.push(temp);
+		}
+	}
+	// 弹栈
+	public void pop() {
+		stack.pop();
+		min.pop();//入栈时重复入过最小值故可以直接弹
+	}
+	// 取出栈顶元素
+	public int top() {
+		return stack.peek();
+	}
+	public int min() {
+		return min.peek();
+	}
+}
+</code></pre>
+<h3 id="二-栈的压入-弹出序列">二、栈的压入、弹出序列</h3>
+<p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如，序列 {1,2,3,4,5} 是某栈的压栈序列，序列 {4,5,3,2,1} 是该压栈序列对应的一个弹出序列，但 {4,3,5,1,2} 就不可能是该压栈序列的弹出序列。</p>
+<p>示例 1：<br>
+输入：pushed = [1,2,3,4,5], popped = [4,5,3,2,1]<br>
+输出：true<br>
+解释：我们可以按以下顺序执行：<br>
+push(1), push(2), push(3), push(4), pop() -&gt; 4,<br>
+push(5), pop() -&gt; 5, pop() -&gt; 3, pop() -&gt; 2, pop() -&gt; 1</p>
+<p>示例 2：<br>
+输入：pushed = [1,2,3,4,5], popped = [4,3,5,1,2]<br>
+输出：false<br>
+解释：1 不能在 2 之前弹出。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof">力扣：栈的压入、弹出序列</a></p>
+<p>思路：借助一个辅助栈，将入栈序列逐个压入辅助栈，判断辅助栈的栈顶元素是否等于出栈序列的弹出数字，是则直接弹出，若不是，则把压栈序列中还没有入栈的数字压入辅助栈。辅助栈每弹栈一次，index自增一，入栈序列全部压入辅助栈后，index等于出栈序列元素个数，则返回true。<br>
+code1：</p>
+<pre><code>class Solution {
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+		int index = 0;
+		for (int i = 0; i &lt; popped.length; i++) {
+			stack.push(pushed[i]);
+            //判断辅助栈的栈顶元素等于弹出序列的第index元素
+			while (!stack.isEmpty() &amp;&amp; popped[index] == stack.peek()) {
+				stack.pop();
+				index++;
+			}
+		}
+		return index == popped.length;
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day13/">
+                  <h3 class="post-title">
+                    Day13：对称的二叉树 &amp; 顺时针打印矩阵
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'b3d2a78babde4a38e9b2',
+        clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+        repo: 'starry',
+        owner: 'southton',
+        admin: ['southton'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
