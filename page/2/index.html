@@ -1,327 +1,317 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Starry</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583998081896">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583998460248">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-
-
-    <meta name="description" content="突破天际的脑洞、无穷无尽的乐观，温柔相待的善良">
-    
+    <meta name="description" content="突破天际的脑洞、无穷无尽的乐观，温柔相待的善良" />
   </head>
   <body>
-    <div id="app" class="main">
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://southton.github.io/starry">
+  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1583998460248" alt="">
+  </a>
+  <h1 class="site-title">
+    Starry
+  </h1>
+  <p class="site-description">
+    突破天际的脑洞、无穷无尽的乐观，温柔相待的善良
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://southton.github.io/starry" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="https://southton.github.io/starry/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://southton.github.io/starry/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://southton.github.io/starry/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
 
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://southton.github.io/starry">
-        <img src="https://southton.github.io/starry/images/avatar.png?v=1583998081896" class="site-logo">
-        <h1 class="site-title">Starry</h1>
+    
+        <div class="post-container">
+  
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day18/">
+        <h2 class="post-title">Day18: 字符串的排列 &amp; 数组中出现次数超过一半的数字</h2>
       </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
+      <div class="post-info">
+        <span>
+          2020-03-02
+        </span>
+        <span>
+          3 min read
+        </span>
+        
       </div>
-    </div>
-    <div>
       
-        
-          <a href="https://southton.github.io/starry" class="site-nav">
-            首页
-          </a>
-        
+        <a href="https://southton.github.io/starry/post/day18/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day18.jpg')">
+        </a>
       
+      <div class="post-abstract">
         
-          <a href="https://southton.github.io/starry/archives" class="site-nav">
-            归档
-          </a>
-        
-      
-        
-          <a href="https://southton.github.io/starry/tags" class="site-nav">
-            标签
-          </a>
-        
-      
-        
-          <a href="https://southton.github.io/starry/post/about" class="site-nav">
-            关于
-          </a>
-        
-      
-    </div>
-  </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      突破天际的脑洞、无穷无尽的乐观，温柔相待的善良
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-</div>
-
-
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day18/">
-                  <h2 class="post-title">Day18: 字符串的排列 &amp; 数组中出现次数超过一半的数字</h2>
-                </a>
-                <div class="post-date">
-                  2020-03-02
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day18/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day18.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day17/">
-                  <h2 class="post-title">Day17：二叉搜索树与双向链表 &amp; 序列化二叉树</h2>
-                </a>
-                <div class="post-date">
-                  2020-03-01
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day17/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day17.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day16/">
-                  <h2 class="post-title">Day16：二叉树中和为某一值的路径 &amp; 复杂链表的复制</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-29
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day16/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day16.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day15/">
-                  <h2 class="post-title">Day15：打印二叉树 &amp; 二叉搜索树的后序遍历序列</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-28
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day15/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day15.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day14/">
-                  <h2 class="post-title">Day14： 包含min函数的栈 &amp; 栈的压入、弹出序列</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-27
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day14/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day14.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day13/">
-                  <h2 class="post-title">Day13：对称的二叉树 &amp; 顺时针打印矩阵</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-26
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day13/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day13.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day12/">
-                  <h2 class="post-title">Day12：树的子结构 &amp; 二叉树的镜像</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-25
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day12/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day12.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day11/">
-                  <h2 class="post-title">Day11：反转链表 &amp; 合并两个排序的链表</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-24
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day11/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day11.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day10/">
-                  <h2 class="post-title">Day10：调整数组顺序使奇数位于偶数前面 &amp; 链表中倒数第k个节点 </h2>
-                </a>
-                <div class="post-date">
-                  2020-02-23
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day10/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day10.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://southton.github.io/starry/post/day09/">
-                  <h2 class="post-title">Day09：正则表达式匹配 &amp; 表示数值的字符串</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-22
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://southton.github.io/starry/post/day09/">
-                  <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day09.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-
-          <div class="pagination-container">
+      </div>
+    </article>
   
-    <a href="https://southton.github.io/starry/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day17/">
+        <h2 class="post-title">Day17：二叉搜索树与双向链表 &amp; 序列化二叉树</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-03-01
+        </span>
+        <span>
+          4 min read
+        </span>
+        
+      </div>
+      
+        <a href="https://southton.github.io/starry/post/day17/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day17.jpg')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
   
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day16/">
+        <h2 class="post-title">Day16：二叉树中和为某一值的路径 &amp; 复杂链表的复制</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-02-29
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+      </div>
+      
+        <a href="https://southton.github.io/starry/post/day16/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day16.jpg')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
   
-    <a href="https://southton.github.io/starry/page/3/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day15/">
+        <h2 class="post-title">Day15：打印二叉树 &amp; 二叉搜索树的后序遍历序列</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-02-28
+        </span>
+        <span>
+          5 min read
+        </span>
+        
+      </div>
+      
+        <a href="https://southton.github.io/starry/post/day15/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day15.jpg')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day14/">
+        <h2 class="post-title">Day14： 包含min函数的栈 &amp; 栈的压入、弹出序列</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-02-27
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+      </div>
+      
+        <a href="https://southton.github.io/starry/post/day14/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day14.jpg')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day13/">
+        <h2 class="post-title">Day13：对称的二叉树 &amp; 顺时针打印矩阵</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-02-26
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+      </div>
+      
+        <a href="https://southton.github.io/starry/post/day13/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day13.jpg')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day12/">
+        <h2 class="post-title">Day12：树的子结构 &amp; 二叉树的镜像</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-02-25
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+      </div>
+      
+        <a href="https://southton.github.io/starry/post/day12/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day12.jpg')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day11/">
+        <h2 class="post-title">Day11：反转链表 &amp; 合并两个排序的链表</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-02-24
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+      </div>
+      
+        <a href="https://southton.github.io/starry/post/day11/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day11.jpg')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day10/">
+        <h2 class="post-title">Day10：调整数组顺序使奇数位于偶数前面 &amp; 链表中倒数第k个节点 </h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-02-23
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+      </div>
+      
+        <a href="https://southton.github.io/starry/post/day10/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day10.jpg')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
+  
+    <article class="post">
+      <a href="https://southton.github.io/starry/post/day09/">
+        <h2 class="post-title">Day09：正则表达式匹配 &amp; 表示数值的字符串</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2020-02-22
+        </span>
+        <span>
+          4 min read
+        </span>
+        
+      </div>
+      
+        <a href="https://southton.github.io/starry/post/day09/" class="post-feature-image" style="background-image: url('https://southton.github.io/starry/post-images/day09.jpg')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </div>
+    </article>
   
 </div>
 
-        </div>
+    
+        <div class="pagination-container">
+  
+    <a href="https://southton.github.io/starry/" class="prev-page">上一页</a>
+  
+  
+    <a href="https://southton.github.io/starry/page/3/" class="next-page">下一页</a>
+  
+</div>
+
+    
+        <div class="site-footer">
+  Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a>
+  <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
       </div>
     </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script type="application/javascript">
-
-AOS.init();
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
-
-</script>
-
-
-
-
-
-
   </body>
 </html>
