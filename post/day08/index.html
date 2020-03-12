@@ -1,19 +1,14 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
+    <meta charset="utf-8" >
 
 <title>Day08： 打印从1到最大的n位数 &amp; 删除链表的节点 | Starry</title>
-<meta name="description" content="突破天际的脑洞、无穷无尽的乐观，温柔相待的善良">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583997407255">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583998081896">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
 
 
@@ -24,78 +19,96 @@
   
 
 
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
 
+    <meta name="description" content="一、打印从1到最大的n位数
+输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
+示例 1:
+输入: n = 1
+输出: [1,2,3,4,5,6,7,8,9]
+来..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://southton.github.io/starry">
-        <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1583997407255" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://southton.github.io/starry">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://southton.github.io/starry">
+        <img src="https://southton.github.io/starry/images/avatar.png?v=1583998081896" class="site-logo">
         <h1 class="site-title">Starry</h1>
       </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
     </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
-  </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
+    <div>
       
         
-          <a href="https://southton.github.io/starry" class="menu purple-link">
+          <a href="https://southton.github.io/starry" class="site-nav">
             首页
           </a>
         
       
         
-          <a href="https://southton.github.io/starry/archives" class="menu purple-link">
+          <a href="https://southton.github.io/starry/archives" class="site-nav">
             归档
           </a>
         
       
         
-          <a href="https://southton.github.io/starry/tags" class="menu purple-link">
+          <a href="https://southton.github.io/starry/tags" class="site-nav">
             标签
           </a>
         
       
         
-          <a href="https://southton.github.io/starry/post/about" class="menu purple-link">
+          <a href="https://southton.github.io/starry/post/about" class="site-nav">
             关于
           </a>
         
       
     </div>
   </div>
-</transition>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      突破天际的脑洞、无穷无尽的乐观，温柔相待的善良
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
 
 
-      <div class="content-container">
-        <div class="post-detail">
-          
-            <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day08.jpg')">
-            </div>
-          
-          <h2 class="post-title">Day08： 打印从1到最大的n位数 &amp; 删除链表的节点</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-02-21</span>
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Day08： 打印从1到最大的n位数 &amp; 删除链表的节点</h2>
+            <div class="post-date">2020-02-21</div>
             
-          </div>
-          <div class="post-content">
-            <h3 id="一-打印从1到最大的n位数">一、打印从1到最大的n位数</h3>
+              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day08.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="一-打印从1到最大的n位数">一、打印从1到最大的n位数</h3>
 <p>输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。</p>
 <p>示例 1:<br>
 输入: n = 1<br>
@@ -172,51 +185,37 @@ class Solution {
 }
 </code></pre>
 
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://southton.github.io/starry/post/day07/">
+                  <h3 class="post-title">
+                    Day07： 二进制中1的个数 &amp; 数值的整数次方
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
           </div>
+
         </div>
-
-        
-          <div class="next-post">
-            <a class="purple-link" href="https://southton.github.io/starry/post/day07/">
-              <h3 class="post-title">
-                下一篇：Day07： 二进制中1的个数 &amp; 数值的整数次方
-              </h3>
-            </a>
-          </div>
-          
       </div>
-
-      
-        
-          <div id="gitalk-container"></div>
-        
-
-        
-      
-
-      <div class="site-footer">
-  <div class="slogan">突破天际的脑洞、无穷无尽的乐观，温柔相待的善良</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-  Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
-</div>
-
-
     </div>
-    <script type="application/javascript">
 
-hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
 
 var app = new Vue({
   el: '#app',
@@ -226,6 +225,8 @@ var app = new Vue({
 })
 
 </script>
+
+
 
 
 
