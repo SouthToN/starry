@@ -1,14 +1,19 @@
+
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
+    
+<meta charset="utf-8" >
 
 <title>Day16：二叉树中和为某一值的路径 &amp; 复杂链表的复制 | Starry</title>
+<meta name="description" content="突破天际的脑洞、无穷无尽的乐观，温柔相待的善良">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583997130765">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1583997407255">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
 
 
@@ -19,98 +24,78 @@
   
 
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
 
-    <meta name="description" content="一、二叉树中和为某一值的路径
-输入一棵二叉树和一个整数，打印出二叉树中节点值的和为输入整数的所有路径。从树的根节点开始往下一直到叶节点所经过的节点形成一条路径。
-示例:
-给定如下二叉树，以及目标和 sum = 22，
-
-返回:
-[
-[5,4..." />
-    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://southton.github.io/starry">
-        <img src="https://southton.github.io/starry/images/avatar.png?v=1583997130765" class="site-logo">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://southton.github.io/starry">
+        <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1583997407255" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://southton.github.io/starry">
         <h1 class="site-title">Starry</h1>
       </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
     </div>
-    <div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
       
         
-          <a href="https://southton.github.io/starry" class="site-nav">
+          <a href="https://southton.github.io/starry" class="menu purple-link">
             首页
           </a>
         
       
         
-          <a href="https://southton.github.io/starry/archives" class="site-nav">
+          <a href="https://southton.github.io/starry/archives" class="menu purple-link">
             归档
           </a>
         
       
         
-          <a href="https://southton.github.io/starry/tags" class="site-nav">
+          <a href="https://southton.github.io/starry/tags" class="menu purple-link">
             标签
           </a>
         
       
         
-          <a href="https://southton.github.io/starry/post/about" class="site-nav">
+          <a href="https://southton.github.io/starry/post/about" class="menu purple-link">
             关于
           </a>
         
       
     </div>
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      突破天际的脑洞、无穷无尽的乐观，温柔相待的善良
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-</div>
+</transition>
 
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">Day16：二叉树中和为某一值的路径 &amp; 复杂链表的复制</h2>
-            <div class="post-date">2020-02-29</div>
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day16.jpg')">
+            </div>
+          
+          <h2 class="post-title">Day16：二叉树中和为某一值的路径 &amp; 复杂链表的复制</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-02-29</span>
             
-              <div class="feature-container" style="background-image: url('https://southton.github.io/starry/post-images/day16.jpg')">
-              </div>
-            
-            <div class="post-content" v-pre>
-              <h3 id="一-二叉树中和为某一值的路径">一、二叉树中和为某一值的路径</h3>
+          </div>
+          <div class="post-content">
+            <h3 id="一-二叉树中和为某一值的路径">一、二叉树中和为某一值的路径</h3>
 <p>输入一棵二叉树和一个整数，打印出二叉树中节点值的和为输入整数的所有路径。从树的根节点开始往下一直到叶节点所经过的节点形成一条路径。</p>
 <p>示例:<br>
 给定如下二叉树，以及目标和 sum = 22，<br>
@@ -207,37 +192,51 @@ class Solution {
 }
 </code></pre>
 
-            </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://southton.github.io/starry/post/day15/">
-                  <h3 class="post-title">
-                    Day15：打印二叉树 &amp; 二叉搜索树的后序遍历序列
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-              
-                <div id="gitalk-container" data-aos="fade-in"></div>
-              
-
-              
-            
-
           </div>
-
         </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://southton.github.io/starry/post/day15/">
+              <h3 class="post-title">
+                下一篇：Day15：打印二叉树 &amp; 二叉搜索树的后序遍历序列
+              </h3>
+            </a>
+          </div>
+          
       </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">突破天际的脑洞、无穷无尽的乐观，温柔相待的善良</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank">Starry</a> | <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">RSS</a>
+</div>
+
+
     </div>
+    <script type="application/javascript">
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script type="application/javascript">
-
-AOS.init();
+hljs.initHighlightingOnLoad()
 
 var app = new Vue({
   el: '#app',
@@ -247,8 +246,6 @@ var app = new Vue({
 })
 
 </script>
-
-
 
 
 
