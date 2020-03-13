@@ -2,13 +2,91 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-03-13T06:43:03.499Z</updated>
+    <updated>2020-03-13T12:40:57.590Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[Day29：n个骰子的点数 & 扑克牌中的顺子]]></title>
+        <id>https://southton.github.io/starry/post/day29/</id>
+        <link href="https://southton.github.io/starry/post/day29/">
+        </link>
+        <updated>2020-03-13T07:49:02.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-n个骰子的点数">一、n个骰子的点数</h3>
+<p>把n个骰子扔在地上，所有骰子朝上一面的点数之和为s。输入n，打印出s的所有可能的值出现的概率。<br>
+你需要用一个浮点数数组返回答案，其中第 i 个元素代表这 n 个骰子所能掷出的点数集合中第 i 小的那个的概率。</p>
+<p>示例 1:<br>
+输入: 1<br>
+输出: [0.16667,0.16667,0.16667,0.16667,0.16667,0.16667]</p>
+<p>示例 2:<br>
+输入: 2<br>
+输出: [0.02778,0.05556,0.08333,0.11111,0.13889,0.16667,0.13889,0.11111,0.08333,0.05556,0.02778]<br>
+限制：1 &lt;= n &lt;= 11</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof">力扣：n个骰子的点数</a></p>
+<p>思路：动态规划<br>
+F(n,s)=F(n-1,s-1)+F(n-1,s-2)+F(n-1,s-3)+F(n-1,s-4)+F(n-1,s-5)+F(n-1,s-6)<br>
+code:</p>
+<pre><code>class Solution {
+    public double[] twoSum(int n) {
+        if (n &lt; 1)   return new double[0];
+        double[] dp = new double[6*n + 1];
+        double[] pr = new double[5*n + 1];//可能的点数和
+        double sum=Math.pow(6, n);        
+        for (int i = 1; i &lt;= 6; i++) {
+            dp[i]=1;
+            pr[i-1]=1.0/6;            
+        }
+        for (int i = 2; i &lt;= n; i++) {  //控制骰子个数
+            for (int j = n*6; j &gt;=1; j--) {
+                int temp=0;
+                for (int k = 1; k &lt;= 6; k++) {
+                    temp+=j&gt;=k?dp[j-k]:0;
+                }
+                dp[j]=temp;
+                if (i==n&amp;&amp;j&gt;=n) pr[j-i]=dp[j]/sum;                
+            }
+        }
+        return pr;
+    }
+}
+</code></pre>
+<h3 id="二-扑克牌中的顺子">二、 扑克牌中的顺子</h3>
+<p>从扑克牌中随机抽5张牌，判断是不是一个顺子，即这5张牌是不是连续的。2～10为数字本身，A为1，J为11，Q为12，K为13，而大、小王为 0 ，可以看成任意数字。A 不能视为 14。</p>
+<p>示例 1:<br>
+输入: [1,2,3,4,5]<br>
+输出: True</p>
+<p>示例 2:<br>
+输入: [0,0,1,2,5]<br>
+输出: True</p>
+<p>限制：数组长度为 5 &amp; 数组的数取值为 [0, 13] .</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/bu-ke-pai-zhong-de-shun-zi-lcof">力扣：扑克牌中的顺子</a></p>
+<p>思路：排序，统计数组中0的个数，数组中若有两个数相等则不能构成顺子，数组中不连续的两个数之间缺的数字个数必须小于等于数组中0的个数<br>
+code：</p>
+<pre><code>class Solution {
+    public boolean isStraight(int[] nums) {
+        if(nums.length&lt;5) return false;
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (nums[i] &lt; 0 || nums[i] &gt; 13) return false;               
+        }
+        int zero = 0;
+        Arrays.sort(nums);
+        for (int i = 0; i &lt; nums.length - 1; i++) {
+            if (nums[i] == 0) {
+                zero++;
+                continue;
+            }
+            if (nums[i] == nums[i + 1]) return false;                
+            if (nums[i] != nums[i + 1] + 1) zero -= nums[i + 1] - nums[i] - 1;                
+        }
+        return zero &gt;= 0;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Day28：翻转单词顺序和左旋转字符串 & 滑动窗口的最大值和队列的最大值 ]]></title>
         <id>https://southton.github.io/starry/post/day28/</id>
@@ -1065,171 +1143,6 @@ code：</p>
         base*=10;
     }
     return count;
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Day19：最小的k个数 & 数据流中的中位数]]></title>
-        <id>https://southton.github.io/starry/post/day19/</id>
-        <link href="https://southton.github.io/starry/post/day19/">
-        </link>
-        <updated>2020-03-03T07:10:53.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-最小的k个数">一、最小的k个数</h3>
-<p>输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。</p>
-<p>示例 1：<br>
-输入：arr = [3,2,1], k = 2<br>
-输出：[1,2] 或者 [2,1]</p>
-<p>示例 2：<br>
-输入：arr = [0,1,2,1], k = 1<br>
-输出：[0]</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof">力扣：最小的k个数</a></p>
-<p>思路1：排序<br>
-code1：</p>
-<pre><code>// 冒泡排序，时间复杂度O(n^2)
-public int[] getLeastNumbers(int[] arr, int k) {
-    if (arr.length == 0) return new int[0];
-    if (k &gt; arr.length) k = arr.length;
-    for (int i = 0; i &lt; arr.length; i++) {
-        for (int j = 0; j &lt; arr.length; j++) {
-            if (arr[i] &lt; arr[j]) {
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-    }
-    int[] mins = new int[k];
-    for (int i = 0; i &lt; mins.length; i++) {
-        mins[i] = arr[i];
-        }
-    return mins;
-}
-</code></pre>
-<pre><code>// 插入排序，时间复杂度O(n^2)
-public int[] getLeastNumbers2(int[] arr, int k) {
-    if (arr.length == 0) return new int[0];
-    if (k &gt; arr.length) k = arr.length;
-    for (int i = 0; i &lt; arr.length; i++) {
-        int temp = arr[i];
-        int j = i - 1;
-        while (j &gt;= 0 &amp;&amp; arr[j] &gt; temp) {
-            arr[j + 1] = arr[j];
-            j--;
-        }
-        arr[j + 1] = temp;
-    }
-    int[] mins = new int[k];
-    for (int i = 0; i &lt; mins.length; i++) {
-        mins[i] = arr[i];
-    }
-    return mins;
-}
-</code></pre>
-<pre><code>//选择排序 时间复杂度O(n^2)
-public int[] getLeastNumbers3(int[] arr, int k) {
-    if (arr.length == 0) return new int[0];
-    if (k &gt; arr.length) k = arr.length;
-    for (int i = 0; i &lt; arr.length; i++) {
-        int minIndex = i;
-        for (int j = i; j &lt; arr.length; j++) {
-            if (arr[j] &lt; arr[minIndex]) minIndex = j;
-        }
-        int temp = arr[minIndex];
-        arr[minIndex] = arr[i];
-        arr[i] = temp;
-    }
-    int[] mins = new int[k];
-    for (int i = 0; i &lt; mins.length; i++) {
-        mins[i] = arr[i];
-    }
-    return mins;
-}
-</code></pre>
-<pre><code>class Solution {
-    public int[] getLeastNumbers(int[] arr, int k) {
-        if (arr.length == 0) return new int[0];
-        if (k &gt; arr.length) k = arr.length;
-        int start = 0, end = arr.length-1;
-        int[] arrs=quick_sort(arr, start, end);
-        int[] mins =new int[k];
-        for (int i = 0; i &lt; mins.length; i++) {
-            mins[i] =arrs[i];
-        }
-        return mins;
-    }
-</code></pre>
-<pre><code>	// 快速排序  时间复杂度O(nlogn)
-    int[] quick_sort(int arr[], int start, int end) {
-        if (start &lt; end) {
-            int i = start, j = end, x = arr[start];
-            while (i &lt; j) {
-                // 从后往前找第一个小于x的数
-                while (i &lt; j &amp;&amp; arr[j] &gt;= x) j--;
-                if (i &lt; j) arr[i++] = arr[j];
-                // 从前往后找第一个大于等于x的数
-                while (i &lt; j &amp;&amp; arr[i] &lt; x)  i++;
-                if (i &lt; j) arr[j--] = arr[i];
-            }
-            arr[i] = x;
-            quick_sort(arr, start, i - 1); // 递归
-            quick_sort(arr, i + 1, end);
-        }
-        return arr;
-    }
-}
-</code></pre>
-<h3 id="二-数据流中的中位数">二、数据流中的中位数</h3>
-<p>何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。<br>
-例如，<br>
-[2,3,4] 的中位数是 3<br>
-[2,3] 的中位数是 (2 + 3) / 2 = 2.5<br>
-设计一个支持以下两种操作的数据结构：<br>
-void addNum(int num) - 从数据流中添加一个整数到数据结构中。<br>
-double findMedian() - 返回目前所有元素的中位数。</p>
-<p>示例 1：<br>
-输入：[&quot;MedianFinder&quot;,&quot;addNum&quot;,&quot;addNum&quot;,&quot;findMedian&quot;,&quot;addNum&quot;,&quot;findMedian&quot;]<br>
-[[],[1],[2],[],[3],[]]<br>
-输出：[null,null,null,1.50000,null,2.00000]</p>
-<p>示例 2：<br>
-输入：[&quot;MedianFinder&quot;,&quot;addNum&quot;,&quot;findMedian&quot;,&quot;addNum&quot;,&quot;findMedian&quot;]<br>
-[[],[2],[],[3],[]]<br>
-输出：[null,null,2.00000,null,2.50000]</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof">力扣：数据流中的中位数</a></p>
-<p>思路：大小顶堆，大顶堆的条件是每个孩子节点的值都小于父节点，小顶堆的条件是每个孩子节点的值都大于父节点<br>
-code：</p>
-<pre><code>class MedianFinder {
-    PriorityQueue&lt;Integer&gt; smallQueue; // 小顶堆
-    PriorityQueue&lt;Integer&gt; bigQueue; // 大顶堆
-    int count;   
-    public MedianFinder() {
-        smallQueue = new PriorityQueue&lt;&gt;();
-        bigQueue = new PriorityQueue&lt;&gt;(new Comparator&lt;Integer&gt;() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2 - o1;
-            }
-        });
-        count = 1;
-    }    
-    public void addNum(int num) {
-        if (count % 2 == 0) { // 当前数据流为偶数个时，往大顶堆加数据，然后将堆顶弹出进入到小顶堆
-            bigQueue.add(num);
-            smallQueue.add(bigQueue.poll());
-        } else { // 当前数据流为奇数个时，往小顶堆加数据，然后将堆顶弹出进入到大顶堆
-            smallQueue.add(num);
-            bigQueue.add((smallQueue.poll()));
-        }
-        count++;
-    }    
-    public double findMedian() {
-         // 当前数据流为偶数个，中位数为两个堆堆顶数字的均值
-        if (count % 2 == 0) {
-            return ((double)(bigQueue.peek() + smallQueue.peek())) / 2;
-        } else { //当前数据流为奇数个时，中位数为小顶堆堆顶
-            return (double)(smallQueue.peek());
-        }
     }
 }
 </code></pre>
