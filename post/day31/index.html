@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Day31：求1+2+…+n &amp; 不用加减乘除做加法 | Starry</title>
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1584269518330">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1584279842461">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Day31：求1+2+…+n &amp; 不用加减乘除做加法 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
@@ -27,7 +27,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://southton.github.io/starry">
-  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1584269518330" alt="">
+  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1584279842461" alt="">
   </a>
   <h1 class="site-title">
     Starry
@@ -87,7 +87,7 @@
                 2020-03-15
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
@@ -131,9 +131,18 @@ code：</p>
 <li>结果不会溢出 32 位整数</li>
 </ul>
 <p>来源：<a href="https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof">力扣：不用加减乘除做加法</a></p>
-<p>思路：<br>
+<p>思路：位运算<br>
 code：</p>
-<pre><code>
+<pre><code>class Solution {
+    public int add(int a, int b) {
+        while(b != 0){
+            int temp = a ^ b; //位与运算
+            b = (a &amp; b) &lt;&lt; 1; //进位
+            a = temp;
+        }
+        return a;
+    }
+}
 </code></pre>
 
               </div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-03-15T10:52:07.676Z</updated>
+    <updated>2020-03-15T13:44:06.110Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
@@ -50,9 +50,18 @@ code：</p>
 <li>结果不会溢出 32 位整数</li>
 </ul>
 <p>来源：<a href="https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof">力扣：不用加减乘除做加法</a></p>
-<p>思路：<br>
+<p>思路：位运算<br>
 code：</p>
-<pre><code>
+<pre><code>class Solution {
+    public int add(int a, int b) {
+        while(b != 0){
+            int temp = a ^ b; //位与运算
+            b = (a &amp; b) &lt;&lt; 1; //进位
+            a = temp;
+        }
+        return a;
+    }
+}
 </code></pre>
 ]]></content>
     </entry>
