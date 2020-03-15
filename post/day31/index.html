@@ -2,21 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Day08： 打印从1到最大的n位数 &amp; 删除链表的节点 | Starry</title>
+<title>Day31：求1+2+…+n &amp; 不用加减乘除做加法 | Starry</title>
 <link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1584269518330">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Day08： 打印从1到最大的n位数 &amp; 删除链表的节点 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Day31：求1+2+…+n &amp; 不用加减乘除做加法 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="一、打印从1到最大的n位数
-输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
-示例 1:
-输入: n = 1
-输出: [1,2,3,4,5,6,7,8,9]
-来..." />
+    <meta name="description" content="一、求1+2+…+n
+求 1+2+...+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+示例 1：
+输入: n = 3
+输出: 6
+示例 2：
+输入: n = 9..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -79,97 +80,60 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Day08： 打印从1到最大的n位数 &amp; 删除链表的节点
+              Day31：求1+2+…+n &amp; 不用加减乘除做加法
             </h2>
             <div class="post-info">
               <span>
-                2020-02-21
+                2020-03-15
               </span>
               <span>
-                3 min read
+                1 min read
               </span>
               
             </div>
             
-              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/day08.jpg" alt="">
+              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/day31.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="一-打印从1到最大的n位数">一、打印从1到最大的n位数</h3>
-<p>输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。</p>
-<p>示例 1:<br>
-输入: n = 1<br>
-输出: [1,2,3,4,5,6,7,8,9]</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof">力扣：打印从1到最大的n位数</a></p>
-<p>思路：根据位数，确定最大值。<br>
-code1:</p>
+                <h3 id="一-求12n">一、求1+2+…+n</h3>
+<p>求 1+2+...+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。</p>
+<p>示例 1：<br>
+输入: n = 3<br>
+输出: 6</p>
+<p>示例 2：<br>
+输入: n = 9<br>
+输出: 45</p>
+<p>限制：</p>
+<ul>
+<li>1 &lt;= n &lt;= 10000</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/qiu-12n-lcof">力扣：求1+2+…+n</a></p>
+<p>思路：使用递归，条件与 &amp;&amp; 在第一个条件语句为 false 的情况下不会去执行第二个条件语句。<br>
+code：</p>
 <pre><code>class Solution {
-    public int[] printNumbers(int n) {        
-		int [] nums;		
-		int max=1;	//最大数字
-		while (n!=0) {
-			max*=10;
-			n--;
-		}
-		nums=new int[max-1];		
-		for (int j = 1; j &lt; max; j++) {
-			nums[j-1]=j;
-		}
-		return nums;
+    public int sumNums(int n) {
+        // return n*(n+1)/2;
+        int sum = n;
+        boolean b = (n &gt; 0) &amp;&amp; ((sum += sumNums(n - 1)) &gt; 0);
+        return sum;
     }
 }
 </code></pre>
-<p>code2:</p>
-<pre><code>class Solution {
-	public int[] printNumbers(int n) {
-        int  sum = (int)Math.pow(10,n);
-        int[] num = new int[sum-1];
-        for(int i=1;i&lt;sum;i++){
-            num[i-1] = i;
-        }
-        return num;
-    }
-}
-</code></pre>
-<h3 id="二-删除链表的结点">二、删除链表的结点</h3>
-<p>给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。<br>
-返回删除后的链表的头节点。</p>
-<p>示例 1:<br>
-输入: head = [4,5,1,9], val = 5<br>
-输出: [4,1,9]<br>
-解释: 给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -&gt; 1 -&gt; 9.</p>
-<p>示例 2:<br>
-输入: head = [4,5,1,9], val = 1<br>
-输出: [4,5,9]<br>
-解释: 给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -&gt; 5 -&gt; 9.</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof">力扣：删除链表的节点</a></p>
-<p>code1:</p>
-<pre><code>/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
-class Solution {
-    public ListNode deleteNode(ListNode head, int val) {
-        if (head.val == val) return head.next; // 删除头结点		
-		ListNode node = head;
-		while (node != null) {
-			if (node.next.val == val) {// 删除最后一个结点
-				if (node.next.next == null)
-					node.next = null;
-				else
-					node.next = node.next.next;
-				break;
-			} else {
-				node = node.next;
-			}
-		}
-		return head;
-    }
-}
+<h3 id="二-不用加减乘除做加法">二、不用加减乘除做加法</h3>
+<p>写一个函数，求两个整数之和，要求在函数体内不得使用 “+”、“-”、“*”、“/” 四则运算符号。</p>
+<p>示例:<br>
+输入: a = 1, b = 1<br>
+输出: 2</p>
+<p>提示：</p>
+<ul>
+<li>a, b 均可能是负数或 0</li>
+<li>结果不会溢出 32 位整数</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof">力扣：不用加减乘除做加法</a></p>
+<p>思路：<br>
+code：</p>
+<pre><code>
 </code></pre>
 
               </div>
@@ -179,8 +143,8 @@ class Solution {
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B8%80-%E6%89%93%E5%8D%B0%E4%BB%8E1%E5%88%B0%E6%9C%80%E5%A4%A7%E7%9A%84n%E4%BD%8D%E6%95%B0">一、打印从1到最大的n位数</a></li>
-<li><a href="#%E4%BA%8C-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E7%BB%93%E7%82%B9">二、删除链表的结点</a></li>
+<li><a href="#%E4%B8%80-%E6%B1%8212n">一、求1+2+…+n</a></li>
+<li><a href="#%E4%BA%8C-%E4%B8%8D%E7%94%A8%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E5%81%9A%E5%8A%A0%E6%B3%95">二、不用加减乘除做加法</a></li>
 </ul>
 </li>
 </ul>
@@ -195,9 +159,9 @@ class Solution {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://southton.github.io/starry/post/day07/">
+            <a href="https://southton.github.io/starry/post/day30/">
               <h3 class="post-title">
-                Day07： 二进制中1的个数 &amp; 数值的整数次方
+                Day30： 圆圈中最后剩下的数字 &amp; 股票的最大利润
               </h3>
             </a>
           </div>
