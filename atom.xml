@@ -2,13 +2,132 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-03-15T13:44:06.110Z</updated>
+    <updated>2020-03-16T14:29:16.612Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[Day32：构建乘积数组 & 把字符串转换成整数]]></title>
+        <id>https://southton.github.io/starry/post/day32/</id>
+        <link href="https://southton.github.io/starry/post/day32/">
+        </link>
+        <updated>2020-03-16T03:05:10.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-构建乘积数组">一、构建乘积数组</h3>
+<p>给定一个数组 A[0,1,…,n-1]，请构建一个数组 B[0,1,…,n-1]，其中 B 中的元素 B[i]=A[0]×A[1]×…×A[i-1]×A[i+1]×…×A[n-1]。不能使用除法。</p>
+<p>示例:<br>
+输入: [1,2,3,4,5]<br>
+输出: [120,60,40,30,24]</p>
+<p>提示：</p>
+<ul>
+<li>所有元素乘积之和不会溢出 32 位整数</li>
+<li>a.length &lt;= 100000</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/gou-jian-cheng-ji-shu-zu-lcof">力扣：构建乘积数组</a></p>
+<p>思路1：根据题目要求直接遍历，数组b的元素b[i]等于数组a中除a[i]外所有元素的乘积，也等于a中所有元素乘积除a[i]，又题目要求不能使用除法，故只能采用前者的思路，但是这样时间复杂度较高O(N^2)，力扣无法通过<br>
+code1：</p>
+<pre><code>class Solution {
+    public int[] constructArr(int[] a) {
+        if (a.length == 0) return new int[0];
+        int len = a.length;
+        int[] b = new int[len];
+        int cur=0;
+        while(cur&lt;len){
+            int temp=1;
+            for (int i = 0; i &lt; len; i++) {
+                if(i!=cur) temp*=a[i];
+            }            
+            b[cur]=temp;
+            cur++;
+        }        
+        return b;
+    }
+}
+</code></pre>
+<p>思路2：优化，数组b的元素b[i]等于数组a中除a[i]外所有元素的乘积，据此可将数组a从a[i]分左右两部分，b[i]就等于a[i]左边的累积结果乘右边累积结果,时间复杂度O（2N）。<br>
+code2:</p>
+<pre><code>class Solution {
+    public int[] constructArr(int[] a) {
+        if (a.length == 0) return new int[0];            
+        int len = a.length;
+        int[] b = new int[len];
+        int temp = 1;// 左边累乘
+        for (int i = 0; i &lt; len; i++) {
+            b[i] = temp;
+            temp *= a[i];
+        }
+        temp = 1;// 右边累乘
+        for (int i = len - 1; i &gt;= 0; i--) {
+            b[i] *= temp;
+            temp *= a[i];
+        }
+        return b;
+    }
+}
+</code></pre>
+<h3 id="二-把字符串转换成整数">二、把字符串转换成整数</h3>
+<p>写一个函数 StrToInt，实现把字符串转换成整数这个功能。不能使用 atoi 或者其他类似的库函数。<br>
+首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。<br>
+当我们寻找到的第一个非空字符为正或者负号时，则将该符号与之后面尽可能多的连续数字组合起来，作为该整数的正负号；假如第一个非空字符是数字，则直接将其与之后连续的数字字符组合起来，形成整数。<br>
+该字符串除了有效的整数部分之后也可能会存在多余的字符，这些字符可以被忽略，它们对于函数不应该造成影响。<br>
+<code>注意：假如该字符串中的第一个非空格字符不是一个有效整数字符、字符串为空或字符串仅包含空白字符时，则你的函数不需要进行转换。</code><br>
+在任何情况下，若函数不能进行有效的转换时，请返回 0。<br>
+说明：<br>
+假设我们的环境只能存储 32 位大小的有符号整数，那么其数值范围为 [−231,  231 − 1]。如果数值超过这个范围，请返回  INT_MAX (231 − 1) 或 INT_MIN (−231) 。</p>
+<p>示例 1:<br>
+输入: &quot;42&quot;<br>
+输出: 42</p>
+<p>示例 2:<br>
+输入: &quot;   -42&quot;<br>
+输出: -42<br>
+解释: 第一个非空白字符为 '-', 它是一个负号。我们尽可能将负号与后面所有连续出现的数字组合起来，最后得到 -42 。</p>
+<p>示例 3:<br>
+输入: &quot;4193 with words&quot;<br>
+输出: 4193<br>
+解释: 转换截止于数字 '3' ，因为它的下一个字符不为数字。</p>
+<p>示例 4:<br>
+输入: &quot;words and 987&quot;<br>
+输出: 0<br>
+解释: 第一个非空字符是 'w', 但它不是数字或正、负号。 因此无法执行有效的转换。</p>
+<p>示例 5:<br>
+输入: &quot;-91283472332&quot;<br>
+输出: -2147483648<br>
+解释: 数字 &quot;-91283472332&quot; 超过 32 位有符号整数范围。 因此返回 INT_MIN (−231) 。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof">力扣：把字符串转换成整数</a></p>
+<p>思路：注意考虑多种情况，例如符号，其他字符，溢出<br>
+code：</p>
+<pre><code>class Solution {
+    public int strToInt(String str) {
+        if (str==null||str.length() == 0) return 0;
+        int len = str.length();
+        int i = 0;
+        boolean flag = true; // true:+,false:-
+        while (i&lt;len&amp;&amp;str.charAt(i) == ' ' &amp;&amp; i &lt; len) {//去空格
+            i++;
+        }
+        if(i&lt;len&amp;&amp; (str.charAt(i) == '+' || str.charAt(i) == '-')) {//判断正负            
+            if (str.charAt(i) == '-')
+                flag = false;
+            i++;
+        }
+        long num = 0;
+        while (i &lt; len &amp;&amp; str.charAt(i) &gt;= '0' &amp;&amp; str.charAt(i) &lt;= '9') {//转换同时判断是否溢出
+            num = num * 10 + str.charAt(i) - '0';            
+            long temp = flag ? num : -num;
+            if (temp &lt;= Integer.MIN_VALUE)
+                return Integer.MIN_VALUE;
+            if (temp &gt;= Integer.MAX_VALUE)
+                return Integer.MAX_VALUE;
+            i++;
+        }        
+        return (int) (flag?num:-num);
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Day31：求1+2+…+n & 不用加减乘除做加法]]></title>
         <id>https://southton.github.io/starry/post/day31/</id>
@@ -55,7 +174,7 @@ code：</p>
 <pre><code>class Solution {
     public int add(int a, int b) {
         while(b != 0){
-            int temp = a ^ b; //位与运算
+            int temp = a ^ b; //按位异或
             b = (a &amp; b) &lt;&lt; 1; //进位
             a = temp;
         }
@@ -1068,81 +1187,6 @@ code2：</p>
         }
         return ugly[n - 1];
 	}    
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Day22：把数字翻译成字符串 & 礼物的最大价值]]></title>
-        <id>https://southton.github.io/starry/post/day22/</id>
-        <link href="https://southton.github.io/starry/post/day22/">
-        </link>
-        <updated>2020-03-06T05:19:52.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-把数字翻译成字符串">一、把数字翻译成字符串</h3>
-<p>给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。</p>
-<p>示例 1:<br>
-输入: 12258<br>
-输出: 5<br>
-解释: 12258有5种不同的翻译，分别是&quot;bccfi&quot;, &quot;bwfi&quot;, &quot;bczi&quot;, &quot;mcfi&quot;和&quot;mzi&quot;</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof">力扣：把数字翻译成字符串</a></p>
-<p>思路：动态规划<br>
-code：</p>
-<pre><code>class Solution {
-    public int translateNum(int num) {
-        if (num&lt;0) return 0;
-        char [] nums=String.valueOf(num).toCharArray();
-        int len = nums.length;
-        int[] dp =new int[len];
-        int count = 0;
-        for (int i = len-1; i &gt;=0 ; --i) {
-            if(i&lt;len-1){
-                count=dp[i+1];
-            }else{
-                count=1;
-            }
-            if(i&lt;len-1){
-                int d1=nums[i]-'0';
-                int d2 = nums[i+1]-'0';
-                if (d1*10+d2&gt;=10 &amp;&amp; d1*10+d2&lt;=25) {
-                    if (i&lt;len-2) {
-                        count+=dp[i+2];
-                    }else{
-                        count+=1;
-                    }
-                }
-            }
-            dp[i]=count;
-        }
-        return dp[0];
-    }
-}
-</code></pre>
-<h3 id="二-礼物的最大价值">二、礼物的最大价值</h3>
-<p>在一个 m*n 的棋盘的每一格都放有一个礼物，每个礼物都有一定的价值（价值大于 0）。你可以从棋盘的左上角开始拿格子里的礼物，并每次向右或者向下移动一格、直到到达棋盘的右下角。给定一个棋盘及其上面的礼物的价值，请计算你最多能拿到多少价值的礼物？</p>
-<p>示例 1:<br>
-输入:<br>
-[<br>
-  [1,3,1],<br>
-  [1,5,1],<br>
-  [4,2,1]<br>
-]<br>
-输出: 12<br>
-解释:<code>路径 1→3→5→2→1 可以拿到最多价值的礼物</code></p>
-<p>来源：<a href="https://leetcode-cn.com/problems/li-wu-de-zui-da-jie-zhi-lcof/">力扣：礼物的最大价值</a></p>
-<p>思路：动态规划问题，维护一个和棋盘同样大小的二位数组，数组中保存的每个元素[i][j]为从[0][0]按照规则走到[i][j]的礼物价值和。<br>
-code：</p>
-<pre><code>class Solution {
-    public int maxValue(int[][] grid) {
-        int m=grid.length, n=grid[0].length;
-        if(m==0&amp;&amp;n==0) return -1;
-        int [][] max=new int[m+1][n+1];        
-        for (int i = 1; i &lt;= m; i++) {
-            for (int j = 1; j &lt;= n; j++) {
-                max[i][j]= Math.max(max[i-1][j], max[i][j-1])+grid[i-1][j-1];
-            }
-        }
-        return max[m][n];
-    }
 }
 </code></pre>
 ]]></content>
