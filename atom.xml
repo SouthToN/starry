@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-03-17T02:36:37.056Z</updated>
+    <updated>2020-03-17T02:38:06.184Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
@@ -10,7 +10,7 @@
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
     <entry>
-        <title type="html"><![CDATA[Day33：二叉搜索树的最近公共祖先]]></title>
+        <title type="html"><![CDATA[Day33：二叉搜索树的最近公共祖先 & 二叉树的最近公共祖先]]></title>
         <id>https://southton.github.io/starry/post/day33/</id>
         <link href="https://southton.github.io/starry/post/day33/">
         </link>
