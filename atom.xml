@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-03-17T02:42:05.892Z</updated>
+    <updated>2020-03-17T02:50:17.584Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
@@ -48,9 +48,9 @@ code：</p>
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(root == null || root==p || root == q)  return root;
-        if(root.val&gt;p.val&amp;&amp;root.val&gt;q.val) return lowestCommonAncestor(root.left, p, q);
-        if(root.val&lt;p.val&amp;&amp;root.val&lt;q.val) return lowestCommonAncestor(root.right, p, q);       
-        return root;
+        if(root.val&gt;p.val&amp;&amp;root.val&gt;q.val) return lowestCommonAncestor(root.left, p, q);//p,q都在左子树
+        if(root.val&lt;p.val&amp;&amp;root.val&lt;q.val) return lowestCommonAncestor(root.right, p, q); //p,q都在右子树      
+        return root;//p,q一个左一个右，则当前根即为公共祖先
     }
 }
 </code></pre>
@@ -89,8 +89,8 @@ class Solution {
         if(root == null || root==p || root == q)  return root;
         TreeNode left = lowestCommonAncestor(root.left, p, q);//递归左子树
         TreeNode right = lowestCommonAncestor(root.right, p, q);//递归右子树
-        if(left==null) return right;
-        if(right==null) return left;
+        if(left==null) return right;//p,q在右子树
+        if(right==null) return left;//p,q在左子树
         return root;
     }
 }
