@@ -2,13 +2,105 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-03-17T09:01:57.930Z</updated>
+    <updated>2020-03-18T13:27:39.408Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[Day34：判定字符是否唯一 & 判定是否互为字符重排]]></title>
+        <id>https://southton.github.io/starry/post/day34/</id>
+        <link href="https://southton.github.io/starry/post/day34/">
+        </link>
+        <updated>2020-03-18T12:44:40.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-判定字符是否唯一">一、判定字符是否唯一</h3>
+<p>实现一个算法，确定一个字符串 s 的所有字符是否全都不同。<br>
+示例 1：<br>
+输入: s = &quot;leetcode&quot;<br>
+输出: false</p>
+<p>示例 2：<br>
+输入: s = &quot;abc&quot;<br>
+输出: true<br>
+限制：</p>
+<ul>
+<li>0 &lt;= len(s) &lt;= 100</li>
+<li>如果你不使用额外的数据结构，会很加分。<br>
+来源：<a href="https://leetcode-cn.com/problems/is-unique-lcci/">力扣：判定字符是否唯一</a></li>
+</ul>
+<p>思路1：最直接的方法，暴力遍历<br>
+code1：</p>
+<pre><code>class Solution {
+    public boolean isUnique(String astr) {
+        if(astr.length()==0) return true;
+        for (int i = 0; i &lt; astr.length(); i++) {            
+            for (int j = i+1; j &lt; astr.length(); j++) {
+                if(astr.charAt(i)==astr.charAt(j))return false;            }
+        }
+        return true;
+    }
+}
+</code></pre>
+<p>思路2：利用hashset，如果字符唯一则最后hashset的长等于字符串的长度。<br>
+code2：</p>
+<pre><code>class Solution {
+    public boolean isUnique(String astr) {
+        if(astr.length()==0) return true;
+        HashSet uni = new HashSet&lt;String&gt;();
+        for (int i = 0; i &lt; astr.length(); i++) {
+            uni.add(astr.charAt(i));
+        }
+        return uni.size()==astr.length();
+    }
+}
+</code></pre>
+<h3 id="二-判定是否互为字符重排">二、判定是否互为字符重排</h3>
+<p>给定两个字符串 s1 和 s2，请编写一个程序，确定其中一个字符串的字符重新排列后，能否变成另一个字符串。<br>
+示例 1：<br>
+输入: s1 = &quot;abc&quot;, s2 = &quot;bca&quot;<br>
+输出: true</p>
+<p>示例 2：<br>
+输入: s1 = &quot;abc&quot;, s2 = &quot;bad&quot;<br>
+输出: false<br>
+说明：</p>
+<ul>
+<li>0 &lt;= len(s1) &lt;= 100</li>
+<li>0 &lt;= len(s2) &lt;= 100</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/check-permutation-lcci/">力扣：判定是否互为字符重排</a></p>
+<p>思路1：将字符串转为字符串数组并排序，然后逐个比较排序后字符是否相等<br>
+code1：</p>
+<pre><code>class Solution {
+    public boolean CheckPermutation(String s1, String s2) {
+        if (s1.length() != s2.length()) return false;
+        char[] c1 = s1.toCharArray();
+        char[] c2 = s2.toCharArray();
+        Arrays.sort(c1);
+        Arrays.sort(c2);
+        for (int i = 0; i &lt; c1.length; i++) {
+            if(c1[i]!=c2[i]) return false;
+        }
+        return true;
+    }
+}
+</code></pre>
+<p>思路2：将字符串中的字符转换为ASCII码并求和，判断两个字符串的ASCII码和是否相等<br>
+code2：</p>
+<pre><code>class Solution {
+    public boolean CheckPermutation(String s1, String s2) {
+        if (s1.length() != s2.length()) return false;
+        int sum1=0,sum2=0;       
+        for (int i = 0; i &lt; s1.length(); i++) {            
+            sum1+=s1.charAt(i)-'a';
+            sum2+=s2.charAt(i)-'a';
+        }
+        return sum1==sum2;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Day33：二叉搜索树的最近公共祖先 & 二叉树的最近公共祖先]]></title>
         <id>https://southton.github.io/starry/post/day33/</id>
@@ -1096,88 +1188,6 @@ code：</p>
 }
 </code></pre>
 <p>os: 0～n-1中缺失的数字应该得用上排序这个规律</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Day24：第一个只出现一次的字符 & 数组中的逆序对]]></title>
-        <id>https://southton.github.io/starry/post/day24/</id>
-        <link href="https://southton.github.io/starry/post/day24/">
-        </link>
-        <updated>2020-03-08T03:25:42.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-第一个只出现一次的字符">一、第一个只出现一次的字符</h3>
-<p>在字符串 s 中找出第一个只出现一次的字符。如果没有，返回一个单空格。</p>
-<p>示例:<br>
-s = &quot;abaccdeff&quot;<br>
-返回 &quot;b&quot;<br>
-s = &quot;&quot;<br>
-返回 &quot; &quot;</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof">力扣：第一个只出现一次的字符</a></p>
-<p>思路1：直接遍历，时间复杂度O(n)，空间复杂度O(1)<br>
-code1：</p>
-<pre><code>class Solution {
-    public char firstUniqChar(String s) {
-        if (s.length() == 0) return ' ';
-        int[] dict = new int[26];
-        for (int i = 0; i &lt; s.length(); i++) {//统计每个字符出现的次数
-            dict[s.charAt(i) - 'a']++;
-        }
-        for (int i = 0; i &lt; s.length(); i++) {
-            if (dict[s.charAt(i) - 'a'] == 1) {//找出第一个只出现一次的字符
-                return s.charAt(i);
-            }
-        }
-        return ' ';
-    }
-}
-</code></pre>
-<h3 id="二-数组中的逆序对">二、数组中的逆序对</h3>
-<p>在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。</p>
-<p>示例 1:<br>
-输入: [7,5,6,4]<br>
-输出: 5</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof">力扣：数组中的逆序对</a></p>
-<p>思路：利用归并排序的排序过程进行统计逆序对的个数<br>
-code：</p>
-<pre><code>class Solution {
-    private long sum; // 统计逆序对的个数
-    public int reversePairs(int[] nums) {
-        if(nums.length==0) return 0;
-        sum = 0;
-        int l = 0;
-        int r = nums.length - 1;
-        divide(l, r, nums);
-        return (int)sum;
-    }    
-    public void divide(int l, int r, int[] nums) {
-        if (l != r) {
-            int mid = (l + r) &gt;&gt; 1;
-            divide(l, mid, nums);
-            divide(mid + 1, r, nums);
-            merge(l, r, mid, nums);
-        }
-    }
-    public void merge(int l, int r, int mid, int[] nums) {
-        int i = l; // 左区间的起点
-        int j = mid + 1; // 右区间的起点
-        int[] temp = new int[r - l + 1];
-        int index = 0;
-        while (i &lt;= mid &amp;&amp; j &lt;= r) {
-            if (nums[i] &gt; nums[j]) {
-                temp[index++] = nums[j++];
-                sum += mid - i + 1; // 统计逆序对个数
-            } else {
-                temp[index++] = nums[i++];
-            }
-        }
-        while (i &lt;= mid) temp[index++] = nums[i++];
-        while (j &lt;= r) temp[index++] = nums[j++];
-        index = 0;
-        for (int k = l; k &lt;= r; k++) {
-            nums[k] = temp[index++];
-        }
-    }
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
