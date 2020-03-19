@@ -2,13 +2,77 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-03-18T13:27:39.408Z</updated>
+    <updated>2020-03-19T04:27:49.643Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[Day35：URL化 & 回文排列]]></title>
+        <id>https://southton.github.io/starry/post/day35/</id>
+        <link href="https://southton.github.io/starry/post/day35/">
+        </link>
+        <updated>2020-03-19T03:37:53.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-url化">一、URL化</h3>
+<p>URL化。编写一种方法，将字符串中的空格全部替换为%20。假定该字符串尾部有足够的空间存放新增字符，并且知道字符串的“真实”长度。（注：用Java实现的话，请使用字符数组实现，以便直接在数组上操作。）<br>
+示例1:<br>
+输入：&quot;Mr John Smith    &quot;, 13<br>
+输出：&quot;Mr%20John%20Smith&quot;</p>
+<p>示例2:<br>
+输入：&quot;               &quot;, 5<br>
+输出：&quot;%20%20%20%20%20&quot;<br>
+来源：<a href="https://leetcode-cn.com/problems/string-to-url-lcci/">力扣：URL化</a><br>
+思路：将字符串转为字符数组，然后循环添加到stringbuffer中，添加过程中判断如果是空格则向stringbuffer中添加&quot;%20&quot;,循环终止条件为length,最后将stringbuffer转为string。<br>
+code：</p>
+<pre><code>class Solution {
+    public String replaceSpaces(String S, int length) {
+        char [] cs = S.toCharArray();
+        StringBuffer sBuffer = new StringBuffer();        
+        for (int i = 0; i &lt; length; i++) {
+            if(cs[i]!=' '){
+                sBuffer.append(cs[i]);
+            }else{
+                sBuffer.append(&quot;%20&quot;);
+            } 
+        }
+        return sBuffer.toString();
+    }
+}
+</code></pre>
+<h3 id="二-回文排列">二、回文排列</h3>
+<p>给定一个字符串，编写一个函数判定其是否为某个回文串的排列之一。<br>
+回文串是指正反两个方向都一样的单词或短语。排列是指字母的重新排列。<br>
+回文串不一定是字典当中的单词。</p>
+<p>示例1：<br>
+输入：&quot;tactcoa&quot;<br>
+输出：true（排列有&quot;tacocat&quot;、&quot;atcocta&quot;，等等）</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/palindrome-permutation-lcci/">力扣：回文排列</a></p>
+<p>思路：回文排列只有两种可能：</p>
+<ul>
+<li>只有一个字母出现奇数次，其他字母全部出现偶数次</li>
+<li>全部出现偶数次，则可判定为回文。<br>
+利用哈希表，不断添加删除，最终，哈希表中只剩下出现奇数次的字母，<br>
+code：</li>
+</ul>
+<pre><code>class Solution {
+    public boolean canPermutePalindrome(String s) {
+        if (s.length() == 0) return true;
+        Set strset = new HashSet&lt;&gt;();
+        for (int i = 0; i &lt; s.length(); i++) {
+            if (strset.contains(s.charAt(i))) {
+                strset.remove(s.charAt(i));
+            } else {
+                strset.add(s.charAt(i));
+            }
+        }
+        return strset.size()&lt;=1; //出现奇数次的字母只能是1个或0个
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Day34：判定字符是否唯一 & 判定是否互为字符重排]]></title>
         <id>https://southton.github.io/starry/post/day34/</id>
@@ -1031,163 +1095,6 @@ class Solution {
     }
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Day25：两个链表的第一个公共节点 & 0～n-1中缺失的数字]]></title>
-        <id>https://southton.github.io/starry/post/day25/</id>
-        <link href="https://southton.github.io/starry/post/day25/">
-        </link>
-        <updated>2020-03-09T05:27:58.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-两个链表的第一个公共节点">一、两个链表的第一个公共节点</h3>
-<p>输入两个链表，找出它们的第一个公共节点。<br>
-如下面的两个链表：<br>
-<img src="https://southton.github.io/starry/post-images/1583994703207.png" alt="" loading="lazy"><br>
-在节点 c1 开始相交。</p>
-<p>示例 1：<br>
-<img src="https://southton.github.io/starry/post-images/1583994712889.png" alt="" loading="lazy"><br>
-输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, skipB = 3<br>
-输出：Reference of the node with value = 8<br>
-输入解释：相交节点的值为 8 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，链表 A 为 [4,1,8,4,5]，链表 B 为 [5,0,1,8,4,5]。在 A 中，相交节点前有 2 个节点；在 B 中，相交节点前有 3 个节点。</p>
-<p>示例 2：<br>
-<img src="https://southton.github.io/starry/post-images/1583994723541.png" alt="" loading="lazy"><br>
-输入：intersectVal = 2, listA = [0,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1<br>
-输出：Reference of the node with value = 2<br>
-输入解释：相交节点的值为 2 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，链表 A 为 [0,9,1,2,4]，链表 B 为 [3,2,4]。在 A 中，相交节点前有 3 个节点；在 B 中，相交节点前有 1 个节点。</p>
-<p>示例 3：<br>
-<img src="https://southton.github.io/starry/post-images/1583994735923.png" alt="" loading="lazy"><br>
-输入：intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2<br>
-输出：null<br>
-输入解释：从各自的表头开始算起，链表 A 为 [2,6,4]，链表 B 为 [1,5]。由于这两个链表不相交，所以 intersectVal 必须为 0，而 skipA 和 skipB 可以是任意值。<br>
-解释：这两个链表不相交，因此返回 null。</p>
-<p><code>注意：</code></p>
-<ul>
-<li>如果两个链表没有交点，返回 null.</li>
-<li>在返回结果后，两个链表仍须保持原有的结构。</li>
-<li>可假定整个链表结构中没有循环。</li>
-<li>程序尽量满足 O(n) 时间复杂度，且仅用 O(1) 内存。</li>
-</ul>
-<p>来源：<a href="https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">力扣：两个链表的第一个公共节点</a></p>
-<p>思路1：计算两个链表的长度差,从长度相等的地方开始找<br>
-code1：</p>
-<pre><code>/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null) return null;
-        ListNode lnA = headA;
-        ListNode lnB = headB;
-        int la = 0, lb = 0;
-        while (lnA.next != null) {// 统计A的长度
-            la++;
-            lnA = lnA.next;
-        }
-        while (lnB.next != null) {// 统计B的长度
-            lb++;
-            lnB = lnB.next;
-        }
-        if (lnA != lnB) return null;// 如果最后一个节点不相等则无公共节点
-        lnA = headA; //计算长度时修改过，此时重新赋值
-        lnB = headB;
-        int n = 0;
-        if (la &gt; lb) { //移动到长度相等处
-            n = la - lb;
-            while (n-- &gt; 0) {
-                lnA = lnA.next;
-            }
-        } else {
-            n = lb - la;
-            while (n-- &gt; 0) {
-                lnB = lnB.next;
-            }
-        }
-        while (lnA != lnB) {//从相等长度处开始找
-            lnA = lnA == null ? null : lnA.next;
-            lnB = lnB == null ? null : lnB.next;
-        }
-        return lnA;
-    }
-}
-</code></pre>
-<p>思路二：双指针，headA无重复部分长度+公共长度+headB无重复部分长度=headB无重复部分长度+公共长度+headA无重复部分长度<br>
-code2：</p>
-<pre><code>/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-       if (headA == null || headB == null) return null;            
-        ListNode ln1 = headA;
-        ListNode ln2 = headB;
-        while (ln1 != ln2) {
-            ln1 = ln1 == null ? headB : ln1.next;
-            ln2 = ln2 == null ? headA : ln2.next;
-        }
-        return ln1; 
-    }
-}
-</code></pre>
-<h3 id="二-0~n-1中缺失的数字">二、0～n-1中缺失的数字</h3>
-<p>（1）在排序数组中查找数字 I<br>
-统计一个数字在排序数组中出现的次数。</p>
-<p>示例 1:<br>
-输入: nums = [5,7,7,8,8,10], target = 8<br>
-输出: 2</p>
-<p>示例 2:<br>
-输入: nums = [5,7,7,8,8,10], target = 6<br>
-输出: 0</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof">力扣：在排序数组中查找数字 I</a><br>
-思路：<br>
-code：</p>
-<pre><code>class Solution {
-    public int search(int[] nums, int target) {
-        if (nums.length == 0) return 0;
-        int count = 0;
-        for (int i = 0; i &lt; nums.length; i++) {
-            if (nums[i] == target) count++;
-        }
-        return count;
-    }
-}
-</code></pre>
-<p>（2）0～n-1中缺失的数字<br>
-一个长度为n-1的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围0～n-1之内。在范围0～n-1内的n个数字中有且只有一个数字不在该数组中，请找出这个数字。</p>
-<p>示例 1:<br>
-输入: [0,1,3]<br>
-输出: 2</p>
-<p>示例 2:<br>
-输入: [0,1,2,3,4,5,6,7,9]<br>
-输出: 8</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof">力扣：0～n-1中缺失的数字</a></p>
-<p>思路：<br>
-code：</p>
-<pre><code>class Solution {
-    public int missingNumber(int[] nums) {
-        for(int i=0;i&lt;nums.length;i++){
-            if(nums[i]!=i) return i;
-        }
-        return nums.length;
-    }
-}
-</code></pre>
-<p>os: 0～n-1中缺失的数字应该得用上排序这个规律</p>
 ]]></content>
     </entry>
 </feed>
