@@ -1,0 +1,354 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Day36：一次编辑 &amp; 字符串压缩 | Starry</title>
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1584708211060">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Day36：一次编辑 &amp; 字符串压缩 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="一、一次编辑
+字符串有三种编辑操作:插入一个字符、删除一个字符或者替换一个字符。 给定两个字符串，编写一个函数判定它们是否只需要一次(或者零次)编辑。
+示例 1:
+输入:
+first = &quot;pale&quot;
+second = ..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://southton.github.io/starry">
+  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1584708211060" alt="">
+  </a>
+  <h1 class="site-title">
+    Starry
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://southton.github.io/starry" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="https://southton.github.io/starry/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://southton.github.io/starry/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://southton.github.io/starry/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Day36：一次编辑 &amp; 字符串压缩
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-20
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/day36.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="一-一次编辑">一、一次编辑</h3>
+<p>字符串有三种编辑操作:插入一个字符、删除一个字符或者替换一个字符。 给定两个字符串，编写一个函数判定它们是否只需要一次(或者零次)编辑。</p>
+<p>示例 1:<br>
+输入:<br>
+first = &quot;pale&quot;<br>
+second = &quot;ple&quot;<br>
+输出: True</p>
+<p>示例 2:<br>
+输入:<br>
+first = &quot;pales&quot;<br>
+second = &quot;pal&quot;<br>
+输出: False</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/one-away-lcci/">力扣：一次编辑</a></p>
+<p>思路1：分别考虑插入、删除、替换，其中删除可以当做在短的字符串中插入，因为只能编辑一次，则三种可能为lf+1=ls、lf = ls+1 、lf = ls（lf:字符串1长度、ls:字符串2长度），特别需要考虑边界情况，防止越界，这种做法代码冗余较高。<br>
+code1：</p>
+<pre><code>class Solution {
+    public boolean oneEditAway(String first, String second) {
+        if ((first.length() == 0 &amp;&amp; second.length() == 0) || (first.length() == 0 &amp;&amp; second.length() == 1)
+                || (first.length() == 1 &amp;&amp; second.length() == 0))
+            return true;
+        int lf = first.length();
+        int ls = second.length();
+        boolean flag = false;
+        if (lf + 1 == ls) { // 插入 lf+1=ls
+            int count = 0;
+            StringBuffer sBuffer = new StringBuffer();
+            int f = 0, s = 0;
+            while (f &lt; lf &amp;&amp; s &lt; ls) {
+                if (first.charAt(f) == second.charAt(s)) {
+                    sBuffer.append(first.charAt(f));
+                    f++;
+                    s++;
+                } else {
+                    sBuffer.append(second.charAt(s));
+                    s++;
+                    count++;
+                }
+            }
+            if (sBuffer.length() &lt; ls) {
+                sBuffer.append(second.charAt(ls - 1));
+                count++;
+            }
+            String sb = new String(sBuffer);
+            if (sb.equals(second) &amp;&amp; count == 1)
+                return true;
+
+        } else if (lf == ls + 1) { // 删除 lf = ls+1 ，可以看作在在短的字符串中插入
+            int count = 0;
+            StringBuffer sBuffer = new StringBuffer();
+            int f = 0, s = 0;
+            while (s &lt; ls &amp;&amp; f &lt; lf) {
+                if (first.charAt(f) == second.charAt(s)) {
+                    sBuffer.append(second.charAt(s));
+                    f++;
+                    s++;
+                } else {
+                    sBuffer.append(first.charAt(f));
+                    f++;
+                    count++;
+                }
+            }
+            if (sBuffer.length() &lt; lf) {
+                sBuffer.append(first.charAt(lf - 1));
+                count++;
+            }
+            String sb = new String(sBuffer);
+            if (sb.equals(first) &amp;&amp; count == 1)
+                return true;
+
+        } else if (lf == ls) { // 替换 lf = ls
+            char[] sc = first.toCharArray();
+            int count = 0;
+            for (int i = 0; i &lt; lf; i++) {
+                if (sc[i] != second.charAt(i)) {
+                    sc[i] = second.charAt(i);
+                    count++;
+                }
+            }
+            if (String.valueOf(sc).equals(second) &amp;&amp; (count == 1) || (count == 0)) {
+                return true;
+            }
+        }
+        return flag;
+    }
+}
+</code></pre>
+<p>思路2：一次编辑，则first和second中至多有一个字符不相等<br>
+code2：</p>
+<pre><code>class Solution {
+    public boolean oneEditAway(String first, String second) {
+        int len = first.length() - second.length();
+        if (len &gt; 1 || len &lt; -1) return false;//差值大于一则一次编辑无法完成  
+        int count = 1;
+        for (int i = 0, j = 0; i &lt; first.length() &amp;&amp; j &lt; second.length(); i++, j++) {
+            if (first.charAt(i) != second.charAt(j)) {
+                if (len == 1) { // second添加
+                    j--;
+                } else if (len == -1) { // second删除
+                    i--;
+                }
+                count--;
+            }
+            if (count &lt; 0) return false;// 最多一次编辑 
+        }
+        return true;
+    }
+}
+</code></pre>
+<h3 id="二-字符串压缩">二、字符串压缩</h3>
+<p>字符串压缩。利用字符重复出现的次数，编写一种方法，实现基本的字符串压缩功能。比如，字符串aabcccccaaa会变为a2b1c5a3。若“压缩”后的字符串没有变短，则返回原先的字符串。你可以假设字符串中只包含大小写英文字母（a至z）。</p>
+<p>示例1:<br>
+输入：&quot;aabcccccaaa&quot;<br>
+输出：&quot;a2b1c5a3&quot;</p>
+<p>示例2:<br>
+输入：&quot;abbccd&quot;<br>
+输出：&quot;abbccd&quot;<br>
+解释：&quot;abbccd&quot;压缩后为&quot;a1b2c2d1&quot;，比原字符串长度更长。</p>
+<p>提示：字符串长度在[0, 50000]范围内。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/compress-string-lcci/">力扣：字符串压缩</a></p>
+<p>思路：逐个统计字符出现次数，每次统计过程中，若前一个字符不等于当前字符，则将前一个字符以及次数添加到stringbuffer中。时间复杂度：O（N）空间复杂度O（1）。<br>
+code：</p>
+<pre><code>class Solution {
+    public String compressString(String S) {
+        if (S.length() == 0 || S == null) return S;
+        StringBuffer sBuffer = new StringBuffer();
+        char pre = S.charAt(0);
+        int count = 1;
+        for (int i = 1; i &lt; S.length(); i++) {
+            char tmp = S.charAt(i);
+            if (pre==tmp) {
+                count++;
+            } else {
+                sBuffer.append(pre);
+                sBuffer.append(count);
+                pre = tmp;
+                count=1;
+            }
+        }
+        sBuffer.append(pre);
+        sBuffer.append(count);
+        if (sBuffer.length() &gt;= S.length()) return S;
+        return sBuffer.toString(); 
+    }
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E4%B8%80%E6%AC%A1%E7%BC%96%E8%BE%91">一、一次编辑</a></li>
+<li><a href="#%E4%BA%8C-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9">二、字符串压缩</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://southton.github.io/starry/post/day35/">
+              <h3 class="post-title">
+                Day35：URL化 &amp; 回文排列
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'b3d2a78babde4a38e9b2',
+    clientSecret: '3aa777906999f3408036d65d4b7b7c5071a79e85',
+    repo: 'starry',
+    owner: 'southton',
+    admin: ['southton'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://southton.github.io/starry/post/about/" target="_blank"> Starry</a>
+  <a class="rss" href="https://southton.github.io/starry/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
