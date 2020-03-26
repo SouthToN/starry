@@ -2,20 +2,26 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Day11：反转链表 &amp; 合并两个排序的链表 | Starry</title>
+<title>Day37：旋转矩阵 &amp; 零矩阵 | Starry</title>
 <link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1585189424625">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Day11：反转链表 &amp; 合并两个排序的链表 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Day37：旋转矩阵 &amp; 零矩阵 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="一、反转链表
-定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。
-示例:
-输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL
-输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt..." />
+    <meta name="description" content="一、旋转矩阵
+给定一幅由N × N矩阵表示的图像，其中每个像素的大小为4字节，编写一种方法，将图像旋转90度。
+不占用额外内存空间能否做到？
+示例 1:
+给定 matrix =
+[
+[1,2,3],
+[4,5,6],
+[7,8,9]
+],
+..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -78,11 +84,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Day11：反转链表 &amp; 合并两个排序的链表
+              Day37：旋转矩阵 &amp; 零矩阵
             </h2>
             <div class="post-info">
               <span>
-                2020-02-24
+                2020-03-21
               </span>
               <span>
                 3 min read
@@ -90,125 +96,128 @@
               
             </div>
             
-              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/day11.jpg" alt="">
+              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/day37.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="一-反转链表">一、反转链表</h3>
-<p>定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。</p>
-<p>示例:<br>
-输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL<br>
-输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof">力扣：反转链表</a></p>
-<p>思路一：非递归解法，从头到尾处理<br>
-code1:</p>
-<pre><code>/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
-class Solution {
-    public ListNode reverseList(ListNode head) {
-        if (head == null|| head.next==null)return head; //链表为空或者只有一个节点
-        ListNode newHead=null,cur=head;
-        while (cur!=null) {
-            ListNode temp=cur.next;
-            cur.next=newHead;
-            newHead=cur;
-            cur=temp;
+                <h3 id="一-旋转矩阵">一、旋转矩阵</h3>
+<p>给定一幅由N × N矩阵表示的图像，其中每个像素的大小为4字节，编写一种方法，将图像旋转90度。<br>
+不占用额外内存空间能否做到？</p>
+<p>示例 1:<br>
+给定 matrix =<br>
+[<br>
+[1,2,3],<br>
+[4,5,6],<br>
+[7,8,9]<br>
+],<br>
+原地旋转输入矩阵，使其变为:<br>
+[<br>
+[7,4,1],<br>
+[8,5,2],<br>
+[9,6,3]<br>
+]</p>
+<p>示例 2:<br>
+给定 matrix =<br>
+[<br>
+[ 5, 1, 9,11],<br>
+[ 2, 4, 8,10],<br>
+[13, 3, 6, 7],<br>
+[15,14,12,16]<br>
+],<br>
+原地旋转输入矩阵，使其变为:<br>
+[<br>
+[15,13, 2, 5],<br>
+[14, 3, 4, 1],<br>
+[12, 6, 8, 9],<br>
+[16, 7,10,11]<br>
+]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/rotate-matrix-lcci">旋转矩阵</a></p>
+<p>思路：根据矩阵<br>
+[<br>
+[1,2,3],<br>
+[4,5,6],<br>
+[7,8,9]<br>
+]<br>
+1移到3，3移到9，9移到7，7移到1。对应坐标变化可以发现规律：(x,y)--&gt;(x',y'):x'=y, y'=N-1-X,注意边界。<br>
+code：</p>
+<pre><code>class Solution {
+    public void rotate(int[][] matrix) {
+        int row=0,col=0,temp=0;
+        int len = matrix.length;
+        while(row&lt;(len+1)/2){
+            col=0;
+            while(col&lt;len/2){
+                temp = matrix[row][col];
+                matrix[row][col]=matrix[len-col-1][row];
+                matrix[len-col-1][row]=matrix[len-1-row][len-1-col];
+                matrix[len-1-row][len-1-col]=matrix[col][len-1-row];
+                matrix[col][len-1-row]=temp;
+                col++;
+            }
+            row++;
         }
-        return newHead;
-    }    
-}
-</code></pre>
-<p>思路二：递归解法，从尾到头处理<br>
-code2:</p>
-<pre><code>/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
-class Solution {
-    public ListNode reverseList(ListNode head) {
-       if (head == null || head.next == null) return head; // 链表为空或者只有一个节点
-       ListNode newHead=reverseList(head.next);//递归到表尾
-       head.next.next=head;
-       head.next=null;
-       return newHead;
-    }    
-}
-</code></pre>
-<h3 id="二-合并两个排序的链表">二、合并两个排序的链表</h3>
-<p>输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。</p>
-<p>示例1：<br>
-输入：1-&gt;2-&gt;4, 1-&gt;3-&gt;4<br>
-输出：1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof">力扣：合并两个排序的链表</a></p>
-<p>思路一：递归<br>
-code1:</p>
-<pre><code>public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-    if (l1 == null) return l2;
-    if (l2 == null) return l1;
-    if (l1 == null &amp;&amp; l2 == null) return null;
-    ListNode head = null;
-    if (l1.val &lt;= l2.val) {
-        head = l1;
-        head.next = mergeTwoLists(l1.next, l2);
-    } else {
-        head = l2;
-        head.next = mergeTwoLists(l1, l2.next);
     }
-    return head;
 }
 </code></pre>
-<p>思路二：遍历<br>
-code2:</p>
-<pre><code>/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
-class Solution {
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if (l1 == null)
-            return l2;
-        if (l2 == null)
-            return l1;
-        if (l1 == null &amp;&amp; l2 == null)
-            return null;
-        ListNode head = new ListNode(0);
-        ListNode cur = head;
-        while (l1 != null &amp;&amp; l2 != null) {
-            if (l1.val &lt;= l2.val) {
-                cur.next = new ListNode(l1.val);
-                cur = cur.next;
-                l1 = l1.next;
-            } else {
-                cur.next = new ListNode(l2.val);
-                cur = cur.next;
-                l2 = l2.next;
+<h3 id="二-零矩阵">二、零矩阵</h3>
+<p>编写一种算法，若M × N矩阵中某个元素为0，则将其所在的行与列清零。<br>
+示例 1：<br>
+输入：<br>
+[<br>
+[1,1,1],<br>
+[1,0,1],<br>
+[1,1,1]<br>
+]<br>
+输出：<br>
+[<br>
+[1,0,1],<br>
+[0,0,0],<br>
+[1,0,1]<br>
+]</p>
+<p>示例 2：<br>
+输入：<br>
+[<br>
+[0,1,2,0],<br>
+[3,4,5,2],<br>
+[1,3,1,5]<br>
+]<br>
+输出：<br>
+[<br>
+[0,0,0,0],<br>
+[0,4,5,0],<br>
+[0,3,1,0]<br>
+]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/zero-matrix-lcci">零矩阵</a></p>
+<p>思路：遍历矩阵记录0所在行，所在列，遍历完成后，根据记录的行和列将矩阵对应行对应列的值设为0<br>
+code：</p>
+<pre><code>class Solution {
+    public void setZeroes(int[][] matrix) {
+        int[] r = new int[matrix.length];
+        int[] c = new int[matrix[0].length];
+        for (int i = 0; i &lt; matrix.length; i++) {
+            for (int j = 0; j &lt; matrix[0].length; j++) {
+                if (matrix[i][j] == 0) {
+                    r[i] = 1;
+                    c[j] = 1;
+                }
+
             }
         }
-        while (l1 != null) {
-            cur.next = new ListNode(l1.val);
-            cur = cur.next;
-            l1 = l1.next;
+        for (int i = 0; i &lt; r.length; i++) {
+            for (int j = 0; j &lt; c.length; j++) {
+                if (r[i] != 0 &amp;&amp; c[j] != 0) setZeroe(matrix, i, j);
+            }
         }
-        while (l2 != null) {
-            cur.next = new ListNode(l2.val);
-            cur = cur.next;
-            l2 = l2.next;
+    }
+
+    private void setZeroe(int[][] matrix, int row, int col) {
+        for (int i = 0; i &lt; matrix[0].length; i++) {// 行设为0
+            matrix[row][i] = 0;
         }
-        return head.next;
+        for (int i = 0; i &lt; matrix.length; i++) {// 列设为0
+            matrix[i][col] = 0;
+        }
+
     }
 }
 </code></pre>
@@ -220,8 +229,8 @@ class Solution {
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B8%80-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8">一、反转链表</a></li>
-<li><a href="#%E4%BA%8C-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8">二、合并两个排序的链表</a></li>
+<li><a href="#%E4%B8%80-%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5">一、旋转矩阵</a></li>
+<li><a href="#%E4%BA%8C-%E9%9B%B6%E7%9F%A9%E9%98%B5">二、零矩阵</a></li>
 </ul>
 </li>
 </ul>
@@ -236,9 +245,9 @@ class Solution {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://southton.github.io/starry/post/day10/">
+            <a href="https://southton.github.io/starry/post/day36/">
               <h3 class="post-title">
-                Day10：调整数组顺序使奇数位于偶数前面 &amp; 链表中倒数第k个节点 
+                Day36：一次编辑 &amp; 字符串压缩
               </h3>
             </a>
           </div>

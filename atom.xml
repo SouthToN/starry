@@ -2,13 +2,142 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-03-20T12:59:11.297Z</updated>
+    <updated>2020-03-26T02:24:39.009Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[Day37：旋转矩阵 & 零矩阵]]></title>
+        <id>https://southton.github.io/starry/post/day37/</id>
+        <link href="https://southton.github.io/starry/post/day37/">
+        </link>
+        <updated>2020-03-21T04:04:43.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-旋转矩阵">一、旋转矩阵</h3>
+<p>给定一幅由N × N矩阵表示的图像，其中每个像素的大小为4字节，编写一种方法，将图像旋转90度。<br>
+不占用额外内存空间能否做到？</p>
+<p>示例 1:<br>
+给定 matrix =<br>
+[<br>
+[1,2,3],<br>
+[4,5,6],<br>
+[7,8,9]<br>
+],<br>
+原地旋转输入矩阵，使其变为:<br>
+[<br>
+[7,4,1],<br>
+[8,5,2],<br>
+[9,6,3]<br>
+]</p>
+<p>示例 2:<br>
+给定 matrix =<br>
+[<br>
+[ 5, 1, 9,11],<br>
+[ 2, 4, 8,10],<br>
+[13, 3, 6, 7],<br>
+[15,14,12,16]<br>
+],<br>
+原地旋转输入矩阵，使其变为:<br>
+[<br>
+[15,13, 2, 5],<br>
+[14, 3, 4, 1],<br>
+[12, 6, 8, 9],<br>
+[16, 7,10,11]<br>
+]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/rotate-matrix-lcci">旋转矩阵</a></p>
+<p>思路：根据矩阵<br>
+[<br>
+[1,2,3],<br>
+[4,5,6],<br>
+[7,8,9]<br>
+]<br>
+1移到3，3移到9，9移到7，7移到1。对应坐标变化可以发现规律：(x,y)--&gt;(x',y'):x'=y, y'=N-1-X,注意边界。<br>
+code：</p>
+<pre><code>class Solution {
+    public void rotate(int[][] matrix) {
+        int row=0,col=0,temp=0;
+        int len = matrix.length;
+        while(row&lt;(len+1)/2){
+            col=0;
+            while(col&lt;len/2){
+                temp = matrix[row][col];
+                matrix[row][col]=matrix[len-col-1][row];
+                matrix[len-col-1][row]=matrix[len-1-row][len-1-col];
+                matrix[len-1-row][len-1-col]=matrix[col][len-1-row];
+                matrix[col][len-1-row]=temp;
+                col++;
+            }
+            row++;
+        }
+    }
+}
+</code></pre>
+<h3 id="二-零矩阵">二、零矩阵</h3>
+<p>编写一种算法，若M × N矩阵中某个元素为0，则将其所在的行与列清零。<br>
+示例 1：<br>
+输入：<br>
+[<br>
+[1,1,1],<br>
+[1,0,1],<br>
+[1,1,1]<br>
+]<br>
+输出：<br>
+[<br>
+[1,0,1],<br>
+[0,0,0],<br>
+[1,0,1]<br>
+]</p>
+<p>示例 2：<br>
+输入：<br>
+[<br>
+[0,1,2,0],<br>
+[3,4,5,2],<br>
+[1,3,1,5]<br>
+]<br>
+输出：<br>
+[<br>
+[0,0,0,0],<br>
+[0,4,5,0],<br>
+[0,3,1,0]<br>
+]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/zero-matrix-lcci">零矩阵</a></p>
+<p>思路：遍历矩阵记录0所在行，所在列，遍历完成后，根据记录的行和列将矩阵对应行对应列的值设为0<br>
+code：</p>
+<pre><code>class Solution {
+    public void setZeroes(int[][] matrix) {
+        int[] r = new int[matrix.length];
+        int[] c = new int[matrix[0].length];
+        for (int i = 0; i &lt; matrix.length; i++) {
+            for (int j = 0; j &lt; matrix[0].length; j++) {
+                if (matrix[i][j] == 0) {
+                    r[i] = 1;
+                    c[j] = 1;
+                }
+
+            }
+        }
+        for (int i = 0; i &lt; r.length; i++) {
+            for (int j = 0; j &lt; c.length; j++) {
+                if (r[i] != 0 &amp;&amp; c[j] != 0) setZeroe(matrix, i, j);
+            }
+        }
+    }
+
+    private void setZeroe(int[][] matrix, int row, int col) {
+        for (int i = 0; i &lt; matrix[0].length; i++) {// 行设为0
+            matrix[row][i] = 0;
+        }
+        for (int i = 0; i &lt; matrix.length; i++) {// 列设为0
+            matrix[i][col] = 0;
+        }
+
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Day36：一次编辑 & 字符串压缩]]></title>
         <id>https://southton.github.io/starry/post/day36/</id>
@@ -924,150 +1053,6 @@ code：</p>
  * obj.push_back(value);
  * int param_3 = obj.pop_front();
  */
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Day27：数组中数字出现的次数 & 和为s的两个数字]]></title>
-        <id>https://southton.github.io/starry/post/day27/</id>
-        <link href="https://southton.github.io/starry/post/day27/">
-        </link>
-        <updated>2020-03-11T04:37:44.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-数组中数字出现的次数">一、数组中数字出现的次数</h3>
-<p>（1）数组中数字出现的次数 I<br>
-一个整型数组 nums 里除两个数字之外，其他数字都出现了两次。请写程序找出这两个只出现一次的数字。要求时间复杂度是O(n)，空间复杂度是O(1)。</p>
-<p>示例 1：<br>
-输入：nums = [4,1,4,6]<br>
-输出：[1,6] 或 [6,1]</p>
-<p>示例 2：<br>
-输入：nums = [1,2,10,4,1,4,3,3]<br>
-输出：[2,10] 或 [10,2]<br>
-限制：</p>
-<ul>
-<li>2 &lt;= nums &lt;= 10000</li>
-</ul>
-<p>来源：<a href="https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof">力扣：数组中数字出现的次数 I</a></p>
-<p>思路：利用hashset<br>
-code：</p>
-<pre><code>class Solution {
-    public int[] singleNumbers(int[] nums) {
-       if (nums.length == 0) return new int[0];         
-        HashSet hashset=new HashSet();
-        for (int i = 0; i &lt; nums.length; i++) {
-            if (hashset.contains(nums[i])) {
-                hashset.remove(nums[i]);
-            } else {
-                hashset.add(nums[i]);
-            }
-        }       
-        int [] result = new int[2];
-        for (int i = 0; i &lt; hashset.size(); i++) {
-            result[i]=Integer.parseInt(hashset.toArray()[i].toString());
-        }
-        return result;
-    }
-}
-</code></pre>
-<p>（2）数组中数字出现的次数 II<br>
-在一个数组 nums 中除一个数字只出现一次之外，其他数字都出现了三次。请找出那个只出现一次的数字。</p>
-<p>示例 1：<br>
-输入：nums = [3,4,3,3]<br>
-输出：4</p>
-<p>示例 2：<br>
-输入：nums = [9,1,7,9,7,9,7]<br>
-输出：1</p>
-<p>限制：</p>
-<ul>
-<li>1 &lt;= nums.length &lt;= 10000</li>
-<li>1 &lt;= nums[i] &lt; 2^31</li>
-</ul>
-<p>来源：<a href="https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof">力扣：数组中数字出现的次数 II</a></p>
-<p>思路1：循环遍历统计每个数字出现的次数<br>
-code1：</p>
-<pre><code>class Solution {
-    public int singleNumber(int[] nums) {
-        if (nums.length == 0) return 0;
-        for (int i = 0; i &lt; nums.length; i++) {
-            int count = 0;
-            for (int j = 0; j &lt; nums.length; j++) {
-                if (nums[i] == nums[j]) count++;                
-            }
-            if (count == 1) return nums[i];
-        }
-        return 0;
-    }
-}
-</code></pre>
-<p>思路2：借助hashmap统计每个数字出现的次数<br>
-code2:</p>
-<pre><code>class Solution {
-    public int singleNumber(int[] nums) {
-        if (nums.length == 0) return 0;
-        Map&lt;Integer,Integer&gt; hm= new HashMap&lt;&gt;();
-        for (int num : nums) {
-            hm.put(num, hm.getOrDefault(num, 0)+1);
-        }
-        for (int num : nums) {
-            if(hm.get(num)==1) return num;
-        }
-        return 0;
-    }
-}
-</code></pre>
-<h3 id="二-和为s的两个数字">二、和为s的两个数字</h3>
-<p>输入一个递增排序的数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。如果有多对数字的和等于s，则输出任意一对即可。</p>
-<p>示例 1：<br>
-输入：nums = [2,7,11,15], target = 9<br>
-输出：[2,7] 或者 [7,2]</p>
-<p>示例 2：<br>
-输入：nums = [10,26,30,31,47,60], target = 40<br>
-输出：[10,30] 或者 [30,10]</p>
-<p>限制：</p>
-<ul>
-<li>1 &lt;= nums.length &lt;= 10^5</li>
-<li>1 &lt;= nums[i] &lt;= 10^6</li>
-</ul>
-<p>来源：<a href="https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof">力扣：和为s的两个数字</a></p>
-<p>思路1：直接遍历，由于递增排序，可以先找大的，然后遍历找小的<br>
-code1：</p>
-<pre><code>class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        if (nums.length == 0) return new int[0];            
-        int[] result = new int[2];        
-        for (int i = nums.length - 1; i &gt; 0; i--) {
-            if (target - nums[i] &lt;= 0) continue; 
-            for (int j = 0; j &lt; i; j++) {
-                if (nums[j] == target-nums[i]) {
-                    result[0] = nums[j];
-                    result[1] = nums[i];                    
-                    return result;
-                }
-            }
-        }
-        return result;
-    }
-}
-</code></pre>
-<p>思路2：利用双指针，从两端往中间扫描<br>
-code2：</p>
-<pre><code>class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        if (nums.length == 0) return new int[0];            
-        int[] result = new int[2];  
-        int start=0,end=nums.length-1;
-        while(start&lt;end){
-            int sum=nums[start]+nums[end];
-            if (sum==target) {
-                result[0]=nums[start];
-                result[1]=nums[end];
-            }
-            if(sum&gt;target){
-                end--;
-            }else start++;
-        }       
-        return result;
-    }
-}
 </code></pre>
 ]]></content>
     </entry>
