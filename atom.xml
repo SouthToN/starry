@@ -2,13 +2,65 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-04-12T02:03:38.792Z</updated>
+    <updated>2020-04-12T15:01:53.709Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[DP01  最长上升子序列]]></title>
+        <id>https://southton.github.io/starry/post/dp01/</id>
+        <link href="https://southton.github.io/starry/post/dp01/">
+        </link>
+        <updated>2020-04-12T02:07:10.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="最长上升子序列">最长上升子序列</h3>
+<p>给定一个无序的整数数组，找到其中最长上升子序列的长度。</p>
+<p>示例:<br>
+输入: [10,9,2,5,3,7,101,18]<br>
+输出: 4<br>
+解释: 最长的上升子序列是 [2,3,7,101]，它的长度是 4。</p>
+<p>说明:</p>
+<ul>
+<li>可能会有多种最长上升子序列的组合，你只需要输出对应的长度即可。</li>
+<li>你算法的时间复杂度应该为 O(n^2) 。</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/longest-increasing-subsequence">力扣：最长上升子序列</a></p>
+<p>思路：结合示例分析：<br>
+第0个数10                               dp[0] = 1  子序列为{10}<br>
+第1个数9 前面没有比9小的数	    dp[1] = 1 子序列为{9}<br>
+第2个数2 	                             dp[2] = 1  子序列为{2}<br>
+第3个数5 前面有2比5小	          dp[3] = dp[2]+1 = 2  子序列为{2，5}<br>
+第4个数3 前面只有2比3小	         dp[4] = dp[2]+1 = 2  子序列为{2，3}<br>
+第5个数7  前面有2，5, 3比7小	    dp[5] =max( dp[2]， dp[3]， dp[4]) + 1=dp[4]+1=3  子序列为{2,3,7}<br>
+第6个数101  前面有10,9,2,5,3,7比101小	dp[6] =max(dp[0],dp[1],dp[2],dp[3],dp[4],dp[5]) +1 =dp[5]+1 = 4 子序列为{2,3,7,101}<br>
+第7个数18	 前面有10,9,2,5,3,7比18小 dp[7] =max(dp[0],dp[1],dp[2],dp[3],dp[4],dp[5]) +1 = dp[5]+1 = 4  子序列为{2,3,7,18}<br>
+maxl = max(dp[i]) =dp[6] = 4<br>
+时间复杂度：O(n^2)<br>
+空间复杂度：O(n)<br>
+代码如下<br>
+code：</p>
+<pre><code>class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if(nums.length==0) return 0;
+        int [] dp =new int[nums.length]; //dp[i]表示以nums[i]结尾的序列长度
+        dp[0]=1;
+        int max=1;//记录最长序列长度
+        for (int i = 1; i &lt; nums.length; i++) {
+            int templen=0;  
+            for (int j = 0; j &lt; nums.length; j++) {
+                if(nums[i]&gt;nums[j]) templen =templen&gt;dp[j]?templen:dp[j];
+            }
+            dp[i] = templen+1;
+            max = max&gt;dp[i]?max:dp[i];
+        }
+        return max;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Day38：字符串轮转 & 移除重复节点  ]]></title>
         <id>https://southton.github.io/starry/post/day38/</id>
@@ -858,84 +910,6 @@ code2：</p>
             }
         }
         return max;
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Day29：n个骰子的点数 & 扑克牌中的顺子]]></title>
-        <id>https://southton.github.io/starry/post/day29/</id>
-        <link href="https://southton.github.io/starry/post/day29/">
-        </link>
-        <updated>2020-03-13T07:49:02.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-n个骰子的点数">一、n个骰子的点数</h3>
-<p>把n个骰子扔在地上，所有骰子朝上一面的点数之和为s。输入n，打印出s的所有可能的值出现的概率。<br>
-你需要用一个浮点数数组返回答案，其中第 i 个元素代表这 n 个骰子所能掷出的点数集合中第 i 小的那个的概率。</p>
-<p>示例 1:<br>
-输入: 1<br>
-输出: [0.16667,0.16667,0.16667,0.16667,0.16667,0.16667]</p>
-<p>示例 2:<br>
-输入: 2<br>
-输出: [0.02778,0.05556,0.08333,0.11111,0.13889,0.16667,0.13889,0.11111,0.08333,0.05556,0.02778]<br>
-限制：1 &lt;= n &lt;= 11</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof">力扣：n个骰子的点数</a></p>
-<p>思路：动态规划<br>
-F(n,s)=F(n-1,s-1)+F(n-1,s-2)+F(n-1,s-3)+F(n-1,s-4)+F(n-1,s-5)+F(n-1,s-6)<br>
-code:</p>
-<pre><code>class Solution {
-    public double[] twoSum(int n) {
-        if (n &lt; 1)   return new double[0];
-        double[] dp = new double[6*n + 1];
-        double[] pr = new double[5*n + 1];//可能的点数和
-        double sum=Math.pow(6, n);        
-        for (int i = 1; i &lt;= 6; i++) {
-            dp[i]=1;
-            pr[i-1]=1.0/6;            
-        }
-        for (int i = 2; i &lt;= n; i++) {  //控制骰子个数
-            for (int j = n*6; j &gt;=1; j--) {
-                int temp=0;
-                for (int k = 1; k &lt;= 6; k++) {
-                    temp+=j&gt;=k?dp[j-k]:0;
-                }
-                dp[j]=temp;
-                if (i==n&amp;&amp;j&gt;=n) pr[j-i]=dp[j]/sum;                
-            }
-        }
-        return pr;
-    }
-}
-</code></pre>
-<h3 id="二-扑克牌中的顺子">二、 扑克牌中的顺子</h3>
-<p>从扑克牌中随机抽5张牌，判断是不是一个顺子，即这5张牌是不是连续的。2～10为数字本身，A为1，J为11，Q为12，K为13，而大、小王为 0 ，可以看成任意数字。A 不能视为 14。</p>
-<p>示例 1:<br>
-输入: [1,2,3,4,5]<br>
-输出: True</p>
-<p>示例 2:<br>
-输入: [0,0,1,2,5]<br>
-输出: True</p>
-<p>限制：数组长度为 5 &amp; 数组的数取值为 [0, 13] .</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/bu-ke-pai-zhong-de-shun-zi-lcof">力扣：扑克牌中的顺子</a></p>
-<p>思路：排序，统计数组中0的个数，数组中若有两个数相等则不能构成顺子，数组中不连续的两个数之间缺的数字个数必须小于等于数组中0的个数<br>
-code：</p>
-<pre><code>class Solution {
-    public boolean isStraight(int[] nums) {
-        if(nums.length&lt;5) return false;
-        for (int i = 0; i &lt; nums.length; i++) {
-            if (nums[i] &lt; 0 || nums[i] &gt; 13) return false;               
-        }
-        int zero = 0;
-        Arrays.sort(nums);
-        for (int i = 0; i &lt; nums.length - 1; i++) {
-            if (nums[i] == 0) {
-                zero++;
-                continue;
-            }
-            if (nums[i] == nums[i + 1]) return false;                
-            if (nums[i] != nums[i + 1] + 1) zero -= nums[i + 1] - nums[i] - 1;                
-        }
-        return zero &gt;= 0;
     }
 }
 </code></pre>
