@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DP03  三角形最小路径和 | Starry</title>
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1586874258704">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1586874758629">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="DP03  三角形最小路径和 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
@@ -30,7 +30,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://southton.github.io/starry">
-  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1586874258704" alt="">
+  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1586874758629" alt="">
   </a>
   <h1 class="site-title">
     Starry
@@ -123,7 +123,7 @@
 <li>每行中间元素：dp[i][j] = min(dp[i-1][j-1],dp[i-1][j]) +triangle[i][j]</li>
 </ul>
 <p>3、找初始值，给dp数组赋初值，即三角形顶上元素triangle[0][0]。<br>
-采用这种思路时间复杂度和空间复杂度均为O(n^2)。通过以上思路分析，不难发现每次更新dp[i][j]时只与dp[i-1][j-1]和dp[i-1][j]有关，故可采用两个变量将dp[i-1][j-1]和dp[i-1][j]保存，采用一维数组即可完成以上3步过程，遍历完成后数组中的最小元素即为三角形的最小路径和<br>
+采用这种思路时间复杂度和空间复杂度均为O(n<sup>2)。通过以上思路分析，不难发现每次更新dp[i][j]时只与dp[i-1][j-1]和dp[i-1][j]有关，故可采用两个变量将dp[i-1][j-1]和dp[i-1][j]保存，采用一维数组即可完成以上3步过程，遍历完成后数组中的最小元素即为三角形的最小路径和。时间复杂度O(n</sup>2)、空间复杂度O(n)。<br>
 code：</p>
 <pre><code>class Solution {
     public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) {

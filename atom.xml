@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-04-14T14:24:24.460Z</updated>
+    <updated>2020-04-14T14:32:41.784Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
@@ -35,7 +35,7 @@
 <li>每行中间元素：dp[i][j] = min(dp[i-1][j-1],dp[i-1][j]) +triangle[i][j]</li>
 </ul>
 <p>3、找初始值，给dp数组赋初值，即三角形顶上元素triangle[0][0]。<br>
-采用这种思路时间复杂度和空间复杂度均为O(n^2)。通过以上思路分析，不难发现每次更新dp[i][j]时只与dp[i-1][j-1]和dp[i-1][j]有关，故可采用两个变量将dp[i-1][j-1]和dp[i-1][j]保存，采用一维数组即可完成以上3步过程，遍历完成后数组中的最小元素即为三角形的最小路径和<br>
+采用这种思路时间复杂度和空间复杂度均为O(n<sup>2)。通过以上思路分析，不难发现每次更新dp[i][j]时只与dp[i-1][j-1]和dp[i-1][j]有关，故可采用两个变量将dp[i-1][j-1]和dp[i-1][j]保存，采用一维数组即可完成以上3步过程，遍历完成后数组中的最小元素即为三角形的最小路径和。时间复杂度O(n</sup>2)、空间复杂度O(n)。<br>
 code：</p>
 <pre><code>class Solution {
     public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) {
