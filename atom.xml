@@ -2,13 +2,36 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-04-13T05:38:36.760Z</updated>
+    <updated>2020-04-14T01:50:20.332Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[DP03  三角形最小路径和]]></title>
+        <id>https://southton.github.io/starry/post/dp03/</id>
+        <link href="https://southton.github.io/starry/post/dp03/">
+        </link>
+        <updated>2020-04-14T01:19:59.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="三角形最小路径和">三角形最小路径和</h3>
+<p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。<br>
+例如，给定三角形：<br>
+[<br>
+[2],<br>
+[3,4],<br>
+[6,5,7],<br>
+[4,1,8,3]<br>
+]<br>
+自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/triangle">力扣：三角形最小路径和</a></p>
+<p>思路：<br>
+code：</p>
+<pre><code>
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DP02 最长公共子序列]]></title>
         <id>https://southton.github.io/starry/post/dp02/</id>
@@ -44,12 +67,12 @@
 2、找出数组元素间的关系式，这时候观察不容易发现，我们可以手动填充几个例子，便可以发现规律：</p>
 <ul>
 <li>test1[i]等于test1[j]时 dp[i][j] = max(dp[i][j - 1], dp[i - 1][j] ) +1 ;</li>
-<li>test1[i]等于test1[j]时 dp[i][j] = max(dp[i][j - 1], dp[i - 1][j] ) ;<br>
-3、找初始值，给dp数组赋初值。<br>
-时间复杂度：O(m^n)<br>
-空间复杂度：O(m*n)<br>
-code：</li>
+<li>test1[i]等于test1[j]时 dp[i][j] = max(dp[i][j - 1], dp[i - 1][j] ) ;</li>
 </ul>
+<p>3、找初始值，给dp数组赋初值。<br>
+时间复杂度：O(m^n)<br>
+空间复杂度：O(m*n)</p>
+<p>code：</p>
 <pre><code>class Solution {
     public int longestCommonSubsequence(String text1, String text2) {
         if (text1.length() == 0 || text2.length() == 0) return 0;
@@ -846,62 +869,6 @@ code：</p>
             i++;
         }        
         return (int) (flag?num:-num);
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Day31：求1+2+…+n & 不用加减乘除做加法]]></title>
-        <id>https://southton.github.io/starry/post/day31/</id>
-        <link href="https://southton.github.io/starry/post/day31/">
-        </link>
-        <updated>2020-03-15T03:32:34.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-求12n">一、求1+2+…+n</h3>
-<p>求 1+2+...+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。</p>
-<p>示例 1：<br>
-输入: n = 3<br>
-输出: 6</p>
-<p>示例 2：<br>
-输入: n = 9<br>
-输出: 45</p>
-<p>限制：</p>
-<ul>
-<li>1 &lt;= n &lt;= 10000</li>
-</ul>
-<p>来源：<a href="https://leetcode-cn.com/problems/qiu-12n-lcof">力扣：求1+2+…+n</a></p>
-<p>思路：使用递归，条件与 &amp;&amp; 在第一个条件语句为 false 的情况下不会去执行第二个条件语句。<br>
-code：</p>
-<pre><code>class Solution {
-    public int sumNums(int n) {
-        // return n*(n+1)/2;
-        int sum = n;
-        boolean b = (n &gt; 0) &amp;&amp; ((sum += sumNums(n - 1)) &gt; 0);
-        return sum;
-    }
-}
-</code></pre>
-<h3 id="二-不用加减乘除做加法">二、不用加减乘除做加法</h3>
-<p>写一个函数，求两个整数之和，要求在函数体内不得使用 “+”、“-”、“*”、“/” 四则运算符号。</p>
-<p>示例:<br>
-输入: a = 1, b = 1<br>
-输出: 2</p>
-<p>提示：</p>
-<ul>
-<li>a, b 均可能是负数或 0</li>
-<li>结果不会溢出 32 位整数</li>
-</ul>
-<p>来源：<a href="https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof">力扣：不用加减乘除做加法</a></p>
-<p>思路：位运算<br>
-code：</p>
-<pre><code>class Solution {
-    public int add(int a, int b) {
-        while(b != 0){
-            int temp = a ^ b; //按位异或
-            b = (a &amp; b) &lt;&lt; 1; //进位
-            a = temp;
-        }
-        return a;
     }
 }
 </code></pre>
