@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DP03  三角形最小路径和 | Starry</title>
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1586829010282">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1586874258704">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="DP03  三角形最小路径和 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
@@ -30,7 +30,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://southton.github.io/starry">
-  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1586829010282" alt="">
+  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1586874258704" alt="">
   </a>
   <h1 class="site-title">
     Starry
@@ -90,7 +90,7 @@
                 2020-04-14
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
                 <a href="https://southton.github.io/starry/tag/p_aE2-U4p/" class="post-tag">
@@ -114,9 +114,46 @@
 ]<br>
 自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。</p>
 <p>来源：<a href="https://leetcode-cn.com/problems/triangle">力扣：三角形最小路径和</a></p>
-<p>思路：<br>
+<p>思路：本题依旧可以用二维数组解决，三步走，将三角形看作一个二维数组triangle[][]<br>
+1、定义dp[i][j]的含义，dp[i][j]表示遍历到三角形第i行第j列的元素triangle[i][j]时的最短路径<br>
+2、找出dp数组中元素之间的关系，分三种情况：</p>
+<ul>
+<li>每行的第一个元素：dp[i][j] = dp[i-1][j] +triangle[i][j]</li>
+<li>每行的最后一个元素：dp[i][j] = dp[i-1][j-1] +triangle[i][j]</li>
+<li>每行中间元素：dp[i][j] = min(dp[i-1][j-1],dp[i-1][j]) +triangle[i][j]</li>
+</ul>
+<p>3、找初始值，给dp数组赋初值，即三角形顶上元素triangle[0][0]。<br>
+采用这种思路时间复杂度和空间复杂度均为O(n^2)。通过以上思路分析，不难发现每次更新dp[i][j]时只与dp[i-1][j-1]和dp[i-1][j]有关，故可采用两个变量将dp[i-1][j-1]和dp[i-1][j]保存，采用一维数组即可完成以上3步过程，遍历完成后数组中的最小元素即为三角形的最小路径和<br>
 code：</p>
-<pre><code>
+<pre><code>class Solution {
+    public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) {
+        if(triangle.isEmpty()) return 0;
+        int n = triangle.size(); //三角形的行数
+        int [] dp= new int[n];
+        dp[0]=triangle.get(0).get(0);//初始值
+        int pre = 0;//保存dp[i-1][j-1]
+        int cur;//保存dp[i-1][j]
+        for (int i = 1; i &lt; n; i++) {
+            List&lt;Integer&gt; item = triangle.get(i);//获取三角形的每一行元素
+            for (int j = 0; j &lt;item.size(); j++) {
+                cur = dp[j];
+                if (j == 0) { // 每行第一个元素                   
+                    dp[j] = cur + item.get(j);
+                } else if (j == i) { // 每行最后一个元素                   
+                    dp[j] = pre + item.get(j);
+                } else {//中间元素
+                    dp[j] = (cur&lt;pre?cur:pre) + item.get(j);
+                }
+                pre = cur;
+            }
+        }
+        int min= Integer.MAX_VALUE;
+        for (int i = 0; i &lt; dp.length; i++) {            
+            min = min&gt;dp[i]?dp[i]:min;
+        }
+        return min;
+    }
+}
 </code></pre>
 
               </div>
