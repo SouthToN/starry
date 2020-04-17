@@ -2,20 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Day04：斐波那契数列 &amp; 青蛙跳台阶问题 | Starry</title>
+<title>DP06 鸡蛋掉落 | Starry</title>
 <link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1587126779356">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Day04：斐波那契数列 &amp; 青蛙跳台阶问题 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="DP06 鸡蛋掉落 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="一、菲波那切数列
-写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项。斐波那契数列的定义如下：
-F(0) = 0,   F(1) = 1
-F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1...." />
-    <meta name="keywords" content="剑指 Offer" />
+    <meta name="description" content="鸡蛋掉落
+你将获得 K 个鸡蛋，并可以使用一栋从 1 到 N  共有 N 层楼的建筑。
+每个蛋的功能都是一样的，如果一个蛋碎了，你就不能再把它掉下去。
+你知道存在楼层 F ，满足 0 &lt;= F &lt;= N 任何从高于 F 的楼层落..." />
+    <meta name="keywords" content="DP" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -77,103 +77,70 @@ F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1...." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Day04：斐波那契数列 &amp; 青蛙跳台阶问题
+              DP06 鸡蛋掉落
             </h2>
             <div class="post-info">
               <span>
-                2020-02-17
+                2020-04-17
               </span>
               <span>
                 3 min read
               </span>
               
-                <a href="https://southton.github.io/starry/tag/JZ-Offer/" class="post-tag">
-                  # 剑指 Offer
+                <a href="https://southton.github.io/starry/tag/p_aE2-U4p/" class="post-tag">
+                  # DP
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/day04.jpg" alt="">
+              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/dp06.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="一-菲波那切数列">一、菲波那切数列</h3>
-<p>写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项。斐波那契数列的定义如下：<br>
-F(0) = 0,   F(1) = 1<br>
-F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.<br>
-斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。<br>
-答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。<br>
-1，1,2,3,5,8。。。</p>
+                <h3 id="鸡蛋掉落">鸡蛋掉落</h3>
+<p>你将获得 K 个鸡蛋，并可以使用一栋从 1 到 N  共有 N 层楼的建筑。<br>
+每个蛋的功能都是一样的，如果一个蛋碎了，你就不能再把它掉下去。<br>
+你知道存在楼层 F ，满足 0 &lt;= F &lt;= N 任何从高于 F 的楼层落下的鸡蛋都会碎，从 F 楼层或比它低的楼层落下的鸡蛋都不会破。<br>
+每次移动，你可以取一个鸡蛋（如果你有完整的鸡蛋）并把它从任一楼层 X 扔下（满足 1 &lt;= X &lt;= N）。<br>
+你的目标是确切地知道 F 的值是多少。<br>
+无论 F 的初始值如何，你确定 F 的值的最小移动次数是多少？</p>
 <p>示例 1：<br>
-输入：n = 2<br>
-输出：1</p>
+输入：K = 1, N = 2<br>
+输出：2<br>
+解释：<br>
+鸡蛋从 1 楼掉落。如果它碎了，我们肯定知道 F = 0 。<br>
+否则，鸡蛋从 2 楼掉落。如果它碎了，我们肯定知道 F = 1 。<br>
+如果它没碎，那么我们肯定知道 F = 2 。<br>
+因此，在最坏的情况下我们需要移动 2 次以确定 F 是多少。</p>
 <p>示例 2：<br>
-输入：n = 5<br>
-输出：5</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof">力扣：斐波那契数列</a></p>
-<p>思路1：递归方法<br>
-时间复杂度 ：O(2^N)<br>
-空间复杂度 ：O(N)<br>
-对于递归问题求时间复杂度画递归树<br>
-递归问题存在大量重复计算，解决方法就是采用动态规划<br>
-code1：</p>
+输入：K = 2, N = 6<br>
+输出：3</p>
+<p>示例 3：<br>
+输入：K = 3, N = 14<br>
+输出：4</p>
+<p>提示：</p>
+<ul>
+<li>1 &lt;= K &lt;= 100</li>
+<li>1 &lt;= N &lt;= 10000</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/super-egg-drop">力扣：鸡蛋掉落</a></p>
+<p>思路：<br>
+<img src="https://southton.github.io/starry/post-images/1587125917769.png" alt="" loading="lazy"><br>
+1、定义动态数组元素的含义: dp[i][j] 表示i个鸡蛋j层楼时，确定 F 的值的最小移动次数<br>
+2、找动态数组元素间的关系， dp[j][i] = dp[j][i - 1] (蛋没碎)+ dp[j - 1][i - 1] (蛋碎)+ 1;<br>
+3、给动态数组赋初值,即没有蛋时dp[0][i] = 0<br>
+code：</p>
 <pre><code>class Solution {
-    public int fib(int n) {       
-        if (n &lt;= 1)  return n;	
-        return fib(n-1)+fib(n-1);
-    }
-}
-</code></pre>
-<p>思路2：非递归方法<br>
-时间复杂度 ：O(N)<br>
-空间复杂度 ：O(1)<br>
-code2：</p>
-<pre><code>class Solution {
-    public int fib(int n) {
-        int a=0,b=1;
-        if (n &lt;= 1)	return n;		
-        for (int i = 2; i &lt;= n; i++) {
-            int temp = a + b;
-            a = b;
-            b = temp%1000000007;
+    public int superEggDrop(int K, int N) {
+        int[][] dp = new int[K + 1][N + 1];
+        for (int i = 1; i &lt;= N; i++) {
+            dp[0][i] = 0; // 赋初值
+            for (int j = 1; j &lt;= K; j++) {
+                dp[j][i] = dp[j][i - 1] + dp[j - 1][i - 1] + 1;
+                if (dp[j][i] &gt;= N) return i;
+            }
         }
-        return b;
-    }
-}
-</code></pre>
-<h3 id="二-青蛙跳台阶问题">二、青蛙跳台阶问题</h3>
-<p>一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。<br>
-答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。</p>
-<p>示例 1：<br>
-输入：n = 2<br>
-输出：2</p>
-<p>示例 2：<br>
-输入：n = 7<br>
-输出：21</p>
-<p>此问题与斐波那契数列问题类似,一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶，即每一级的跳法与n-1级和n-2级有关。</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/qing-wa-tiao-tai-jie-wen-ti-lcof">力扣：青蛙跳台阶问题</a></p>
-<p>code1:</p>
-<pre><code>class Solution {
-    public int numWays(int n) {        
-        if (n&lt;=2) return n;		
-        return numWays(n-1)+numWays(n-2);
-    }
-}
-</code></pre>
-<p>code2:</p>
-<pre><code>class Solution {
-    public int numWays(int n) {        
-        int a = 1, b = 1;
-        if (n == 0)
-            return 1;
-        if (n &gt; 0 &amp;&amp; n &lt;= 2)
-            return n;
-        for (int i = 2; i &lt;= n; i++) {
-            int temp = a + b;
-            a = b;
-            b = temp % 1000000007;
-		}
-        return b;
+        return N;
     }
 }
 </code></pre>
@@ -185,8 +152,7 @@ code2：</p>
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B8%80-%E8%8F%B2%E6%B3%A2%E9%82%A3%E5%88%87%E6%95%B0%E5%88%97">一、菲波那切数列</a></li>
-<li><a href="#%E4%BA%8C-%E9%9D%92%E8%9B%99%E8%B7%B3%E5%8F%B0%E9%98%B6%E9%97%AE%E9%A2%98">二、青蛙跳台阶问题</a></li>
+<li><a href="#%E9%B8%A1%E8%9B%8B%E6%8E%89%E8%90%BD">鸡蛋掉落</a></li>
 </ul>
 </li>
 </ul>
@@ -201,9 +167,9 @@ code2：</p>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://southton.github.io/starry/post/day03/">
+            <a href="https://southton.github.io/starry/post/dp05/">
               <h3 class="post-title">
-                Day03：重建二叉树 &amp; 用两个栈实现队列
+                DP05 乘积最大子数组
               </h3>
             </a>
           </div>
