@@ -2,22 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Day18: 字符串的排列 &amp; 数组中出现次数超过一半的数字 | Starry</title>
+<title>DP07 俄罗斯套娃信封问题 | Starry</title>
 <link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1587218042955">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Day18: 字符串的排列 &amp; 数组中出现次数超过一半的数字 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="DP07 俄罗斯套娃信封问题 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="一、字符串的排列
-输入一个字符串，打印出该字符串中字符的所有排列。
-你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
-示例:
-输入：s = &quot;abc&quot;
-输出：[&quot;abc&quot;,&quot;acb..." />
-    <meta name="keywords" content="剑指 Offer" />
+    <meta name="description" content="俄罗斯套娃信封问题
+给定一些标记了宽度和高度的信封，宽度和高度以整数对形式 (w, h) 出现。当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。
+请计算最多能有多少个信封能组成一组“俄罗斯套..." />
+    <meta name="keywords" content="DP" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -79,109 +76,62 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Day18: 字符串的排列 &amp; 数组中出现次数超过一半的数字
+              DP07 俄罗斯套娃信封问题
             </h2>
             <div class="post-info">
               <span>
-                2020-03-02
+                2020-04-18
               </span>
               <span>
-                3 min read
+                2 min read
               </span>
               
-                <a href="https://southton.github.io/starry/tag/JZ-Offer/" class="post-tag">
-                  # 剑指 Offer
+                <a href="https://southton.github.io/starry/tag/p_aE2-U4p/" class="post-tag">
+                  # DP
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/day18.jpg" alt="">
+              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/dp07.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="一-字符串的排列">一、字符串的排列</h3>
-<p>输入一个字符串，打印出该字符串中字符的所有排列。<br>
-你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。</p>
+                <h3 id="俄罗斯套娃信封问题">俄罗斯套娃信封问题</h3>
+<p>给定一些标记了宽度和高度的信封，宽度和高度以整数对形式 (w, h) 出现。当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。<br>
+请计算最多能有多少个信封能组成一组“俄罗斯套娃”信封（即可以把一个信封放到另一个信封里面）。<br>
+说明:不允许旋转信封。</p>
 <p>示例:<br>
-输入：s = &quot;abc&quot;<br>
-输出：[&quot;abc&quot;,&quot;acb&quot;,&quot;bac&quot;,&quot;bca&quot;,&quot;cab&quot;,&quot;cba&quot;]<br>
-限制：1 &lt;= 字符串的长度 &lt;= 8</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof">力扣：字符串的排列</a></p>
-<p>思路：将字符串转换为字符数组进行全排列<br>
+输入: envelopes = [[5,4],[6,4],[6,7],[2,3]]<br>
+输出: 3<br>
+解释: 最多信封的个数为 3, 组合为: [2,3] =&gt; [5,4] =&gt; [6,7]。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/russian-doll-envelopes/">力扣：俄罗斯套娃信封问题</a></p>
+<p>思路：排序后按最长子序列处理<br>
+dp[i] 表示dp[i]表示第i个信封能套的最大信封数<br>
 code：</p>
-<pre><code>class Solution { 
-	// 给输入的str字符串中的字符进行全排列
-		public String [] permutation(String s) {
-            if (s == null) return new String[0];
-            List&lt;String&gt; strall = new ArrayList&lt;&gt;();
-            String [] strings=permutation(s.toCharArray(), 0);
-            for(String str:strings){//去重
-				if(!strall.contains(str))	
-					strall.add(str);
-			}
-			return strall.toArray(new String[strall.size()]);            
-        }
-        List&lt;String&gt; strList = new ArrayList&lt;&gt;();
-		private String [] permutation(char[] chars, int pos) {
-			if (pos == chars.length - 1) strList.add(new String(chars));
-			for (int i = pos; i &lt; chars.length; i++) {				
-				char temp = chars[i];
-				chars[i] = chars[pos];
-				chars[pos] = temp;
-				// 递归求后面的字符的排列
-				permutation(chars, pos + 1);
-				// 还原字符位置
-				temp = chars[i];
-				chars[i] = chars[pos];
-				chars[pos] = temp;
-			}
-			return strList.toArray(new String[strList.size()]);
-		}
-}
-</code></pre>
-<h3 id="二-数组中出现次数超过一半的数字">二、数组中出现次数超过一半的数字</h3>
-<p>数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。<br>
-你可以假设数组是非空的，并且给定的数组总是存在多数元素。<br>
-示例:<br>
-输入: [1, 2, 3, 2, 2, 2, 5, 4, 2]<br>
-输出: 2<br>
-限制：1 &lt;= 数组长度 &lt;= 50000</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof">力扣：数组中出现次数超过一半的数字</a></p>
-<p>思路1：直接遍历，时间复杂度O(n^2)较高。<br>
-code1：</p>
 <pre><code>class Solution {
-    public int majorityElement(int[] nums) {
-        int num=0;
-        if (nums.length == 0)  return num;
-        for (int i = 0; i &lt; nums.length; i++) {
-            int count = 1;
-            for (int j = i+1; j &lt; nums.length; j++) {
-                if (nums[i] == nums[j]) count++;
+    public int maxEnvelopes(int[][] envelopes) {
+        if (envelopes.length &lt; 2) return envelopes.length;
+        int n = envelopes.length;
+        Arrays.sort(envelopes, new Comparator&lt;int[]&gt;() {
+            @Override
+            public int compare(int[] o1, int[] o2) { // 自定义一个排序器按宽度进行升序排序
+                if (o1[0] == o2[0])
+                    return o2[1] - o1[1]; // 宽度相等时按高度降序排序
+                return o1[0] - o2[0];
             }
-            if (count&gt;nums.length/2) num=nums[i];
+        });
+        int[] dp = new int[n];// dp[i]表示第i个信封能套的最大信封数        
+        int max = 1;//记录最大值
+        for (int i = 0; i &lt; n; i++) {
+            dp[i] = 1;//初始化
+            for (int j = 0; j &lt; i; j++) {
+                if ( envelopes[i][1] &gt; envelopes[j][1]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            max = max&gt;dp[i]?max:dp[i];
         }
-        return num;
-    }
-}
-</code></pre>
-<p>思路2：摩尔投票法，时间复杂度O(N),空间复杂度O(1)<br>
-count作为计数器，如果count为0则num重新赋值，重新计算count,如果有数字出现次数超过数组长度一半，那么count便不会减到0。<br>
-code2：</p>
-<pre><code>class Solution {
-    public int majorityElement(int[] nums) {
-        int count =0;
-        int num=0;
-        for (int item : nums) {
-            if (count==0) {
-                num=item;
-            }
-            if (num==item) {
-                count+=1;
-            } else {
-                count+=-1;
-            }
-        }
-        return num;
+        return max;
     }
 }
 </code></pre>
@@ -193,8 +143,7 @@ code2：</p>
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B8%80-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%8E%92%E5%88%97">一、字符串的排列</a></li>
-<li><a href="#%E4%BA%8C-%E6%95%B0%E7%BB%84%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E8%B6%85%E8%BF%87%E4%B8%80%E5%8D%8A%E7%9A%84%E6%95%B0%E5%AD%97">二、数组中出现次数超过一半的数字</a></li>
+<li><a href="#%E4%BF%84%E7%BD%97%E6%96%AF%E5%A5%97%E5%A8%83%E4%BF%A1%E5%B0%81%E9%97%AE%E9%A2%98">俄罗斯套娃信封问题</a></li>
 </ul>
 </li>
 </ul>
@@ -209,9 +158,9 @@ code2：</p>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://southton.github.io/starry/post/day17/">
+            <a href="https://southton.github.io/starry/post/dp06/">
               <h3 class="post-title">
-                Day17：二叉搜索树与双向链表 &amp; 序列化二叉树
+                DP06 鸡蛋掉落
               </h3>
             </a>
           </div>
