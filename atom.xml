@@ -2,13 +2,78 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-04-18T13:54:08.183Z</updated>
+    <updated>2020-04-20T09:07:49.373Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[DP08 打家劫舍]]></title>
+        <id>https://southton.github.io/starry/post/dp08/</id>
+        <link href="https://southton.github.io/starry/post/dp08/">
+        </link>
+        <updated>2020-04-20T08:10:04.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="打家劫舍">打家劫舍</h3>
+<p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。<br>
+给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。</p>
+<p>示例 1:<br>
+输入: [1,2,3,1]<br>
+输出: 4<br>
+解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。<br>
+     偷窃到的最高金额 = 1 + 3 = 4 。</p>
+<p>示例 2:<br>
+输入: [2,7,9,3,1]<br>
+输出: 12<br>
+解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。<br>
+     偷窃到的最高金额 = 2 + 9 + 1 = 12 。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/house-robber">力扣：打家劫舍</a></p>
+<p>思路：采用动态规划<br>
+1、定义动态数组的含义：dp[i]表示打劫到第i家时打劫的最大金额<br>
+2、找动态数组间元素的关系，由题意不能连着打劫两家，故dp[i]为下面两种情况中的最大值</p>
+<ul>
+<li>1）打劫当前家，即dp[i-2]+nums[i]</li>
+<li>2）不打劫当前家，即dp[i-1]</li>
+</ul>
+<pre><code>dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2]);
+</code></pre>
+<p>3、给动态数组元素赋初值，这里的初始值有两个，即第一家和第二家，打劫第一家时dp[0] =nums[0];，打劫第二家时，为第二家和第一家中的最大值dp[1] =Math.max(nums[0],nums[1]);<br>
+时间复杂度和空间复杂度均为O(n)。<br>
+code：</p>
+<pre><code>class Solution {
+    public int rob(int[] nums) {
+        if (nums.length == 0) return 0;
+        if (nums.length == 1) return nums[0];
+        int n = nums.length;
+        int[] dp = new int[n+1];
+        dp[0] =nums[0];
+        dp[1] =Math.max(nums[0],nums[1]);
+        for (int i = 2; i &lt; n; i++) {
+            dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2]);
+        }
+        return dp[n-1];
+    }
+}
+</code></pre>
+<p>优化：上述思路可以发现每次在更新dp[i]的时候，只会用到dp[i-2]和nums[i],因此可以用两个变量，一个存储最大值，一个存储dp[i-2];时间复杂度O(n)，空间复杂度O(1)。<br>
+code2：</p>
+<pre><code>class Solution {
+    public int rob(int[] nums) {
+        if (nums.length == 0) return 0;        
+        int max= 0; //保存最大值
+        int pre = 0;  //保存dp[i-2]
+        for (int i : nums) {
+            int tmp = max;
+            max = Math.max(max, pre+i);
+            pre = tmp;
+        }  
+        return max;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DP07 俄罗斯套娃信封问题]]></title>
         <id>https://southton.github.io/starry/post/dp07/</id>
@@ -596,159 +661,6 @@ code：</p>
             matrix[i][col] = 0;
         }
 
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Day36：一次编辑 & 字符串压缩]]></title>
-        <id>https://southton.github.io/starry/post/day36/</id>
-        <link href="https://southton.github.io/starry/post/day36/">
-        </link>
-        <updated>2020-03-20T10:18:07.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-一次编辑">一、一次编辑</h3>
-<p>字符串有三种编辑操作:插入一个字符、删除一个字符或者替换一个字符。 给定两个字符串，编写一个函数判定它们是否只需要一次(或者零次)编辑。</p>
-<p>示例 1:<br>
-输入:<br>
-first = &quot;pale&quot;<br>
-second = &quot;ple&quot;<br>
-输出: True</p>
-<p>示例 2:<br>
-输入:<br>
-first = &quot;pales&quot;<br>
-second = &quot;pal&quot;<br>
-输出: False</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/one-away-lcci/">力扣：一次编辑</a></p>
-<p>思路1：分别考虑插入、删除、替换，其中删除可以当做在短的字符串中插入，因为只能编辑一次，则三种可能为lf+1=ls、lf = ls+1 、lf = ls（lf:字符串1长度、ls:字符串2长度），特别需要考虑边界情况，防止越界，这种做法代码冗余较高。<br>
-code1：</p>
-<pre><code>class Solution {
-    public boolean oneEditAway(String first, String second) {
-        if ((first.length() == 0 &amp;&amp; second.length() == 0) || (first.length() == 0 &amp;&amp; second.length() == 1)
-                || (first.length() == 1 &amp;&amp; second.length() == 0))
-            return true;
-        int lf = first.length();
-        int ls = second.length();
-        boolean flag = false;
-        if (lf + 1 == ls) { // 插入 lf+1=ls
-            int count = 0;
-            StringBuffer sBuffer = new StringBuffer();
-            int f = 0, s = 0;
-            while (f &lt; lf &amp;&amp; s &lt; ls) {
-                if (first.charAt(f) == second.charAt(s)) {
-                    sBuffer.append(first.charAt(f));
-                    f++;
-                    s++;
-                } else {
-                    sBuffer.append(second.charAt(s));
-                    s++;
-                    count++;
-                }
-            }
-            if (sBuffer.length() &lt; ls) {
-                sBuffer.append(second.charAt(ls - 1));
-                count++;
-            }
-            String sb = new String(sBuffer);
-            if (sb.equals(second) &amp;&amp; count == 1)
-                return true;
-
-        } else if (lf == ls + 1) { // 删除 lf = ls+1 ，可以看作在在短的字符串中插入
-            int count = 0;
-            StringBuffer sBuffer = new StringBuffer();
-            int f = 0, s = 0;
-            while (s &lt; ls &amp;&amp; f &lt; lf) {
-                if (first.charAt(f) == second.charAt(s)) {
-                    sBuffer.append(second.charAt(s));
-                    f++;
-                    s++;
-                } else {
-                    sBuffer.append(first.charAt(f));
-                    f++;
-                    count++;
-                }
-            }
-            if (sBuffer.length() &lt; lf) {
-                sBuffer.append(first.charAt(lf - 1));
-                count++;
-            }
-            String sb = new String(sBuffer);
-            if (sb.equals(first) &amp;&amp; count == 1)
-                return true;
-
-        } else if (lf == ls) { // 替换 lf = ls
-            char[] sc = first.toCharArray();
-            int count = 0;
-            for (int i = 0; i &lt; lf; i++) {
-                if (sc[i] != second.charAt(i)) {
-                    sc[i] = second.charAt(i);
-                    count++;
-                }
-            }
-            if (String.valueOf(sc).equals(second) &amp;&amp; (count == 1) || (count == 0)) {
-                return true;
-            }
-        }
-        return flag;
-    }
-}
-</code></pre>
-<p>思路2：一次编辑，则first和second中至多有一个字符不相等<br>
-code2：</p>
-<pre><code>class Solution {
-    public boolean oneEditAway(String first, String second) {
-        int len = first.length() - second.length();
-        if (len &gt; 1 || len &lt; -1) return false;//差值大于一则一次编辑无法完成  
-        int count = 1;
-        for (int i = 0, j = 0; i &lt; first.length() &amp;&amp; j &lt; second.length(); i++, j++) {
-            if (first.charAt(i) != second.charAt(j)) {
-                if (len == 1) { // second添加
-                    j--;
-                } else if (len == -1) { // second删除
-                    i--;
-                }
-                count--;
-            }
-            if (count &lt; 0) return false;// 最多一次编辑 
-        }
-        return true;
-    }
-}
-</code></pre>
-<h3 id="二-字符串压缩">二、字符串压缩</h3>
-<p>字符串压缩。利用字符重复出现的次数，编写一种方法，实现基本的字符串压缩功能。比如，字符串aabcccccaaa会变为a2b1c5a3。若“压缩”后的字符串没有变短，则返回原先的字符串。你可以假设字符串中只包含大小写英文字母（a至z）。</p>
-<p>示例1:<br>
-输入：&quot;aabcccccaaa&quot;<br>
-输出：&quot;a2b1c5a3&quot;</p>
-<p>示例2:<br>
-输入：&quot;abbccd&quot;<br>
-输出：&quot;abbccd&quot;<br>
-解释：&quot;abbccd&quot;压缩后为&quot;a1b2c2d1&quot;，比原字符串长度更长。</p>
-<p>提示：字符串长度在[0, 50000]范围内。</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/compress-string-lcci/">力扣：字符串压缩</a></p>
-<p>思路：逐个统计字符出现次数，每次统计过程中，若前一个字符不等于当前字符，则将前一个字符以及次数添加到stringbuffer中。时间复杂度：O（N）空间复杂度O（1）。<br>
-code：</p>
-<pre><code>class Solution {
-    public String compressString(String S) {
-        if (S.length() == 0 || S == null) return S;
-        StringBuffer sBuffer = new StringBuffer();
-        char pre = S.charAt(0);
-        int count = 1;
-        for (int i = 1; i &lt; S.length(); i++) {
-            char tmp = S.charAt(i);
-            if (pre==tmp) {
-                count++;
-            } else {
-                sBuffer.append(pre);
-                sBuffer.append(count);
-                pre = tmp;
-                count=1;
-            }
-        }
-        sBuffer.append(pre);
-        sBuffer.append(count);
-        if (sBuffer.length() &gt;= S.length()) return S;
-        return sBuffer.toString(); 
     }
 }
 </code></pre>
