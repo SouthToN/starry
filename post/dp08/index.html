@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DP08 打家劫舍 | Starry</title>
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1587392782322">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1587463509272">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="DP08 打家劫舍 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
@@ -11,9 +11,9 @@
 
 
 
-    <meta name="description" content="打家劫舍
+    <meta name="description" content="打家劫舍 I
 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
-给定一个代表每个房屋存放金额的非负整数数组，..." />
+给定一个代表每个房屋存放金额的非负整数数..." />
     <meta name="keywords" content="DP" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://southton.github.io/starry">
-  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1587392782322" alt="">
+  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1587463509272" alt="">
   </a>
   <h1 class="site-title">
     Starry
@@ -83,7 +83,7 @@
                 2020-04-20
               </span>
               <span>
-                3 min read
+                6 min read
               </span>
               
                 <a href="https://southton.github.io/starry/tag/p_aE2-U4p/" class="post-tag">
@@ -96,7 +96,7 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="打家劫舍">打家劫舍</h3>
+                <h3 id="打家劫舍-i">打家劫舍 I</h3>
 <p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。<br>
 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。</p>
 <p>示例 1:<br>
@@ -153,6 +153,76 @@ code2：</p>
     }
 }
 </code></pre>
+<h3 id="打家劫舍-ii">打家劫舍 II</h3>
+<p>你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都围成一圈，这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。<br>
+给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。</p>
+<p>示例 1:<br>
+输入: [2,3,2]<br>
+输出: 3<br>
+解释: 你不能先偷窃 1 号房屋（金额 = 2），然后偷窃 3 号房屋（金额 = 2）, 因为他们是相邻的。</p>
+<p>示例 2:<br>
+输入: [1,2,3,1]<br>
+输出: 4<br>
+解释: 你可以先偷窃 1 号房屋（金额 = 1），然后偷窃 3 号房屋（金额 = 3）。<br>
+     偷窃到的最高金额 = 1 + 3 = 4 。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/house-robber-ii/">力扣：打家劫舍 II</a></p>
+<p>思路：这里第一家和最后一家也相邻，因此可以分别去掉第一家和最后一家后进行动态规划,返回两种情况中的最大值；<br>
+code:</p>
+<pre><code>class Solution {
+    public int rob(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        } else if (nums.length == 1){
+            return nums[0];
+        }else if (nums.length == 2){
+            return Math.max(nums[0], nums[1]) ;
+        }            
+        int n = nums.length;
+        int[] dp = new int[n + 1];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+        for (int i = 2; i &lt; n; i++) { //打劫第一家
+            dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2]);
+        }
+        int[] dp2 = new int[n + 1];
+        dp2[1] = nums[1];
+        dp2[2] = Math.max(nums[1],nums[2]);
+        for (int i = 3; i &lt; n; i++) { //不打劫第一家
+            dp2[i] = Math.max(dp2[i - 1], nums[i] + dp2[i - 2]);
+        }
+        return Math.max(dp[n - 2], dp2[n - 1]);
+    }
+}
+</code></pre>
+<p>思路2：对空间进行优化<br>
+code：</p>
+<pre><code>class Solution {
+    public int rob(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        } else if (nums.length == 1){
+            return nums[0];
+        }else if (nums.length == 2){
+            return Math.max(nums[0], nums[1]) ;
+        }
+        int max1 = 0;
+        int pre1 = 0;        
+        for (int i = 0; i &lt; nums.length-1; i++) {
+            int tmp1 = max1;
+            max1 = Math.max(max1, pre1 + nums[i]);
+            pre1 = tmp1;
+        }
+        int max2 = 0;
+        int pre2 = 0;
+        for (int i = 1; i &lt; nums.length; i++) {
+            int tmp2 = max2;
+            max2 = Math.max(max2, pre2 + nums[i]);
+            pre2 = tmp2;
+        }
+        return Math.max(max1, max2);
+    }
+}
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -161,7 +231,8 @@ code2：</p>
 <ul>
 <li>
 <ul>
-<li><a href="#%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D">打家劫舍</a></li>
+<li><a href="#%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D-i">打家劫舍 I</a></li>
+<li><a href="#%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D-ii">打家劫舍 II</a></li>
 </ul>
 </li>
 </ul>
