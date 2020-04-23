@@ -2,13 +2,71 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-04-22T14:15:44.373Z</updated>
+    <updated>2020-04-23T11:15:28.741Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[DP09 买卖股票的最佳时机]]></title>
+        <id>https://southton.github.io/starry/post/dp09/</id>
+        <link href="https://southton.github.io/starry/post/dp09/">
+        </link>
+        <updated>2020-04-23T10:34:01.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="买卖股票的最佳时机">买卖股票的最佳时机</h3>
+<p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。<br>
+如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。<br>
+注意：你不能在买入股票前卖出股票。</p>
+<p>示例 1:<br>
+输入: [7,1,5,3,6,4]<br>
+输出: 5<br>
+解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。<br>
+注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格；同时，你不能在买入前卖出股票。</p>
+<p>示例 2:<br>
+输入: [7,6,4,3,1]<br>
+输出: 0<br>
+解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock">力扣：买卖股票的最佳时机</a></p>
+<p>思路1：直接暴力循环，第i天的最大利润等于第i天的股票价值减去之前i-(0到i)天股票差值中的最大值，这其中的最大值便是买卖该支股票所能获得的最大利润，时间复杂度O(n^2),空间复杂度O(1).<br>
+code2：</p>
+<pre><code>class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices.length&lt;=1) return 0;
+        int max = 0;
+        for (int i = 1; i &lt; prices.length; i++) {
+            int tmp = 0;
+            for (int j = 0; j &lt; i; j++) {
+                tmp = tmp&gt;(prices[i] -prices[j])?tmp:(prices[i] -prices[j]);
+            }
+            //更新最大值
+            max = Math.max(max, tmp);
+        }
+        return max;
+    }
+}
+</code></pre>
+<p>思路2：上面的思路虽直接明了，但时间复杂度太高，根据常识想要获得利润最高，在最低价格买入最高价格卖出便是，于是可以在循环过程中记下最低价格的同时更新最大利润，时间复杂度O(n)，空间复杂度O(1)。<br>
+code2：</p>
+<pre><code>class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices.length&lt;=1) return 0;
+        int max = 0;//记录买卖股票最大利润
+        int min = Integer.MAX_VALUE;//记录股票的最低价格
+        for (int i = 0; i &lt; prices.length; i++) {
+            if (prices[i]&lt;min) {
+                min = prices[i] ; 
+            } else if (prices[i]-min&gt;max) {
+                max = prices[i]-min;
+            }           
+        }
+        return max;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DP08 打家劫舍]]></title>
         <id>https://southton.github.io/starry/post/dp08/</id>
@@ -647,135 +705,6 @@ class Solution {
             tmp1=tmp1.next;
         }
         return head;
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Day37：旋转矩阵 & 零矩阵]]></title>
-        <id>https://southton.github.io/starry/post/day37/</id>
-        <link href="https://southton.github.io/starry/post/day37/">
-        </link>
-        <updated>2020-03-21T04:04:43.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-旋转矩阵">一、旋转矩阵</h3>
-<p>给定一幅由N × N矩阵表示的图像，其中每个像素的大小为4字节，编写一种方法，将图像旋转90度。<br>
-不占用额外内存空间能否做到？</p>
-<p>示例 1:<br>
-给定 matrix =<br>
-[<br>
-[1,2,3],<br>
-[4,5,6],<br>
-[7,8,9]<br>
-],<br>
-原地旋转输入矩阵，使其变为:<br>
-[<br>
-[7,4,1],<br>
-[8,5,2],<br>
-[9,6,3]<br>
-]</p>
-<p>示例 2:<br>
-给定 matrix =<br>
-[<br>
-[ 5, 1, 9,11],<br>
-[ 2, 4, 8,10],<br>
-[13, 3, 6, 7],<br>
-[15,14,12,16]<br>
-],<br>
-原地旋转输入矩阵，使其变为:<br>
-[<br>
-[15,13, 2, 5],<br>
-[14, 3, 4, 1],<br>
-[12, 6, 8, 9],<br>
-[16, 7,10,11]<br>
-]</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/rotate-matrix-lcci">旋转矩阵</a></p>
-<p>思路：根据矩阵<br>
-[<br>
-[1,2,3],<br>
-[4,5,6],<br>
-[7,8,9]<br>
-]<br>
-1移到3，3移到9，9移到7，7移到1。对应坐标变化可以发现规律：(x,y)--&gt;(x',y'):x'=y, y'=N-1-X,注意边界。<br>
-code：</p>
-<pre><code>class Solution {
-    public void rotate(int[][] matrix) {
-        int row=0,col=0,temp=0;
-        int len = matrix.length;
-        while(row&lt;(len+1)/2){
-            col=0;
-            while(col&lt;len/2){
-                temp = matrix[row][col];
-                matrix[row][col]=matrix[len-col-1][row];
-                matrix[len-col-1][row]=matrix[len-1-row][len-1-col];
-                matrix[len-1-row][len-1-col]=matrix[col][len-1-row];
-                matrix[col][len-1-row]=temp;
-                col++;
-            }
-            row++;
-        }
-    }
-}
-</code></pre>
-<h3 id="二-零矩阵">二、零矩阵</h3>
-<p>编写一种算法，若M × N矩阵中某个元素为0，则将其所在的行与列清零。<br>
-示例 1：<br>
-输入：<br>
-[<br>
-[1,1,1],<br>
-[1,0,1],<br>
-[1,1,1]<br>
-]<br>
-输出：<br>
-[<br>
-[1,0,1],<br>
-[0,0,0],<br>
-[1,0,1]<br>
-]</p>
-<p>示例 2：<br>
-输入：<br>
-[<br>
-[0,1,2,0],<br>
-[3,4,5,2],<br>
-[1,3,1,5]<br>
-]<br>
-输出：<br>
-[<br>
-[0,0,0,0],<br>
-[0,4,5,0],<br>
-[0,3,1,0]<br>
-]</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/zero-matrix-lcci">零矩阵</a></p>
-<p>思路：遍历矩阵记录0所在行，所在列，遍历完成后，根据记录的行和列将矩阵对应行对应列的值设为0<br>
-code：</p>
-<pre><code>class Solution {
-    public void setZeroes(int[][] matrix) {
-        int[] r = new int[matrix.length];
-        int[] c = new int[matrix[0].length];
-        for (int i = 0; i &lt; matrix.length; i++) {
-            for (int j = 0; j &lt; matrix[0].length; j++) {
-                if (matrix[i][j] == 0) {
-                    r[i] = 1;
-                    c[j] = 1;
-                }
-
-            }
-        }
-        for (int i = 0; i &lt; r.length; i++) {
-            for (int j = 0; j &lt; c.length; j++) {
-                if (r[i] != 0 &amp;&amp; c[j] != 0) setZeroe(matrix, i, j);
-            }
-        }
-    }
-
-    private void setZeroe(int[][] matrix, int row, int col) {
-        for (int i = 0; i &lt; matrix[0].length; i++) {// 行设为0
-            matrix[row][i] = 0;
-        }
-        for (int i = 0; i &lt; matrix.length; i++) {// 列设为0
-            matrix[i][col] = 0;
-        }
-
     }
 }
 </code></pre>
