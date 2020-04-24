@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DP09 买卖股票的最佳时机 | Starry</title>
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1587640922986">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1587738298674">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="DP09 买卖股票的最佳时机 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
@@ -11,12 +11,12 @@
 
 
 
-    <meta name="description" content="买卖股票的最佳时机
+    <meta name="description" content="买卖股票的最佳时机 I
 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
 如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。
 注意：你不能在买入股票前卖出股票。
 示例 1:
-输入:..." />
+输..." />
     <meta name="keywords" content="DP" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -26,7 +26,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://southton.github.io/starry">
-  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1587640922986" alt="">
+  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1587738298674" alt="">
   </a>
   <h1 class="site-title">
     Starry
@@ -86,7 +86,7 @@
                 2020-04-23
               </span>
               <span>
-                3 min read
+                6 min read
               </span>
               
                 <a href="https://southton.github.io/starry/tag/p_aE2-U4p/" class="post-tag">
@@ -99,7 +99,7 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="买卖股票的最佳时机">买卖股票的最佳时机</h3>
+                <h3 id="买卖股票的最佳时机-i">买卖股票的最佳时机 I</h3>
 <p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。<br>
 如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。<br>
 注意：你不能在买入股票前卖出股票。</p>
@@ -112,7 +112,7 @@
 输入: [7,6,4,3,1]<br>
 输出: 0<br>
 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock">力扣：买卖股票的最佳时机</a></p>
+<p>来源：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock">力扣：买卖股票的最佳时机 I</a></p>
 <p>思路1：直接暴力循环，第i天的最大利润等于第i天的股票价值减去之前i-(0到i)天股票差值中的最大值，这其中的最大值便是买卖该支股票所能获得的最大利润，时间复杂度O(n^2),空间复杂度O(1).<br>
 code2：</p>
 <pre><code>class Solution {
@@ -149,6 +149,68 @@ code2：</p>
     }
 }
 </code></pre>
+<h3 id="买卖股票的最佳时机-ii">买卖股票的最佳时机 II</h3>
+<p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。<br>
+设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。<br>
+注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
+<p>示例 1:<br>
+输入: [7,1,5,3,6,4]<br>
+输出: 7<br>
+解释: 在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6-3 = 3 。</p>
+<p>示例 2:<br>
+输入: [1,2,3,4,5]<br>
+输出: 4<br>
+解释: 在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。<br>
+注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。因为这样属于同时参与了多笔交易，你必须在再次购买前出售掉之前的股票。</p>
+<p>示例 3:<br>
+输入: [7,6,4,3,1]<br>
+输出: 0<br>
+解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</p>
+<p>提示：</p>
+<ul>
+<li>1 &lt;= prices.length &lt;= 3 * 10 ^ 4</li>
+<li>0 &lt;= prices[i] &lt;= 10 ^ 4</li>
+</ul>
+<p>来源：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii">力扣：买卖股票的最佳时机 II</a></p>
+<p>思路1：一开始选择暴力求解，无奈一时没有穷举出所有可能情况，越想越复杂，没想到暴力解法对于这道题而言并不是最简单的方法，只好另寻他法；在买入以后的每天如果在涨就不卖，如果跌了那么就在跌的前一天卖出，在跌的这天重新买入，这时的收益是最大的，这种情况可以换一种想法，那就是如果股票持续上涨，那么每天都进行买卖，这种想法虽然不和题目要求但是效果是相同的；用示例2举例：<br>
+max = (5-1) = (2-1)+(3-2)+(4-3)+(5-4) = 4<br>
+最大利润 = [如果过程在涨就暂时不卖，到最后再卖]   =[每天进行买卖]<br>
+code1：</p>
+<pre><code>class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices.length&lt;=1) return 0;
+        int max = 0;
+        for(int i=1;i&lt;prices.length;i++){
+            if(prices[i]&gt;prices[i-1]) max += prices[i]-prices[i-1]; 
+        }
+        return max;
+    }
+}
+</code></pre>
+<p>思路2：动态规划<br>
+1、dp[i]表示到第i天时买卖股票所得最大利润<br>
+2、如果股票上涨则卖出，如果跌则不作任何操作，即<br>
+涨：dp[i] = dp[i - 1] + prices[i] - prices[i - 1];<br>
+跌：dp[i] = dp[i - 1]<br>
+3、初始时没有买卖股票，dp[0] = 0;<br>
+code2：</p>
+<pre><code>class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices.length&lt;=1) return 0;
+        int len = prices.length;
+        int[] dp = new int[len]; //收益
+        dp[0] = 0;
+        for (int i = 1; i &lt; len; i++) {
+            if (prices[i] - prices[i - 1] &gt; 0){
+                dp[i] = dp[i - 1] + prices[i] - prices[i - 1];
+            }else {
+                dp[i] = dp[i - 1];
+            }
+        }
+        return dp[len - 1];
+    }
+}
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -157,7 +219,8 @@ code2：</p>
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA">买卖股票的最佳时机</a></li>
+<li><a href="#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-i">买卖股票的最佳时机 I</a></li>
+<li><a href="#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-ii">买卖股票的最佳时机 II</a></li>
 </ul>
 </li>
 </ul>
