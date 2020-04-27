@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-04-25T14:26:19.686Z</updated>
+    <updated>2020-04-27T13:55:37.359Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
@@ -15,7 +15,7 @@
         <link href="https://southton.github.io/starry/post/dp09/">
         </link>
         <updated>2020-04-23T10:34:01.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="买卖股票的最佳时机-i">买卖股票的最佳时机 I</h3>
+        <content type="html"><![CDATA[<h3 id="i-买卖股票的最佳时机-i">I 买卖股票的最佳时机 I</h3>
 <p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。<br>
 如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。<br>
 注意：你不能在买入股票前卖出股票。</p>
@@ -65,7 +65,7 @@ code2：</p>
     }
 }
 </code></pre>
-<h3 id="买卖股票的最佳时机-ii">买卖股票的最佳时机 II</h3>
+<h3 id="ii-买卖股票的最佳时机-ii">II 买卖股票的最佳时机 II</h3>
 <p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。<br>
 设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。<br>
 注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
@@ -127,7 +127,7 @@ code2：</p>
     }
 }
 </code></pre>
-<h3 id="买卖股票的最佳时机-iii">买卖股票的最佳时机 III</h3>
+<h3 id="iii-买卖股票的最佳时机-iii">III 买卖股票的最佳时机 III</h3>
 <p>定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。<br>
 设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。<br>
 注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
@@ -144,23 +144,66 @@ code2：</p>
 输入: [7,6,4,3,1]<br>
 输出: 0<br>
 解释: 在这个情况下, 没有交易完成, 所以最大利润为 0。</p>
-<p>来源：力扣：买卖股票的最佳时机 III](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii)</p>
-<p>思路：<br>
+<p>来源：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii">力扣：买卖股票的最佳时机 III</a></p>
+<p>思路：见代码<br>
 code :</p>
 <pre><code>class Solution {
     public int maxProfit(int[] prices) {
         if (prices.length &lt; 2) return 0;
-        int len = prices.length;
-        int K = 2;
-        int[][] dp = new int[len][K + 1];
-        for (int k = 1; k &lt;= K; k++) {
+        int len = prices.length;        
+        int[][] dp = new int[len][3];
+        for (int k = 1; k &lt;= 2; k++) {
             int min = prices[0];
-            for (int i = 1; i &lt; len; i++) {
+            for (int i = 1; i &lt; len; i++) {               
                 min = Math.min(prices[i] - dp[i][k - 1], min);
                 dp[i][k] = Math.max(dp[i - 1][k], prices[i] - min);
             }
         }
-        return dp[len - 1][K];
+        return dp[len - 1][2];
+    }
+}
+</code></pre>
+<h3 id="iv-买卖股票的最佳时机-iv">IV 买卖股票的最佳时机 IV</h3>
+<p>给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。<br>
+设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。<br>
+注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
+<p>示例 1:<br>
+输入: [2,4,1], k = 2<br>
+输出: 2<br>
+解释: 在第 1 天 (股票价格 = 2) 的时候买入，在第 2 天 (股票价格 = 4) 的时候卖出，这笔交易所能获得利润 = 4-2 = 2 。</p>
+<p>示例 2:<br>
+输入: [3,2,6,5,0,3], k = 2<br>
+输出: 7<br>
+解释: 在第 2 天 (股票价格 = 2) 的时候买入，在第 3 天 (股票价格 = 6) 的时候卖出, 这笔交易所能获得利润 = 6-2 = 4 。随后，在第 5 天 (股票价格 = 0) 的时候买入，在第 6 天 (股票价格 = 3) 的时候卖出, 这笔交易所能获得利润 = 3-0 = 3 。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv">力扣：买卖股票的最佳时机 IV</a></p>
+<p>思路：见代码<br>
+code：</p>
+<pre><code>public class Solution {
+    public int maxProfit(int k, int[] prices) {
+        int res = 0;
+        if (k &gt;= prices.length / 2) {
+            for (int i = 1; i &lt; prices.length; i++) {
+                if (prices[i] &gt; prices[i - 1]) {
+                    res += prices[i] - prices[i - 1];
+                }
+            }
+            return res;
+        }       
+        res = 0;
+        int[][][] dp = new int[prices.length][k + 1][2];
+        for (int i = 0; i &lt; prices.length; i++) {//第几天
+            for (int j = 1; j &lt;= k; j++) { //交易次数
+                if (i == 0) {
+                    dp[0][j][0] = 0;    //0为不持有，1为持有
+                    dp[0][j][1] = -prices[0]; 
+                    continue;
+                }
+                dp[i][j][0] = Math.max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i]);
+                dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i]);
+                res = Math.max(res, dp[i][j][0]);
+            }
+        }
+        return res;
     }
 }
 </code></pre>
