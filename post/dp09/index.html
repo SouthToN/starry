@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DP09 买卖股票的最佳时机 | Starry</title>
-<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1587996457677">
+<link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1588073256705">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="DP09 买卖股票的最佳时机 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
@@ -11,11 +11,11 @@
 
 
 
-    <meta name="description" content="I 买卖股票的最佳时机 I
+    <meta name="description" content="一、 买卖股票的最佳时机 I
 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
 如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。
 注意：你不能在买入股票前卖出股票。
-示例 1:..." />
+示例 1..." />
     <meta name="keywords" content="DP" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -25,7 +25,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://southton.github.io/starry">
-  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1587996457677" alt="">
+  <img class="avatar" src="https://southton.github.io/starry/images/avatar.png?v=1588073256705" alt="">
   </a>
   <h1 class="site-title">
     Starry
@@ -85,7 +85,7 @@
                 2020-04-23
               </span>
               <span>
-                10 min read
+                11 min read
               </span>
               
                 <a href="https://southton.github.io/starry/tag/p_aE2-U4p/" class="post-tag">
@@ -98,7 +98,7 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="i-买卖股票的最佳时机-i">I 买卖股票的最佳时机 I</h3>
+                <h3 id="一-买卖股票的最佳时机-i">一、 买卖股票的最佳时机 I</h3>
 <p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。<br>
 如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。<br>
 注意：你不能在买入股票前卖出股票。</p>
@@ -148,7 +148,7 @@ code2：</p>
     }
 }
 </code></pre>
-<h3 id="ii-买卖股票的最佳时机-ii">II 买卖股票的最佳时机 II</h3>
+<h3 id="二-买卖股票的最佳时机-ii">二、买卖股票的最佳时机 II</h3>
 <p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。<br>
 设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。<br>
 注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
@@ -210,7 +210,7 @@ code2：</p>
     }
 }
 </code></pre>
-<h3 id="iii-买卖股票的最佳时机-iii">III 买卖股票的最佳时机 III</h3>
+<h3 id="三-买卖股票的最佳时机-iii">三、买卖股票的最佳时机 III</h3>
 <p>定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。<br>
 设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。<br>
 注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
@@ -246,7 +246,7 @@ code :</p>
     }
 }
 </code></pre>
-<h3 id="iv-买卖股票的最佳时机-iv">IV 买卖股票的最佳时机 IV</h3>
+<h3 id="四-买卖股票的最佳时机-iv">四、买卖股票的最佳时机 IV</h3>
 <p>给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。<br>
 设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。<br>
 注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
@@ -290,6 +290,44 @@ code：</p>
     }
 }
 </code></pre>
+<h3 id="五-最佳买卖股票时机含冷冻期">五、最佳买卖股票时机含冷冻期</h3>
+<p>给定一个整数数组，其中第 i 个元素代表了第 i 天的股票价格 。​<br>
+设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:<br>
+你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。<br>
+卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。</p>
+<p>示例:<br>
+输入: [1,2,3,0,2]<br>
+输出: 3<br>
+解释: 对应的交易状态为: [买入, 卖出, 冷冻期, 买入, 卖出]</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown">力扣：最佳买卖股票时机含冷冻期</a></p>
+<p>思路：<br>
+1、dp0[i]:表示第i天（包含第i天）之前，买卖股票所得最大利润，最后一次操作是买入<br>
+dp1[i]:表示第i天（包含第i天）之前，买卖股票所得最大利润，最后一次操作是卖出<br>
+2、找关系<br>
+dp0[i] = Math.max(dp0[i - 1], -prices[i]);<br>
+dp0[i] = Math.max(dp0[i], dp1[i - 2] - prices[i])  考虑冷冻期<br>
+dp1[i] = Math.max(dp1[i - 1], dp0[i - 1] + prices[i]);<br>
+3、初始化<br>
+dp0[0]=-prices[0];<br>
+dp1[0] = 0<br>
+code：</p>
+<pre><code>class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices.length &lt; 2) return 0;
+        int n = prices.length;
+        int[] dp0 = new int[n];
+        int[] dp1 = new int[n];
+        dp0[0] = -prices[0];
+        dp1[0] = 0;
+        for (int i = 1; i &lt; dp1.length; i++) {
+            dp0[i] = Math.max(dp0[i - 1], -prices[i]);
+            if (i &gt;= 2) dp0[i] = Math.max(dp0[i], dp1[i - 2] - prices[i]);
+            dp1[i] = Math.max(dp1[i - 1], dp0[i - 1] + prices[i]);
+        }
+        return dp1[n - 1];
+    }
+}
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -298,10 +336,11 @@ code：</p>
 <ul>
 <li>
 <ul>
-<li><a href="#i-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-i">I 买卖股票的最佳时机 I</a></li>
-<li><a href="#ii-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-ii">II 买卖股票的最佳时机 II</a></li>
-<li><a href="#iii-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-iii">III 买卖股票的最佳时机 III</a></li>
-<li><a href="#iv-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-iv">IV 买卖股票的最佳时机 IV</a></li>
+<li><a href="#%E4%B8%80-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-i">一、 买卖股票的最佳时机 I</a></li>
+<li><a href="#%E4%BA%8C-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-ii">二、买卖股票的最佳时机 II</a></li>
+<li><a href="#%E4%B8%89-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-iii">三、买卖股票的最佳时机 III</a></li>
+<li><a href="#%E5%9B%9B-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-iv">四、买卖股票的最佳时机 IV</a></li>
+<li><a href="#%E4%BA%94-%E6%9C%80%E4%BD%B3%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E6%97%B6%E6%9C%BA%E5%90%AB%E5%86%B7%E5%86%BB%E6%9C%9F">五、最佳买卖股票时机含冷冻期</a></li>
 </ul>
 </li>
 </ul>
