@@ -2,13 +2,102 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-05-04T14:22:56.471Z</updated>
+    <updated>2020-05-05T13:29:51.671Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
     <logo>https://southton.github.io/starry/images/avatar.png</logo>
     <icon>https://southton.github.io/starry/favicon.ico</icon>
     <rights>All rights reserved 2020, Starry</rights>
+    <entry>
+        <title type="html"><![CDATA[DP12 正则表达式匹配]]></title>
+        <id>https://southton.github.io/starry/post/dp12/</id>
+        <link href="https://southton.github.io/starry/post/dp12/">
+        </link>
+        <updated>2020-05-05T13:14:45.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="正则表达式匹配">正则表达式匹配</h3>
+<p>给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。</p>
+<ul>
+<li>'.' 匹配任意单个字符</li>
+<li>'*' 匹配零个或多个前面的那一个元素<br>
+所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。</li>
+</ul>
+<p>说明:</p>
+<ul>
+<li>s 可能为空，且只包含从 a-z 的小写字母。</li>
+<li>p 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 *。</li>
+</ul>
+<p>示例 1:<br>
+输入:<br>
+s = &quot;aa&quot;<br>
+p = &quot;a&quot;<br>
+输出: false<br>
+解释: &quot;a&quot; 无法匹配 &quot;aa&quot; 整个字符串。</p>
+<p>示例 2:<br>
+输入:<br>
+s = &quot;aa&quot;<br>
+p = &quot;a*&quot;<br>
+输出: true<br>
+解释: 因为 '*' 代表可以匹配零个或多个前面的那一个元素, 在这里前面的元素就是 'a'。因此，字符串 &quot;aa&quot; 可被视为 'a' 重复了一次。</p>
+<p>示例 3:<br>
+输入:<br>
+s = &quot;ab&quot;<br>
+p = &quot;.<em>&quot;<br>
+输出: true<br>
+解释: &quot;.</em>&quot; 表示可匹配零个或多个（'*'）任意字符（'.'）。</p>
+<p>示例 4:<br>
+输入:<br>
+s = &quot;aab&quot;<br>
+p = &quot;c<em>a</em>b&quot;<br>
+输出: true<br>
+解释: 因为 '*' 表示零个或多个，这里 'c' 为 0 个, 'a' 被重复一次。因此可以匹配字符串 &quot;aab&quot;。</p>
+<p>示例 5:<br>
+输入:<br>
+s = &quot;mississippi&quot;<br>
+p = &quot;mis<em>is</em>p*.&quot;<br>
+输出: false</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/regular-expression-matching">力扣：正则表达式匹配</a></p>
+<p>思路：<br>
+1、定义动态数组的含义，定义dp[i][j]表示s的前i个元素能否被p的前j个元素匹配<br>
+2、找数组元素之间的关系<br>
+当p[j] = '*'时:</p>
+<pre><code>dp[i+1][j+1] = dp[i+1][j-1] || (dp[i][j+1] &amp;&amp; (s.charAt(i)==p.charAt(j-1) || p.charAt(j-1) == '.')) ;
+</code></pre>
+<p>当p[j] ！= '*'时:</p>
+<pre><code>dp[i+1][j+1] = dp[i][j]  &amp;&amp; (s.charAt(i)==p.charAt(j) || p.charAt(j) == '.') ;
+</code></pre>
+<p>3、初始化<br>
+当s和p均为空，匹配 即dp[0][0] = true<br>
+当s为空p不为空时，dp[0][i] = p.charAt(i-1) == '*' &amp;&amp; dp[0][i-2];<br>
+当p为空时，dp[i][0] = false,java布尔数组初始值即为false，所以不必单独处理<br>
+code：</p>
+<pre><code>class Solution {
+    public boolean isMatch(String s, String p) {        
+        int len1 = s.length();
+        int len2 = p.length();
+
+        boolean [][] dp = new boolean [len1+1][len2+1];
+        //初始化
+        dp[0][0] = true;
+        for(int i=2; i&lt;=len2; i++){
+            dp[0][i] = p.charAt(i-1) == '*' &amp;&amp; dp[0][i-2];           
+        }
+        for(int i=0; i&lt;len1; i++){
+            for(int j=0; j&lt;len2; j++){
+                if(p.charAt(j) == '*'){
+                    dp[i+1][j+1] = dp[i+1][j-1] || (dp[i][j+1] &amp;&amp; (s.charAt(i)==p.charAt(j-1) || p.charAt(j-1) == '.')) ;
+                }else{
+                    dp[i+1][j+1] = dp[i][j]  &amp;&amp; (s.charAt(i)==p.charAt(j) || p.charAt(j) == '.') ;
+                }
+            }
+        }
+        return dp[len1][len2];
+
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DP11 通配符匹配]]></title>
         <id>https://southton.github.io/starry/post/dp11/</id>
@@ -895,82 +984,6 @@ code：</p>
             min = min&gt;dp[i]?dp[i]:min;
         }
         return min;
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[DP02 最长公共子序列]]></title>
-        <id>https://southton.github.io/starry/post/dp02/</id>
-        <link href="https://southton.github.io/starry/post/dp02/">
-        </link>
-        <updated>2020-04-13T03:09:35.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="最长公共子序列">最长公共子序列</h3>
-<p>给定两个字符串 text1 和 text2，返回这两个字符串的最长公共子序列。<br>
-一个字符串的 子序列 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。<br>
-例如，&quot;ace&quot; 是 &quot;abcde&quot; 的子序列，但 &quot;aec&quot; 不是 &quot;abcde&quot; 的子序列。两个字符串的「公共子序列」是这两个字符串所共同拥有的子序列。<br>
-若这两个字符串没有公共子序列，则返回 0。</p>
-<p>示例 1:<br>
-输入：text1 = &quot;abcde&quot;, text2 = &quot;ace&quot;<br>
-输出：3<br>
-解释：最长公共子序列是 &quot;ace&quot;，它的长度为 3。</p>
-<p>示例 2:<br>
-输入：text1 = &quot;abc&quot;, text2 = &quot;abc&quot;<br>
-输出：3<br>
-解释：最长公共子序列是 &quot;abc&quot;，它的长度为 3。</p>
-<p>示例 3:<br>
-输入：text1 = &quot;abc&quot;, text2 = &quot;def&quot;<br>
-输出：0<br>
-解释：两个字符串没有公共子序列，返回 0。</p>
-<p>提示:</p>
-<ul>
-<li>1 &lt;= text1.length &lt;= 1000</li>
-<li>1 &lt;= text2.length &lt;= 1000</li>
-<li>输入的字符串只含有小写英文字符。</li>
-</ul>
-<p>来源：<a href="https://leetcode-cn.com/problems/longest-common-subsequence">力扣：最长公共子序列</a></p>
-<p>思路：利用二位数组，分三步走：<br>
-1、定义数组元素的含义，dp[i][j]表示遍历到text1[i],text2[j]时最长公共子序列的长度<br>
-2、找出数组元素间的关系式，这时候观察不容易发现，我们可以手动填充几个例子，便可以发现规律：</p>
-<ul>
-<li>test1[i]等于test1[j]时 dp[i][j] = max(dp[i][j - 1], dp[i - 1][j] ) +1 ;</li>
-<li>test1[i]等于test1[j]时 dp[i][j] = max(dp[i][j - 1], dp[i - 1][j] ) ;</li>
-</ul>
-<p>3、找初始值，给dp数组赋初值。<br>
-时间复杂度：O(m^n)<br>
-空间复杂度：O(m*n)</p>
-<p>code：</p>
-<pre><code>class Solution {
-    public int longestCommonSubsequence(String text1, String text2) {
-        if (text1.length() == 0 || text2.length() == 0) return 0;
-        int m = text1.length(), n = text2.length();
-        int[][] dp = new int[m][n];
-        // 初始值
-        if (text1.charAt(0) == text2.charAt(0)) dp[0][0] = 1;        
-        for (int i = 1; i &lt; n; i++) { // 给dp第一行赋初值
-            if (text1.charAt(0) == text2.charAt(i)) {
-                dp[0][i] = 1;
-            } else {
-                dp[0][i] = dp[0][i - 1];
-            }
-        }
-        for (int i = 1; i &lt; m; i++) { // 给dp第一列赋初值
-            if (text1.charAt(i) == text2.charAt(0)) {
-                dp[i][0] = 1;
-            } else {
-                dp[i][0] = dp[i - 1][0];
-            }
-        }
-        for (int i = 1; i &lt; m; i++) {
-            for (int j = 1; j &lt; n; j++) {
-                dp[i][j] = dp[i][j - 1] &gt; dp[i - 1][j] ? dp[i][j - 1] : dp[i - 1][j];
-                if (text1.charAt(i) == text2.charAt(j)) {
-                    dp[i][j] = dp[i][j] &gt; dp[i - 1][j - 1] ? dp[i][j] : dp[i - 1][j - 1] + 1;
-                }
-            }
-        }
-        return dp[m - 1][n - 1];
     }
 }
 </code></pre>
