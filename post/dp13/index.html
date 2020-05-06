@@ -2,21 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DP04 最大子序和 | Starry</title>
+<title>DP13 最长回文子序列 | Starry</title>
 <link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1588760160072">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="DP04 最大子序和 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="DP13 最长回文子序列 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="最大子序和
-给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
-示例:
-输入: [-2,1,-3,4,-1,2,1,-5,4],
-输出: 6
-解释: 连续子数组 [4,-1,2,1] 的和..." />
+    <meta name="description" content="给定一个字符串s，找到其中最长的回文子序列。可以假设s的最大长度为1000。
+示例 1:
+输入: &quot;bbbab&quot;
+输出: 4
+一个可能的最长回文子序列为 &quot;bbbb&quot;。
+示例 2:
+输入: &quot..." />
     <meta name="keywords" content="DP" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -79,11 +80,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              DP04 最大子序和
+              DP13 最长回文子序列
             </h2>
             <div class="post-info">
               <span>
-                2020-04-15
+                2020-05-06
               </span>
               <span>
                 2 min read
@@ -95,53 +96,54 @@
               
             </div>
             
-              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/dp04.jpg" alt="">
+              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/dp13.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="最大子序和">最大子序和</h3>
-<p>给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。</p>
-<p>示例:<br>
-输入: [-2,1,-3,4,-1,2,1,-5,4],<br>
-输出: 6<br>
-解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/maximum-subarray">力扣：最大子序和</a></p>
-<p>思路：借助一维数组，三步走：<br>
-1、定义dp[i]的含义，dp[i]表示遍历到nums[i]时最大连续子数组的和<br>
-2、找出dp数组中元素之间的关系，dp[i]等于dp[i-1]+nums[i]与nums[i]中的大者<br>
-3、找初始值，给dp数组赋初值，即nums[0]。<br>
-由图中实例得dp为[-2,1,-2,4,3,5,6,1,5];<br>
-时间复杂度与空间复杂度均为O(n);<br>
+                <p>给定一个字符串s，找到其中最长的回文子序列。可以假设s的最大长度为1000。<br>
+示例 1:<br>
+输入: &quot;bbbab&quot;<br>
+输出: 4<br>
+一个可能的最长回文子序列为 &quot;bbbb&quot;。</p>
+<p>示例 2:<br>
+输入: &quot;cbbd&quot;<br>
+输出: 2<br>
+一个可能的最长回文子序列为 &quot;bb&quot;。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/longest-palindromic-subsequence">力扣：最长回文子序列</a></p>
+<p>思路：<br>
+1、定义动态数组的含义，定义dp[i][j]表示s中从i到j所能构成的最长回文序列长度<br>
+2、找数组元素之间的关系<br>
+当s中第i个字符和第j个字符相同时:</p>
+<pre><code> dp[i][j] = dp[i+1][j-1] +2;
+</code></pre>
+<p>当s中第i个字符和第j个字符不同时:</p>
+<pre><code>dp[i][j] = Math.max(dp[i+1][j],dp[i][j-1]);
+</code></pre>
+<p>3、初始化<br>
+dp[i][i] = 1; 单个字符能构成的回文序列长度为1<br>
 code：</p>
 <pre><code>class Solution {
-    public int maxSubArray(int[] nums) {
-        if(nums.length==0) return 0;
-        int [] dp = new int[nums.length]; //定义dp[i]
-        dp[0]=nums[0]; // 赋初值
-        int max = nums[0];//保存最大连续子数组的和
-        for (int i = 1; i &lt; dp.length; i++) {
-            dp[i] =(dp[i-1]+nums[i])&gt;nums[i]?(dp[i-1]+nums[i]):nums[i];
-            max = max&gt;dp[i]?max:dp[i];
+    public int longestPalindromeSubseq(String s) {
+        int len = s.length();
+        int [][] dp = new int[len][len];
+        for(int i = len-1;i&gt;=0;i--){
+            dp[i][i] = 1;
+            for(int j = i+1;j&lt;len;j++){
+                if(s.charAt(i)==s.charAt(j)){
+                    dp[i][j] = dp[i+1][j-1] +2;
+                }else{
+                    dp[i][j] = Math.max(dp[i+1][j],dp[i][j-1]);
+                }
+            }
         }
-        return max;
+        return dp[0][len-1];
     }
 }
 </code></pre>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C">最大子序和</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
@@ -150,9 +152,9 @@ code：</p>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://southton.github.io/starry/post/dp03/">
+            <a href="https://southton.github.io/starry/post/dp12/">
               <h3 class="post-title">
-                DP03  三角形最小路径和
+                DP12 正则表达式匹配
               </h3>
             </a>
           </div>
