@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://southton.github.io/starry</id>
     <title>Starry</title>
-    <updated>2020-05-06T10:16:28.654Z</updated>
+    <updated>2020-05-27T13:09:56.206Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://southton.github.io/starry"/>
     <link rel="self" href="https://southton.github.io/starry/atom.xml"/>
@@ -190,7 +190,7 @@ p = &quot;<em>a</em>b&quot;<br>
 s = &quot;acdcb&quot;<br>
 p = &quot;a*c?b&quot;<br>
 输入: false</p>
-<p>来源：力扣：通配符匹配](https://leetcode-cn.com/problems/wildcard-matching)</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/wildcard-matching">力扣：通配符匹配</a></p>
 <p>思路：<br>
 1、定义动态数组的含义，对于大部分两个字符串的问题都可以用二维数组解决，本题可以采用二维布尔数组来解决，定义dp[i][j]表示s的前i个元素和p的前j个元素是否匹配<br>
 2、找数组元素之间的关系<br>
