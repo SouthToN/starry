@@ -2,26 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DP03  三角形最小路径和 | Starry</title>
+<title>Day39： 判断能否形成等差数列 | Starry</title>
 <link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1596031157055">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="DP03  三角形最小路径和 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Day39： 判断能否形成等差数列 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="三角形最小路径和
-给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。
-例如，给定三角形：
-[
-[2],
-[3,4],
-[6,5,7],
-[4,1,8,3]
-]
-自顶向下的最小路径和为 11（即，2 + 3 + ..." />
-    <meta name="keywords" content="DP" />
+    <meta name="description" content="一、判断能否形成等差数列
+给你一个数字数组 arr 。
+如果一个数列中，任意相邻两项的差总等于同一个常数，那么这个数列就称为 等差数列 。
+如果可以重新排列数组形成等差数列，请返回 true ；否则，返回 false 。
+示例 1：
+输入：..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -83,78 +79,71 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              DP03  三角形最小路径和
+              Day39： 判断能否形成等差数列
             </h2>
             <div class="post-info">
               <span>
-                2020-04-14
+                2020-07-05
               </span>
               <span>
-                3 min read
+                2 min read
               </span>
-              
-                <a href="https://southton.github.io/starry/tag/p_aE2-U4p/" class="post-tag">
-                  # DP
-                </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/dp03.jpg" alt="">
+              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/day39.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="三角形最小路径和">三角形最小路径和</h3>
-<p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。<br>
-例如，给定三角形：<br>
-[<br>
-[2],<br>
-[3,4],<br>
-[6,5,7],<br>
-[4,1,8,3]<br>
-]<br>
-自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/triangle">力扣：三角形最小路径和</a></p>
-<p>思路：本题依旧可以用二维数组解决，三步走，将三角形看作一个二维数组triangle[][]<br>
-1、定义dp[i][j]的含义，dp[i][j]表示遍历到三角形第i行第j列的元素triangle[i][j]时的最短路径<br>
-2、找出dp数组中元素之间的关系，分三种情况：</p>
-<ul>
-<li>每行的第一个元素：dp[i][j] = dp[i-1][j] +triangle[i][j]</li>
-<li>每行的最后一个元素：dp[i][j] = dp[i-1][j-1] +triangle[i][j]</li>
-<li>每行中间元素：dp[i][j] = min(dp[i-1][j-1],dp[i-1][j]) +triangle[i][j]</li>
-</ul>
-<p>3、找初始值，给dp数组赋初值，即三角形顶上元素triangle[0][0]。<br>
-采用这种思路时间复杂度和空间复杂度均为O(n<sup>2)。通过以上思路分析，不难发现每次更新dp[i][j]时只与dp[i-1][j-1]和dp[i-1][j]有关，故可采用两个变量将dp[i-1][j-1]和dp[i-1][j]保存，采用一维数组即可完成以上3步过程，遍历完成后数组中的最小元素即为三角形的最小路径和。时间复杂度O(n</sup>2)、空间复杂度O(n)。<br>
+                <h3 id="一-判断能否形成等差数列">一、判断能否形成等差数列</h3>
+<p>给你一个数字数组 arr 。<br>
+如果一个数列中，任意相邻两项的差总等于同一个常数，那么这个数列就称为 等差数列 。<br>
+如果可以重新排列数组形成等差数列，请返回 true ；否则，返回 false 。<br>
+示例 1：<br>
+输入：arr = [3,5,1]<br>
+输出：true<br>
+解释：对数组重新排序得到 [1,3,5] 或者 [5,3,1] ，任意相邻两项的差分别为 2 或 -2 ，     可以形成等差数列。</p>
+<p>示例 2：<br>
+输入：arr = [1,2,4]<br>
+输出：false<br>
+解释：无法通过重新排序得到等差数列。</p>
+<p>来源：<a href="https://leetcode-cn.com/contest/weekly-contest-196/problems/can-make-arithmetic-progression-from-sequence/">力扣：判断能否形成等差数列</a></p>
+<p>思路：力扣196场周赛的第一题，看到这题第一想法就是排序+计算数列的公差，这里我用了快排对数组进行排序，使用HashSet来存储数组的公差，如果是等差数组则set中只会有一个值，即就是数字的公差。<br>
 code：</p>
 <pre><code>class Solution {
-    public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) {
-        if(triangle.isEmpty()) return 0;
-        int n = triangle.size(); //三角形的行数
-        int [] dp= new int[n];
-        dp[0]=triangle.get(0).get(0);//初始值
-        int pre = 0;//保存dp[i-1][j-1]
-        int cur;//保存dp[i-1][j]
-        for (int i = 1; i &lt; n; i++) {
-            List&lt;Integer&gt; item = triangle.get(i);//获取三角形的每一行元素
-            for (int j = 0; j &lt;item.size(); j++) {
-                cur = dp[j];
-                if (j == 0) { // 每行第一个元素                   
-                    dp[j] = cur + item.get(j);
-                } else if (j == i) { // 每行最后一个元素                   
-                    dp[j] = pre + item.get(j);
-                } else {//中间元素
-                    dp[j] = (cur&lt;pre?cur:pre) + item.get(j);
-                }
-                pre = cur;
-            }
+   public static boolean canMakeArithmeticProgression(int[] arr) {
+        int l=0;
+        int r=arr.length-1;
+        quickp(arr,l,r);        
+        HashSet&lt;Integer&gt; cha = new HashSet&lt;Integer&gt;();
+        for(int i = 0;i&lt;r;i++){
+           int temp =arr[i+1]-arr[i];
+           cha.add(temp);
         }
-        int min= Integer.MAX_VALUE;
-        for (int i = 0; i &lt; dp.length; i++) {            
-            min = min&gt;dp[i]?dp[i]:min;
+        if(cha.size()==1){
+            return true;
+        } else{
+            return false;
         }
-        return min;
+       
+    }
+    
+    static void quickp(int[] nums,int l, int r){        
+        int left = l, right = r;        
+        while(left&lt;right){
+            int mid = nums[left];
+            while(left&lt;right &amp;&amp; nums[right]&gt;=mid)  right--;  //找到右边比mid值小的位置            
+            nums[left] = nums[right];            
+            while(left&lt;right &amp;&amp; nums[left]&lt;mid) left++; //找到左边比mid值大的位置  
+            nums[right] = nums[left];
+            nums[left] = mid;
+            quickp(nums, l, left);
+            quickp(nums, left+1, r);
+        }
     }
 }
 </code></pre>
+<h4 id="review">review</h4>
 
               </div>
               <div class="toc-container">
@@ -163,7 +152,11 @@ code：</p>
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C">三角形最小路径和</a></li>
+<li><a href="#%E4%B8%80-%E5%88%A4%E6%96%AD%E8%83%BD%E5%90%A6%E5%BD%A2%E6%88%90%E7%AD%89%E5%B7%AE%E6%95%B0%E5%88%97">一、判断能否形成等差数列</a>
+<ul>
+<li><a href="#review">review</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -178,9 +171,9 @@ code：</p>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://southton.github.io/starry/post/dp02/">
+            <a href="https://southton.github.io/starry/post/dp13/">
               <h3 class="post-title">
-                DP02 最长公共子序列
+                DP13 最长回文子序列
               </h3>
             </a>
           </div>
