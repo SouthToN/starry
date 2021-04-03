@@ -2,23 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DP13 最长回文子序列 | Starry</title>
+<title>Day40： 替换所有的问号 | Starry</title>
 <link rel="shortcut icon" href="https://southton.github.io/starry/favicon.ico?v=1617440083141">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://southton.github.io/starry/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="DP13 最长回文子序列 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Day40： 替换所有的问号 | Starry - Atom Feed" href="https://southton.github.io/starry/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="给定一个字符串s，找到其中最长的回文子序列。可以假设s的最大长度为1000。
-示例 1:
-输入: &quot;bbbab&quot;
-输出: 4
-一个可能的最长回文子序列为 &quot;bbbb&quot;。
-示例 2:
-输入: &quot..." />
-    <meta name="keywords" content="DP" />
+    <meta name="description" content="一、替换所有的问号
+题目描述：输入一个字符串，将字符串中？替换成一个小写字母，要求这个字母不能与其前一个和后一个字母相同。
+来源：力扣1576：替换所有的问号
+思路：将字符串转换为字符串数组，循环遍历其中的每一个元素，判断其是否是'?'，不..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -80,70 +77,94 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              DP13 最长回文子序列
+              Day40： 替换所有的问号
             </h2>
             <div class="post-info">
               <span>
-                2020-05-06
+                2020-09-07
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
-              
-                <a href="https://southton.github.io/starry/tag/p_aE2-U4p/" class="post-tag">
-                  # DP
-                </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/dp13.jpg" alt="">
+              <img class="post-feature-image" src="https://southton.github.io/starry/post-images/day40.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>给定一个字符串s，找到其中最长的回文子序列。可以假设s的最大长度为1000。<br>
-示例 1:<br>
-输入: &quot;bbbab&quot;<br>
-输出: 4<br>
-一个可能的最长回文子序列为 &quot;bbbb&quot;。</p>
-<p>示例 2:<br>
-输入: &quot;cbbd&quot;<br>
-输出: 2<br>
-一个可能的最长回文子序列为 &quot;bb&quot;。</p>
-<p>来源：<a href="https://leetcode-cn.com/problems/longest-palindromic-subsequence">力扣：最长回文子序列</a></p>
-<p>思路：<br>
-1、定义动态数组的含义，定义dp[i][j]表示s中从i到j所能构成的最长回文序列长度<br>
-2、找数组元素之间的关系<br>
-当s中第i个字符和第j个字符相同时:</p>
-<pre><code> dp[i][j] = dp[i+1][j-1] +2;
-</code></pre>
-<p>当s中第i个字符和第j个字符不同时:</p>
-<pre><code>dp[i][j] = Math.max(dp[i+1][j],dp[i][j-1]);
-</code></pre>
-<p>3、初始化<br>
-dp[i][i] = 1; 单个字符能构成的回文序列长度为1<br>
-code：</p>
-<pre><code>class Solution {
-    public int longestPalindromeSubseq(String s) {
-        int len = s.length();
-        int [][] dp = new int[len][len];
-        for(int i = len-1;i&gt;=0;i--){
-            dp[i][i] = 1;
-            for(int j = i+1;j&lt;len;j++){
-                if(s.charAt(i)==s.charAt(j)){
-                    dp[i][j] = dp[i+1][j-1] +2;
-                }else{
-                    dp[i][j] = Math.max(dp[i+1][j],dp[i][j-1]);
+                <h3 id="一-替换所有的问号">一、替换所有的问号</h3>
+<p>题目描述：输入一个字符串，将字符串中？替换成一个小写字母，要求这个字母不能与其前一个和后一个字母相同。<br>
+来源：<a href="https://leetcode-cn.com/problems/replace-all-s-to-avoid-consecutive-repeating-characters/">力扣1576：替换所有的问号</a></p>
+<p>思路：将字符串转换为字符串数组，循环遍历其中的每一个元素，判断其是否是'?'，不是继续下一次循环，是判断其前后字母，大致步骤：</p>
+<ul>
+<li>将字符串转换为stringbuffer，并在最后追加一个？，因为需要判断其前后字母，这种遍历条件无法遍历到最后一个字符{for (int i = 0; i+1 &lt; strChar.length; i++) }</li>
+<li>将stringbuffer转为字符串，再转为字符数组</li>
+<li>遍历每一个字符，判断其是否是'?'，不是则继续遍历下一个字符，是则继续判断其是否是第一个字符，是则找到一个与下一个字符不相同的字符，来替换掉当前的'?'，不是第一个则需要找到一个与当前'?'前后的字符都不相等的字符，替换掉当前问号。</li>
+<li>替换完毕，将字符数组转为字符串，再将字符串转为stringbuffer</li>
+<li>删除最后一个字符，这个字符的作用就是让算法能够遍历到最后一个字符</li>
+<li>将stringbuffer转为字符串并返回<br>
+code：</li>
+</ul>
+<pre><code>public class replaceString {
+    public static String re(String str){
+        if (str.length()==0) return str;
+        StringBuffer sb = new StringBuffer(str);
+        sb.append(&quot;?&quot;);
+        char[] strChar=sb.toString().toCharArray();// 将字符串转换为字符串数组；
+        for (int i = 0; i+1 &lt; strChar.length; i++) {
+            if (strChar[i]!='?') continue;//跳出本次循环，进入下一次循环，循环未结束
+            for (char j = 'a'; j &lt;='z' ; j++) {
+                if(i==0 &amp;&amp; strChar[i+1]!=j){//第一个字母是'?',找到跟下一个字母不相同的字母
+                    strChar[i] = j;//替换
+                    break;//退出当前循环，循环结束
+                }else if (i&gt;0 &amp;&amp;strChar[i-1]!=j &amp;&amp; strChar[i+1]!=j){
+                    strChar[i] = j;
+                    break;
                 }
             }
         }
-        return dp[0][len-1];
-    }
+        str = new String(strChar);//将字符数组转字符串
+        sb = new StringBuffer(str);
+        sb.deleteCharAt(str.length()-1);
+        String res = String.valueOf(sb);
+        return res;
+    }   
 }
+
+</code></pre>
+<p>tips：字符串和字符数组互转的方法</p>
+<pre><code>        /*字符串转字符数组*/
+        chars = s.toCharArray();
+        
+        /*字符数组转字符串*/
+
+        // 方法一
+        s = new String(chars);
+        //方法二
+        s = String.valueOf(chars);
+        //方法三
+        StringBuffer sb =new StringBuffer();
+        for (char c:chars) {
+            sb.append(c);
+        }
+        s = sb.toString();
 </code></pre>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E6%9B%BF%E6%8D%A2%E6%89%80%E6%9C%89%E7%9A%84%E9%97%AE%E5%8F%B7">一、替换所有的问号</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -152,9 +173,9 @@ code：</p>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://southton.github.io/starry/post/dp12/">
+            <a href="https://southton.github.io/starry/post/day39/">
               <h3 class="post-title">
-                DP12 正则表达式匹配
+                Day39： 判断能否形成等差数列
               </h3>
             </a>
           </div>
